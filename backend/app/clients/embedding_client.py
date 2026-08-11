@@ -2,9 +2,14 @@ import httpx
 
 
 class EmbeddingClient:
-    def __init__(self, base_url: str) -> None:
+    def __init__(
+        self, 
+        base_url: str,
+        timeout: float = 60.0,
+        ) -> None:
         self._client = httpx.AsyncClient(
-            base_url=base_url.rstrip("/")
+            base_url=base_url.rstrip("/"),
+            timeout=timeout,
         )
         
     async def embed(self, texts: list[str]) -> list[list[float]]:

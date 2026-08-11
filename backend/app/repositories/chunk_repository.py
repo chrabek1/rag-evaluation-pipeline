@@ -6,22 +6,6 @@ from app.models.embedded_chunk import EmbeddedChunk
 class ChunkRepository:
     def __init__(self, pool: asyncpg.Pool) -> None:
         self._pool = pool
-        
-    async def create_schema(self) -> None:
-        async with self._pool.acquire() as connection:
-            await connection.execute(
-                """
-                CREATE EXTENSION IF NOT EXISTS vector;
-                
-                CREATE TABLE IF NOT EXISTS chunks (
-                    id BIGSERIAL PRIMARY KEY,
-                    chunk_id TEXT NOT NULL UNIQUE,
-                    filename TEXT NOT NULL,
-                    content TEXT NOT NULL,
-                    embedding VECTOR(1024) NOT NULL
-                );
-                """
-            )
     
     async def add_many(
         self,
@@ -50,6 +34,11 @@ class ChunkRepository:
                     embedding
                 )
                 VALUES ($1, $2, $3, $4)
+                ON CONFLICT (chunk_id)
+                DO UPDATE SET
+                    filename = EXCLUDED.filename,
+                    content = EXCLUDED.content,
+                    embedding = EXCLUDED.embedding
                 """,
                 records,
             )
