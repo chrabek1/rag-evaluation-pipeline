@@ -1,4 +1,4 @@
-# EWC — RAG Evaluation Project
+# RAG Evaluation Pipeline
 
 > A reproducible local environment for building and evaluating retrieval strategies over a fixed document corpus.
 
@@ -9,7 +9,7 @@
 
 ## Overview
 
-EWC is a local Retrieval-Augmented Generation (RAG) project focused on retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with pgvector.
+RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project focused on retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with pgvector.
 
 Keeping the corpus fixed makes retrieval strategies directly comparable without introducing differences caused by chunking.
 
@@ -92,7 +92,7 @@ Indexing is idempotent, so running the command again updates existing rows inste
 
 ```bash
 docker compose exec postgres \
-  psql -U ewc -d ewc \
+  psql -U rag_eval -d rag_eval \
   -c "SELECT COUNT(*) FROM chunks;"
 ```
 
@@ -121,7 +121,7 @@ docker compose exec embedding_service pytest
 ## Project Structure
 
 ```text
-EWC/
+RAG Evaluation Pipeline/
 ├── backend/
 │   ├── app/
 │   │   ├── clients/          # external service clients
