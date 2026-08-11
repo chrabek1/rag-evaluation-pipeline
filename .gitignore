@@ -1,0 +1,8 @@
+/open_rag_data
+.env
+dane.csv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store

@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ewc-postgres
+    environment:
+      POSTGRES_DB: ewc
+      POSTGRES_USER: ewc
+      POSTGRES_PASSWORD: ewc
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ewc -d ewc"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  embedding_service:
+    build:
+      context: ./embedding_service
+    env_file:
+      - .env
+    volumes:
+      - ./embedding_service:/app
+    container_name: ewc-embedding-service
+    ports:
+      - "8001:8001"
+
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+      - /app/.venv
+      - ./dane.csv:/data/dane.csv:ro
+    container_name: ewc-backend
+    environment:
+      EMBEDDING_SERVICE_URL: http://embedding_service:8001
+      DATABASE_URL: postgresql://ewc:ewc@postgres:5432/ewc
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      embedding_service:
+        condition: service_started
+
+volumes:
+  postgres_data:
