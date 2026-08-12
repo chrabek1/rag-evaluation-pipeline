@@ -14,35 +14,43 @@ from app.services.indexing_service import IndexingService
 
 logger = logging.getLogger(__name__)
 
-async def main() -> None:
-    configure_logging()
-    
-    logger.info("Start indexing")
+async def run_indexing() -> None:
+    corpus_path = Path(settings.corpus_path)
     
     loader = CsvChunkLoader()
-    chunks = loader.load(Path("/data/dane.csv"))
+    chunks = loader.load(corpus_path)
     
-    logger.info("Loaded %d chunks", len(chunks))
+    logger.info("Loaded %d chunks from %s", len(chunks), corpus_path)
     
     await initialize_schema(settings.database_url)
     
     pool = await create_pool(settings.database_url)
     embedding_client = EmbeddingClient(settings.embedding_service_url)
-    repository = ChunkRepository(pool)
-    
+
     try:
+        repository = ChunkRepository(pool)
         indexing_service = IndexingService(
             embedding_client=embedding_client,
             chunk_repository=repository,
         )
         
         await indexing_service.index(chunks)
-        
-        logger.info("Indexed %d chunks", len(chunks))
-        
     finally:
         await embedding_client.close()
         await pool.close()
-        
+
+async def main() -> None:
+    configure_logging()
+    
+    logger.info("Start indexing pipeline")
+    
+    try: 
+        await run_indexing()
+    except Exception:
+        logger.exception("Indexing pipeline failed")
+        raise
+    
+    logger.info("Indexing pipeline completed succesfully")
+    
 if __name__ == "__main__":
     asyncio.run(main())

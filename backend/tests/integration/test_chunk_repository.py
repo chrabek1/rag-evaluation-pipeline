@@ -119,3 +119,59 @@ async def test_add_many_with_empty_list_does_not_modify_database(
         )
 
     assert count == 0
+    
+@pytest.mark.asyncio
+async def test_search_returns_top_k_chunks_ordered_by_cosine_similarity(
+    db_pool: asyncpg.Pool,
+) -> None:
+    repository = ChunkRepository(db_pool)
+
+    chunks = [
+        EmbeddedChunk(
+            chunk_id="doc.pdf_0001",
+            chunk=Chunk(
+                filename="doc.pdf",
+                content="Most similar chunk",
+            ),
+            embedding=[1.0, 0.0] + [0.0] * 1022,
+        ),
+        EmbeddedChunk(
+            chunk_id="doc.pdf_0002",
+            chunk=Chunk(
+                filename="doc.pdf",
+                content="Second most similar chunk",
+            ),
+            embedding=[0.8, 0.6] + [0.0] * 1022,
+        ),
+        EmbeddedChunk(
+            chunk_id="doc.pdf_0003",
+            chunk=Chunk(
+                filename="doc.pdf",
+                content="Least similar chunk",
+            ),
+            embedding=[0.0, 1.0] + [0.0] * 1022,
+        ),
+    ]
+
+    await repository.add_many(chunks)
+
+    query_embedding = [1.0, 0.0] + [0.0] * 1022
+
+    results = await repository.search(
+        query_embedding=query_embedding,
+        top_k=2,
+    )
+
+    assert len(results) == 2
+
+    assert results[0].chunk_id == "doc.pdf_0001"
+    assert results[0].chunk.filename == "doc.pdf"
+    assert results[0].chunk.content == "Most similar chunk"
+    assert results[0].score == pytest.approx(1.0)
+
+    assert results[1].chunk_id == "doc.pdf_0002"
+    assert results[1].chunk.filename == "doc.pdf"
+    assert results[1].chunk.content == "Second most similar chunk"
+    assert results[1].score == pytest.approx(0.8)
+
+    assert results[0].score > results[1].score

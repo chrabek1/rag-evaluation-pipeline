@@ -2,7 +2,9 @@ import logging
 
 import asyncpg
 
+from app.models.chunk import Chunk
 from app.models.embedded_chunk import EmbeddedChunk
+from app.models.retrieved_chunk import RetrievedChunk
 
 
 logger = logging.getLogger(__name__)
@@ -51,3 +53,41 @@ class ChunkRepository:
                 """,
                 records,
             )
+            
+    async def search(
+        self,
+        query_embedding: list[float],
+        top_k: int,
+    ) -> list[RetrievedChunk]:
+        if top_k <= 0:
+            raise ValueError("top_k must be greater than 0")
+        
+        logger.info("Searching for top %d chunks", top_k)
+        
+        async with self._pool.acquire() as connection:
+            rows = await connection.fetch(
+                """
+                SELECT
+                    chunk_id,
+                    filename,
+                    content,
+                    1 - (embedding <=> $1) AS score
+                FROM chunks
+                ORDER BY embedding <=> $1
+                LIMIT $2
+                """,
+                query_embedding,
+                top_k,
+            )
+        
+        return [
+            RetrievedChunk(
+                chunk_id=row["chunk_id"],
+                chunk=Chunk(
+                    filename=row["filename"],
+                    content=row["content"],
+                ),
+                score=float(row["score"]),
+            )
+            for row in rows
+        ]

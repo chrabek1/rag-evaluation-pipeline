@@ -1,6 +1,6 @@
 # RAG Evaluation Pipeline
 
-> A reproducible local environment for building and evaluating retrieval strategies over a fixed document corpus.
+> Reproducible local environment for building and evaluating retrieval strategies over a fixed document corpus.
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
@@ -9,47 +9,65 @@
 
 ## Overview
 
-RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project focused on retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with pgvector.
+RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with `pgvector` for vector similarity search.
 
-Keeping the corpus fixed makes retrieval strategies directly comparable without introducing differences caused by chunking.
+Keeping the corpus fixed ensures retrieval strategies are comparable without differences introduced by re-chunking.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-    CSV[dane.csv] --> Loader[CSV loader]
-    Loader --> Indexing[Indexing service]
-    Indexing --> Embeddings[Embedding service]
-    Embeddings --> Model[BAAI/bge-m3]
-    Indexing --> Repository[Chunk repository]
-    Repository --> DB[(PostgreSQL + pgvector)]
+  subgraph INDEXING_FLOW [Indexing flow]
+    A[CSV corpus] --> B[CsvChunkLoader]
+    B --> C[IndexingService]
+    C --> D[EmbeddingClient]
+    D --> E[embedding_service]
+    E --> F[BAAI/bge-m3]
+    C --> G[ChunkRepository]
+    G --> H[(PostgreSQL + pgvector)]
+  end
+
+  subgraph RETRIEVAL_FLOW [Retrieval flow]
+    Q[query] --> R[RetrievalService]
+    R --> D
+    D --> E
+    R --> G
+    G --> H
+    H --> T[Top-k RetrievedChunk]
+  end
 ```
 
 The environment consists of three Docker services:
 
-- `backend` — corpus loading, indexing and persistence,
-- `embedding_service` — FastAPI service generating dense embeddings,
-- `postgres` — PostgreSQL 16 with pgvector.
+- `backend` — corpus loading, indexing, retrieval and persistence
+- `embedding_service` — FastAPI service that generates dense embeddings
+- `postgres` — PostgreSQL 16 with `pgvector`
 
 ## Current Status
 
 Implemented:
 
-- fixed-corpus CSV loading with stable chunk identifiers,
-- document chunk model and embedding payload validation,
-- batched embedding generation and database writes,
-- idempotent indexing with PostgreSQL UPSERT,
-- repository-level persistence logic for chunk records,
-- Docker Compose environment with service health checks,
-- FastAPI embedding service with model and schema validation,
-- automated unit and integration tests for backend and embedding service,
-- reproducible full-corpus indexing from an empty database.
+- fixed-corpus CSV loading with stable chunk identifiers
+- document chunk model and embedding payload validation
+- batched embedding generation and database writes
+- idempotent indexing with PostgreSQL UPSERT
+- repository-level persistence logic for chunk records
+- Docker Compose environment with service health checks
+- FastAPI embedding service with model and schema validation
+- automated unit and integration tests for backend and embedding service (44 passing backend tests)
+- reproducible full-corpus indexing from an empty database
+- vector retrieval with cosine similarity
+- configurable `top_k` for retrieval
+- `RetrievedChunk` model including a `score` field
+- CLI retrieval entrypoint: `scripts/search_chunks.py`
+- logging for indexing and retrieval
+- dedicated, automatically-created `rag_eval_test` database for tests
 
 Planned:
 
-- vector retrieval and similarity search,
-- retrieval-quality evaluation metrics,
-- end-to-end benchmark automation.
+- golden dataset preparation
+- retrieval evaluation metrics
+- end-to-end evaluation pipeline / benchmark automation
 
 ## Quick Start
 
@@ -62,13 +80,17 @@ No local Python installation is required.
 
 ### 1. Configure the environment
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root (see `.env.example` below):
 
 ```dotenv
 EMBEDDING_MODEL=BAAI/bge-m3
+EMBEDDING_SERVICE_URL=http://embedding_service:8001
+DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval
+TEST_DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval_test
+CORPUS_PATH=/data/dane.csv
 ```
 
-The backend connection settings are supplied by Docker Compose.
+The backend reads configuration from an `env_file` (use the local `.env` for development; do not commit it).
 
 ### 2. Start the services
 
@@ -103,6 +125,19 @@ docker compose exec postgres \
 
 The expected row count for the included dataset is `735`.
 
+### Search the corpus
+
+Run an example retrieval request against the indexed corpus:
+
+```bash
+docker compose exec backend \
+  uv run python scripts/search_chunks.py \
+  "What is heteroskedasticity?" \
+  --top-k 5
+```
+
+This returns the top-k retrieved chunks for the query using the configured similarity search.
+
 ## Database Schema
 
 | Column | Description |
@@ -114,7 +149,7 @@ The expected row count for the included dataset is `735`.
 | `embedding` | 1024-dimensional embedding generated by `BAAI/bge-m3` |
 
 The application initializes the pgvector extension and the `chunks` table before opening the repository connection pool.
-
+Note: retrieval is implemented using cosine similarity over stored vector embeddings. The `score` value on `RetrievedChunk` is the similarity/score returned by the search and is not an evaluation metric.
 ## Testing
 
 The project includes both unit and integration tests for the backend and embedding service.
@@ -122,7 +157,7 @@ The project includes both unit and integration tests for the backend and embeddi
 Run the backend test suite:
 
 ```bash
-docker compose exec backend pytest
+docker compose exec backend uv run pytest tests -v
 ```
 
 Run the embedding service test suite:
@@ -131,12 +166,19 @@ Run the embedding service test suite:
 docker compose exec embedding_service pytest
 ```
 
-The current backend suite covers chunk model validation, CSV loading, embedding client behavior, repository integration, and indexing logic. The embedding service tests cover API behavior and the embedding service layer.
+The backend test suite covers:
+
+- unit tests
+- repository integration tests
+- indexing pipeline integration tests
+- retrieval pipeline integration tests
+
+Current test status: 44 passing backend tests.
 
 ## Project Structure
 
 ```text
-RAG Evaluation Pipeline/
+rag-evaluation-pipeline/
 ├── backend/
 │   ├── app/
 │   │   ├── clients/          # external service clients
@@ -144,12 +186,23 @@ RAG Evaluation Pipeline/
 │   │   ├── db/               # database connection and schema
 │   │   ├── loaders/          # corpus loading
 │   │   ├── models/           # domain models
+│   │   │   ├── chunk.py
+│   │   │   └── retrieved_chunk.py
 │   │   ├── repositories/     # persistence layer
 │   │   └── services/         # application services
+│   │       └── retrieval_service.py
+│   
 │   ├── scripts/              # executable backend scripts
+│   │   ├── index_chunks.py
+│   │   └── search_chunks.py
 │   ├── tests/
-│   │   ├── integration/      # repository and pipeline integration tests
-│   │   └── unit/             # chunk, loader, model, and service tests
+│   │   ├── integration/
+│   │   │   ├── test_chunk_repository.py
+│   │   │   ├── test_indexing_pipeline.py
+│   │   │   └── test_retrieval_pipeline.py
+│   │   └── unit/
+│   │       ├── test_chunk.py
+│   │       └── test_retrieval_service.py
 │   ├── Dockerfile
 │   ├── pyproject.toml
 │   └── uv.lock
@@ -162,11 +215,12 @@ RAG Evaluation Pipeline/
 │   └── requirements.txt
 ├── docs/                     # research and evaluation notes
 ├── scripts/                  # data preparation utilities
-├── dane.csv                  # fixed document corpus
+├── docker/
+│   └── postgres/
+│       └── init.sql
 ├── docker-compose.yml
-├── .env
+├── .env.example
 ├── README.md
-└── open_rag_data/            # prepared evaluation corpus data
 ```
 
 ## Reproducibility
@@ -180,3 +234,16 @@ docker compose exec backend uv run python scripts/index_chunks.py
 ```
 
 A successful clean run should produce the same `735` indexed chunks.
+
+The `rag_eval_test` database is created automatically using `docker/postgres/init.sql` when the PostgreSQL service initializes.
+
+Quick verification of retrieval after indexing (example):
+
+```bash
+docker compose exec backend \
+  uv run python scripts/search_chunks.py \
+  "What is heteroskedasticity?" \
+  --top-k 5
+```
+
+This runs a retrieval request against the indexed corpus. Retrieval uses cosine similarity over stored vectors; the `score` field on returned `RetrievedChunk` items reflects the similarity value used for ranking and is not an external evaluation metric.
