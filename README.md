@@ -90,7 +90,9 @@ TEST_DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval_test
 CORPUS_PATH=/data/dane.csv
 ```
 
-The backend reads configuration from an `env_file` (use the local `.env` for development; do not commit it).
+- The backend loads configuration from the file specified as `env_file` in `docker-compose.yml`.
+- For local development copy `.env.example` → `.env` and adjust values as needed.
+- Do not commit `.env` to the repository.
 
 ### 2. Start the services
 
