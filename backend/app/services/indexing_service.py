@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict
 
 from app.clients.embedding_client import EmbeddingClient
@@ -5,6 +6,8 @@ from app.models.chunk import Chunk
 from app.models.embedded_chunk import EmbeddedChunk
 from app.repositories.chunk_repository import ChunkRepository
 
+
+logger = logging.getLogger(__name__)
 
 class IndexingService:
     def __init__(
@@ -21,10 +24,19 @@ class IndexingService:
         self._batch_size = batch_size
         
     async def index(self, chunks: list[Chunk]) -> None:
+        logger.info("Indexing %d chunks", len(chunks))
+        
         document_counters: dict[str, int] = defaultdict(int)
         
         for batch_start in range(0, len(chunks), self._batch_size):
             batch = chunks[batch_start : batch_start + self._batch_size]
+            
+            logger.info(
+                "Processing batch %d-%d of %d chunks",
+                batch_start +1,
+                batch_start + len(batch),
+                len(chunks),
+            )
         
             texts = [chunk.content for chunk in batch]
             embeddings = await self._embedding_client.embed(texts)
@@ -51,3 +63,4 @@ class IndexingService:
                 )
                 
             await self._chunk_repository.add_many(embedded_chunks)
+            

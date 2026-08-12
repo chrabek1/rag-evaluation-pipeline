@@ -36,15 +36,20 @@ The environment consists of three Docker services:
 Implemented:
 
 - fixed-corpus CSV loading with stable chunk identifiers,
+- document chunk model and embedding payload validation,
 - batched embedding generation and database writes,
 - idempotent indexing with PostgreSQL UPSERT,
+- repository-level persistence logic for chunk records,
 - Docker Compose environment with service health checks,
+- FastAPI embedding service with model and schema validation,
+- automated unit and integration tests for backend and embedding service,
 - reproducible full-corpus indexing from an empty database.
 
 Planned:
 
-- vector retrieval,
-- retrieval evaluation pipeline.
+- vector retrieval and similarity search,
+- retrieval-quality evaluation metrics,
+- end-to-end benchmark automation.
 
 ## Quick Start
 
@@ -112,11 +117,21 @@ The application initializes the pgvector extension and the `chunks` table before
 
 ## Testing
 
-Run the embedding service test suite inside its container:
+The project includes both unit and integration tests for the backend and embedding service.
+
+Run the backend test suite:
+
+```bash
+docker compose exec backend pytest
+```
+
+Run the embedding service test suite:
 
 ```bash
 docker compose exec embedding_service pytest
 ```
+
+The current backend suite covers chunk model validation, CSV loading, embedding client behavior, repository integration, and indexing logic. The embedding service tests cover API behavior and the embedding service layer.
 
 ## Project Structure
 
@@ -132,19 +147,26 @@ RAG Evaluation Pipeline/
 │   │   ├── repositories/     # persistence layer
 │   │   └── services/         # application services
 │   ├── scripts/              # executable backend scripts
+│   ├── tests/
+│   │   ├── integration/      # repository and pipeline integration tests
+│   │   └── unit/             # chunk, loader, model, and service tests
 │   ├── Dockerfile
 │   ├── pyproject.toml
 │   └── uv.lock
 ├── embedding_service/
 │   ├── app/                  # embedding API and model service
 │   ├── tests/
+│   │   ├── integration/      # API contract tests
+│   │   └── unit/             # service logic tests
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── docs/                     # research and evaluation notes
 ├── scripts/                  # data preparation utilities
 ├── dane.csv                  # fixed document corpus
 ├── docker-compose.yml
-└── README.md
+├── .env
+├── README.md
+└── open_rag_data/            # prepared evaluation corpus data
 ```
 
 ## Reproducibility

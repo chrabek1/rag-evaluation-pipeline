@@ -1,5 +1,9 @@
+import logging
+
 import httpx
 
+
+logger=logging.getLogger(__name__)
 
 class EmbeddingClient:
     def __init__(
@@ -14,7 +18,9 @@ class EmbeddingClient:
         
     async def embed(self, texts: list[str]) -> list[list[float]]:
         if not texts:
-            return []   
+            return []
+        
+        logger.info("Requesting embeddings for %d texts", len(texts))
         
         response = await self._client.post(
             "/embed",
@@ -23,7 +29,11 @@ class EmbeddingClient:
         response.raise_for_status()
         
         data = response.json()
-        return data["vectors"]
+        vectors = data["vectors"]
+        
+        logger.info("Received %d embeddings", len(vectors))
+        
+        return vectors
     
     async def close(self) -> None:
         await self._client.aclose()

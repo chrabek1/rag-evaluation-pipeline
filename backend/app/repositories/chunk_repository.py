@@ -1,7 +1,11 @@
+import logging
+
 import asyncpg
 
 from app.models.embedded_chunk import EmbeddedChunk
 
+
+logger = logging.getLogger(__name__)
 
 class ChunkRepository:
     def __init__(self, pool: asyncpg.Pool) -> None:
@@ -13,6 +17,11 @@ class ChunkRepository:
     ) -> None:
         if not embedded_chunks:
             return
+        
+        logger.info(
+            "Writing %d chunks to database",
+            len(embedded_chunks)
+        )
         
         records = [
             (
