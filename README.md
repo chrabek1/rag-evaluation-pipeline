@@ -11,6 +11,49 @@
 
 RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with `pgvector` for vector similarity search.
 
+## Preparing the golden dataset
+
+Golden-dataset preparation is split into two parts because evidence annotation
+is a manual quality-control step.
+
+### 1. Prepare data for annotation
+
+Download Open RAGBench, select the document subset, download the selected PDFs,
+and create `selected_documents.json` and `selected_questions.json` with:
+
+```powershell
+uv run python scripts\prepare_annotation_dataset.py
+```
+
+The script stops after preparing the questions. Use each question and its
+assigned `ground_truth_text` to manually create or update:
+
+```text
+open_rag_data/evidence_annotations.json
+```
+
+Each `evidence_texts` entry must be an exact substring of the corresponding
+`ground_truth_text`.
+
+### 2. Build the golden dataset
+
+After the annotations are ready, map evidence to the fixed chunks, validate the
+records, and write the final dataset with:
+
+```powershell
+uv run python scripts\build_golden_dataset.py
+```
+
+The second stage requires two project-specific artifacts:
+
+- `dane.csv` — the fixed chunk corpus used by the retrieval system;
+- `open_rag_data/evidence_annotations.json` — human-curated evidence
+  annotations.
+
+They cannot be reconstructed from Open RAGBench alone. Keeping `dane.csv`
+fixed is intentional because changing the chunking would change the retrieval
+evaluation target.
+
 Keeping the corpus fixed ensures retrieval strategies are comparable without differences introduced by re-chunking.
 
 ## Architecture
@@ -62,10 +105,11 @@ Implemented:
 - CLI retrieval entrypoint: `scripts/search_chunks.py`
 - logging for indexing and retrieval
 - dedicated, automatically-created `rag_eval_test` database for tests
+- Open RAGBench subset preparation for manual annotation
+- manually curated evidence annotations and validated golden dataset
 
 Planned:
 
-- golden dataset preparation
 - retrieval evaluation metrics
 - end-to-end evaluation pipeline / benchmark automation
 
