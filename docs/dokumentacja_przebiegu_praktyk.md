@@ -11,9 +11,10 @@ W ramach dotychczasowych prac:
 - wybrałem publiczny korpus testowy,
 - przygotowałem lokalne środowisko z PostgreSQL i pgvector,
 - uruchomiłem indeksowanie i wyszukiwanie wektorowe,
-- zbudowałem ręcznie zweryfikowany golden dataset.
+- zbudowałem ręcznie zweryfikowany golden dataset,
+- zaimplementowałem i przetestowałem metryki retrievalu oraz agregację wyników.
 
-Implementacja metryk, porównanie konfiguracji, ewaluacja generowania odpowiedzi i dashboard stanowią kolejne etapy projektu.
+Kolejne etapy obejmują uruchamianie pełnych eksperymentów, ewaluację generowania odpowiedzi i raportowanie wyników.
 
 ## Analiza metod i metryk ewaluacji RAG
 
@@ -22,7 +23,7 @@ Pierwszym etapem było zapoznanie się z metodami oceny systemów RAG oraz wybó
 1. **Retrieval** — sprawdzenie, czy system znajduje właściwe fragmenty i umieszcza je odpowiednio wysoko w rankingu.
 2. **Generation** — sprawdzenie, czy odpowiedź jest zgodna z pobranym kontekstem i odpowiada na pytanie.
 
-Dla planowanej ewaluacji retrievalu wybrałem deterministyczne metryki **Precision@k, Recall@k, MRR i nDCG@k**. Pozwalają one mierzyć odpowiednio czystość wyników, kompletność znalezionego kontekstu, pozycję pierwszego trafienia oraz jakość całego rankingu. Do ewentualnej późniejszej oceny generowania wskazałem **Faithfulness** i **Answer Relevance**, które zwykle wymagają modelu oceniającego. Na tym etapie metryki nie zostały jeszcze zaimplementowane ani uruchomione.
+Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k i weighted Precision@k**. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
 
 Research wykazał również najważniejsze ryzyka: data leakage, zbyt łatwe pytania syntetyczne, niepełne oznaczenia relewancji oraz uzależnienie ground truth od konkretnego chunkowania. Wnioski te wpłynęły później na sposób przygotowania golden datasetu. Szczegółowy opis znajduje się w `rag_evaluation_research.md`.
 
@@ -43,6 +44,8 @@ Klasyczne metryki retrievalowe mają być liczone samodzielnie, bez wywołań LL
 - PostgreSQL z rozszerzeniem pgvector przechowuje embeddingi i wykonuje wyszukiwanie wektorowe.
 
 Zależności Pythona są zarządzane przez `uv`, a konfiguracja, między innymi adres bazy, model embeddingowy i ścieżka korpusu, jest przekazywana przez zmienne środowiskowe. Przygotowałem jedną komendę indeksującą cały korpus oraz osobny skrypt do testowego wyszukiwania z konfigurowalnym `top_k`.
+
+Embedding service udostępnia endpoint zwracający nazwę modelu i rozmiar wektora. Backend pobiera te dane, dzięki czemu wymiar embeddingu nie jest hardkodowany. Dla aktualnego modelu `BAAI/bge-m3` baza używa typu `vector(1024)`.
 
 Indeksowanie jest idempotentne: ponowne uruchomienie aktualizuje istniejące rekordy zamiast tworzyć duplikaty. Korpus zawiera 735 chunków, a ich identyfikatory są stabilne. Dodałem również testy jednostkowe i integracyjne obejmujące modele danych, klienta embeddingowego, repozytorium, indeksowanie oraz retrieval.
 
@@ -94,7 +97,7 @@ Podczas tworzenia adnotacji obowiązywały następujące wytyczne:
 - usuwano duplikaty oraz informacje całkowicie niezwiązane z pytaniem,
 - jeżeli sekcja rzeczywiście nie dostarczałaby przydatnej informacji, lista evidence miała pozostać pusta zamiast zawierać zgadywaną treść.
 
-Adnotacje zostały następnie kilkukrotnie zweryfikowane pod względem kompletności, przydatności, pełności zdań i dokładnej zgodności z tekstem źródłowym. Każdy niepusty fragment został też automatycznie sprawdzony jako substring właściwego `ground_truth_text`. Ostatecznie wszystkie 50 rekordów otrzymało evidence. Mediana evidence wynosi 240,5 znaku, czyli około 23% długości medianowego chunka i około 1/7,6 medianowego `ground_truth_text`.
+Adnotacje zostały następnie kilkukrotnie zweryfikowane pod względem kompletności, przydatności, pełności zdań i dokładnej zgodności z tekstem źródłowym. Każdy niepusty fragment został też automatycznie sprawdzony jako substring właściwego `ground_truth_text`. Ostatecznie wszystkie 50 rekordów otrzymało evidence. Mediana evidence wynosi 240,5 znaku, czyli około 23% długości medianowego chunka i około 13% medianowego `ground_truth_text`.
 
 W dwóch przypadkach pytanie było bardziej szczegółowe od przypisanej sekcji. Zachowano wtedy najlepszy dostępny kontekst z `ground_truth_text`, ale rekordy te należy interpretować jako częściowo dopasowane do materiału referencyjnego.
 
@@ -116,7 +119,7 @@ pytanie + section_id + ground_truth_text
 
 Zweryfikowane evidence odnosi się do tekstu źródłowego, natomiast system wyszukuje w 735 gotowych chunkach z `dane.csv`. Dlatego dla każdego pytania najpierw ograniczałem kandydatów do chunków pochodzących z dokumentu wskazanego przez `qrels`, a następnie porównywałem ich treść z każdym fragmentem evidence.
 
-Dla każdego chunka obliczane jest `evidence_coverage`, czyli procent całego evidence dla pytania, który można odnaleźć w tym chunku. Chunk zostaje zapisany jako relevant, jeżeli osiąga ustalony minimalny próg. Ponieważ evidence może być rozłożone na kilka chunków, golden dataset przechowuje listę wszystkich chunków spełniających kryterium.
+Dla każdego chunka obliczane jest `evidence_coverage`, czyli część całego evidence dla pytania obecna w tym chunku. Relevance jest ustalana osobno dla każdego fragmentu `evidence_texts`, a nie przez jeden globalny próg coverage. Uwzględniane są lokalne dopasowania tekstu, evidence przecięte granicą chunków oraz osobne reguły dla wzorów matematycznych.
 
 Dodatkowo obliczane jest `evidence_coverage_percentage` dla całego pytania. Wartość ta pokazuje, jaki procent evidence pokrywa suma wybranych relevant chunks. Pokrycie jest liczone jako unia dopasowanych zakresów, dlatego ten sam tekst znaleziony w kilku chunkach nie jest zaliczany wielokrotnie.
 
@@ -130,6 +133,7 @@ Finalny `golden_dataset.json` jest tablicą 50 rekordów. Każdy rekord łączy 
 {
   "query_id": "...",
   "question": "...",
+  "expected_answer": "...",
   "type": "abstractive",
   "source": "text",
   "doc_id": "...",
@@ -153,6 +157,7 @@ Znaczenie poszczególnych pól jest następujące:
 | --- | --- |
 | `query_id` | Unikalny identyfikator pytania zachowany z Open RAGBench. |
 | `question` | Treść pytania przekazywana później do retrievera. |
+| `expected_answer` | Odpowiedź referencyjna z Open RAGBench używana w ewaluacji generowania. |
 | `type` | Typ pytania określony w benchmarku, np. `abstractive`. |
 | `source` | Modalność źródła pytania; w wybranym podzbiorze pozostawiono pytania tekstowe. |
 | `doc_id` | Identyfikator właściwego dokumentu w Open RAGBench. |
@@ -161,7 +166,7 @@ Znaczenie poszczególnych pól jest następujące:
 | `ground_truth_text` | Pełny tekst referencyjnej sekcji Open RAGBench. Pole pozwala zachować pochodzenie evidence i ponownie zweryfikować adnotację. |
 | `evidence_text` | Fragmenty potrzebne do odpowiedzi, wyekstrahowane przy pomocy LLM i zweryfikowane względem źródła. Jeżeli w `evidence_annotations.json` było ich kilka, w finalnym rekordzie są łączone spacją. |
 | `evidence_coverage_percentage` | Procent evidence pokryty łącznie przez wszystkie wybrane relevant chunks. |
-| `relevant_chunks` | Lista chunków spełniających minimalny próg coverage, uporządkowana malejąco według dopasowania. |
+| `relevant_chunks` | Lista chunków zawierających znaczącą część co najmniej jednego fragmentu evidence, uporządkowana malejąco według coverage. |
 | `relevant_chunks[].chunk_id` | Stabilny identyfikator chunka w postaci nazwy pliku i kolejnego numeru. |
 | `relevant_chunks[].evidence_coverage` | Część całego evidence pokryta przez pojedynczy chunk, zapisana w zakresie od `0` do `1`. |
 
@@ -171,51 +176,29 @@ Taka struktura zawiera zarówno dane potrzebne do uruchomienia ewaluacji (`query
 
 Tekst benchmarku zawiera Markdown i LaTeX, natomiast `dane.csv` powstał przez ekstrakcję tekstu z PDF. Powodowało to różnice w symbolach, odstępach i kolejności indeksów matematycznych, na przykład `Q_i^(nom)` oraz `Q (nom) i`. Proste porównanie znaków zaniżało coverage mimo obecności właściwego fragmentu.
 
-Rozszerzyłem więc normalizację tekstu o obsługę LaTeX-u, symboli matematycznych, wariantów minusa, liczb rozdzielonych spacjami i słów przerwanych końcem linii. Dla lokalnych wyrażeń matematycznych dodałem dopasowanie tokenów odporne na zmianę kolejności indeksów. W zwykłej prozie kolejność słów nadal jest respektowana, aby ograniczyć fałszywe trafienia.
+Rozszerzyłem normalizację o obsługę LaTeX-u, symboli matematycznych, wariantów minusa, liczb rozdzielonych spacjami i słów przerwanych końcem linii. Matcher łączy tylko lokalne, uporządkowane bloki tekstu. Duże fragmenty LaTeX są porównywane osobno z kontrolą wartości liczbowych i tokenów kotwiczących, co ogranicza dopasowania podobnych, ale różnych wzorów.
 
-### Dobór progu coverage
+### Reguły relevance i coverage
 
-Próg większy od zera okazał się zbyt liberalny, ponieważ krótkie wspólne frazy dodawały słabo powiązane chunki. Przetestowałem wartości od `0.00` do `0.90`, analizując zarówno liczbę wybranych chunków, jak i łączne pokrycie evidence dla całego pytania.
+Początkowo relevance wyznaczał globalny próg `MIN_CHUNK_COVERAGE = 0.25`. Rozwiązanie powodowało false positives dla często powtarzających się fraz i podobnych wzorów matematycznych, dlatego zostało zastąpione oceną każdego fragmentu evidence osobno.
 
-| Próg pojedynczego chunka | Chunki | Śr. chunków/pytanie | Bez chunków | Śr. coverage pytania | Minimum | Pytania <90% |
-| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 0,00 | 2615 | 52,30 | 0 | 99,76% | 90,98% | 0 |
-| 0,05 | 2169 | 43,38 | 0 | 99,76% | 90,98% | 0 |
-| 0,10 | 1450 | 29,00 | 0 | 99,76% | 90,98% | 0 |
-| 0,15 | 966 | 19,32 | 0 | 99,76% | 90,98% | 0 |
-| 0,20 | 578 | 11,56 | 0 | 99,76% | 90,98% | 0 |
-| **0,25** | **364** | **7,28** | **0** | **99,76%** | **90,98%** | **0** |
-| 0,30 | 226 | 4,52 | 0 | 99,06% | 79,37% | 2 |
-| 0,35 | 151 | 3,02 | 0 | 98,35% | 73,03% | 3 |
-| 0,40 | 128 | 2,56 | 0 | 97,71% | 67,87% | 4 |
-| 0,50 | 91 | 1,82 | 1 | 93,40% | 0% | 10 |
-| 0,60 | 66 | 1,32 | 1 | 92,28% | 0% | 11 |
-| 0,75 | 45 | 0,90 | 9 | 79,95% | 0% | 14 |
-| 0,90 | 37 | 0,74 | 15 | 69,78% | 0% | 15 |
+Aktualne reguły wymagają co najmniej 30 dopasowanych znaków oraz odpowiednio: 80% lokalnego dopasowania, 40% jednego spójnego bloku albo 35% przy podziale evidence na granicy chunków. Wzory matematyczne wymagają 85% zgodności tokenów oraz zgodności liczb i tokenów kotwiczących.
 
-Wybrałem `MIN_CHUNK_COVERAGE = 0.25`. Dla tego progu uzyskano:
-
-- 364 relevant chunks,
-- średnio 7,28 chunka na pytanie,
-- średnie łączne coverage 99,76%,
-- minimalne łączne coverage 90,98%,
-- brak pytań bez relevant chunks.
-
-Wartość `0.25` usunęła około 86% początkowych kandydatów bez obniżenia coverage względem niższych progów. Próg `0.30` ograniczał liczbę dopasowań jeszcze bardziej, ale obniżał minimalne coverage pytania do 79,37%, ponieważ usuwał również chunki zawierające unikalne części evidence. Wartość `0.25` została więc wybrana jako kompromis między ograniczeniem szumu a zachowaniem kompletnej informacji. Tabela jest również przechowywana osobno w `relevant_chunk_coverage_thresholds.md`.
+Aktualny golden dataset zawiera 50 pytań i 77 relevant chunks. Średnia wynosi 1,54 chunka na pytanie, mediana 1, maksimum 4. Każde pytanie ma co najmniej jeden relevant chunk i 100% łącznego evidence coverage.
 
 ### Walidacja końcowa
 
-Pipeline sprawdza zgodność i unikalność `query_id`, obecność evidence, jego dokładne występowanie w `ground_truth_text`, brak duplikatów, zgodność dokumentów oraz spełnienie progu przez relevant chunks. Finalny `golden_dataset.json` zawiera 50 ręcznie zweryfikowanych rekordów i żaden z nich nie pozostaje bez relevant chunka.
+Builder sprawdza zgodność i unikalność `query_id`, obecność odpowiedzi i evidence, dokładne występowanie evidence w `ground_truth_text`, zgodność dokumentów oraz brak pytań bez relevant chunks. Finalny `golden_dataset.json` zawiera 50 zweryfikowanych rekordów i 100% łącznego evidence coverage dla każdego pytania.
 
 
 ## Stan realizacji i dalsze etapy
 
-Zrealizowane zostały zadania obejmujące research, porównanie narzędzi, wybór danych, uruchomienie środowiska, indeksowanie, retrieval oraz przygotowanie golden datasetu. Projekt ma odtwarzalną podstawę do rozpoczęcia właściwych eksperymentów.
+Zrealizowane zostały zadania obejmujące research, wybór danych, środowisko, indeksowanie, retrieval, golden dataset, metryki retrievalu, evaluator i agregację wyników.
 
 Do wykonania pozostają:
 
-- implementacja Precision@k, Recall@k, MRR i nDCG@k,
-- ewaluacja Faithfulness i Answer Relevance,
+- połączenie golden datasetu, retrievalu i evaluatora w jeden przebieg,
+- implementacja generowania odpowiedzi i ewaluacja Faithfulness oraz Answer Relevance,
 - porównanie różnych wartości `top_k`,
 - dodanie i ocena rerankera `BAAI/bge-reranker-v2-m3`,
 - automatyczne generowanie tabeli wyników dla wielu konfiguracji,

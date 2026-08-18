@@ -21,9 +21,20 @@ OUTPUT_PATH = REPOSITORY_ROOT / "golden_dataset.json"
 
 # Krótsze dopasowania często są przypadkowymi wspólnymi frazami.
 MIN_MATCH_CHARS = 15
-MIN_CHUNK_COVERAGE = 0.25
-MATH_MARKERS_RE = re.compile(
-    r"[$\\_^{}]|[α-ωΑ-Ω∈≤≥≈≠∑√∞⊤∂∫∪]"
+MIN_RELEVANT_MATCH_CHARS = 30
+MIN_FRAGMENT_COVERAGE = 0.40
+MIN_BOUNDARY_FRAGMENT_COVERAGE = 0.35
+MIN_STRONG_FRAGMENT_COVERAGE = 0.80
+MAX_MATCH_GAP_CHARS = 60
+MAX_COVERAGE_GAP_CHARS = 3
+MIN_MATH_COVERAGE = 0.85
+MIN_MATH_SEGMENT_TOKENS = 8
+MATH_SPAN_RE = re.compile(
+    r"\$\$(.*?)\$\$|\$(.*?)\$",
+    re.DOTALL,
+)
+STRUCTURAL_MATH_RE = re.compile(
+    r"[\\_^{}=<>≤≥≈≠∑√∞⊤∂∫∪]"
 )
 
 
@@ -243,11 +254,28 @@ def load_chunks() -> dict[str, list[dict]]:
 
 @lru_cache(maxsize=None)
 def is_math_evidence(text: str) -> bool:
-    """Return whether evidence needs order-tolerant math matching."""
-    markers = len(MATH_MARKERS_RE.findall(text))
-    token_count = len(normalize_text(text).split())
+    """Return whether mathematical notation dominates the evidence."""
+    spans = MATH_SPAN_RE.findall(text)
+    math_text = " ".join(
+        display_math or inline_math
+        for display_math, inline_math in spans
+    )
 
-    return markers >= 2 or (markers >= 1 and token_count <= 20)
+    text_length = len(re.sub(r"\s+", "", text))
+    math_length = len(re.sub(r"\s+", "", math_text))
+    math_ratio = math_length / text_length if text_length else 0.0
+
+    text_without_math_spans = MATH_SPAN_RE.sub(" ", text)
+    structural_markers = len(
+        STRUCTURAL_MATH_RE.findall(text_without_math_spans)
+    )
+    token_count = len(re.findall(r"[A-Za-z0-9]+", text))
+
+    return math_ratio >= 0.5 or (
+        not spans
+        and structural_markers >= 3
+        and token_count <= 30
+    )
 
 
 @lru_cache(maxsize=None)
@@ -265,6 +293,12 @@ def math_token_coverage(
         return 0.0
 
     evidence_counts = Counter(evidence_tokens)
+    evidence_numbers = Counter(
+        token
+        for token in evidence_tokens
+        if re.fullmatch(r"\d+(?:\.\d+)?", token)
+    )
+    anchor_tokens = Counter(evidence_tokens[:2])
     weights = {token: len(token) for token in evidence_counts}
     total_weight = sum(
         weights[token] * count
@@ -284,10 +318,20 @@ def math_token_coverage(
         window_count = len(chunk_tokens) - window_size + 1
 
         for start in range(window_count):
-            matched_weight = sum(
-                weights[token] * min(count, window_counts[token])
-                for token, count in evidence_counts.items()
+            numbers_match = all(
+                window_counts[token] >= count
+                for token, count in evidence_numbers.items()
             )
+            anchor_matches = all(
+                window_counts[token] >= count
+                for token, count in anchor_tokens.items()
+            )
+            matched_weight = 0
+            if numbers_match and anchor_matches:
+                matched_weight = sum(
+                    weights[token] * min(count, window_counts[token])
+                    for token, count in evidence_counts.items()
+                )
             best_weight = max(best_weight, matched_weight)
             if best_weight == total_weight:
                 return 1.0
@@ -331,19 +375,109 @@ def match_details(
         for block in matcher.get_matching_blocks()
         if block.size >= MIN_MATCH_CHARS
     ]
-    sequence_match_chars = sum(block.size for block in matching_blocks)
-    math_match_chars = round(
-        math_token_coverage(evidence_text, chunk_text) * len(evidence)
+    matching_groups = []
+    current_group = []
+
+    for block in matching_blocks:
+        if not current_group:
+            current_group = [block]
+            continue
+
+        previous = current_group[-1]
+        evidence_gap = block.a - (previous.a + previous.size)
+        chunk_gap = block.b - (previous.b + previous.size)
+
+        if (
+            evidence_gap <= MAX_MATCH_GAP_CHARS
+            and chunk_gap <= MAX_MATCH_GAP_CHARS
+        ):
+            current_group.append(block)
+            continue
+
+        matching_groups.append(current_group)
+        current_group = [block]
+
+    if current_group:
+        matching_groups.append(current_group)
+
+    best_group = max(
+        matching_groups,
+        key=lambda group: sum(block.size for block in group),
+        default=[],
+    )
+    sequence_match_chars = sum(block.size for block in best_group)
+    intervals = tuple(
+        (block.a, block.a + block.size)
+        for block in best_group
     )
 
-    intervals = [
-        (block.a, block.a + block.size)
-        for block in matching_blocks
-    ]
-    if math_match_chars > 0:
-        intervals.append((0, math_match_chars))
+    math_coverage = math_token_coverage(evidence_text, chunk_text)
+    if math_coverage >= MIN_MATH_COVERAGE:
+        return len(evidence), ((0, len(evidence)),)
 
-    return max(sequence_match_chars, math_match_chars), tuple(intervals)
+    return sequence_match_chars, intervals
+
+
+def contains_evidence_fragment(
+    evidence_text: str,
+    chunk_text: str,
+) -> bool:
+    """Return whether a chunk contains a meaningful part of one evidence."""
+    evidence = normalize_text(evidence_text)
+    if not evidence:
+        return False
+
+    matched_chars, intervals = match_details(evidence_text, chunk_text)
+    if is_math_evidence(evidence_text):
+        math_matches = (
+            matched_chars == len(evidence)
+            and intervals == ((0, len(evidence)),)
+        )
+        if math_matches:
+            return True
+
+        prose_text = MATH_SPAN_RE.sub(" ", evidence_text)
+        if normalize_text(prose_text) != evidence:
+            return contains_evidence_fragment(prose_text, chunk_text)
+
+        return False
+
+    if matched_chars < min(MIN_RELEVANT_MATCH_CHARS, len(evidence)):
+        return False
+
+    coverage = matched_chars / len(evidence)
+    longest_match = max(
+        (end - start for start, end in intervals),
+        default=0,
+    )
+    longest_match_coverage = longest_match / len(evidence)
+    touches_evidence_boundary = bool(intervals) and (
+        intervals[0][0] == 0
+        or intervals[-1][1] == len(evidence)
+    )
+
+    return (
+        coverage >= MIN_STRONG_FRAGMENT_COVERAGE
+        or longest_match_coverage >= MIN_FRAGMENT_COVERAGE
+        or (
+            touches_evidence_boundary
+            and coverage >= MIN_BOUNDARY_FRAGMENT_COVERAGE
+        )
+    )
+
+
+def chunk_contains_evidence(
+    evidence_texts: list[str],
+    chunk_text: str,
+) -> bool:
+    """Return whether a chunk contains at least one evidence fragment."""
+    return any(
+        contains_evidence_fragment(
+            evidence_text=evidence_text,
+            chunk_text=chunk_text,
+        )
+        for evidence_text in evidence_texts
+    )
 
 
 def matched_char_count(
@@ -391,9 +525,52 @@ def matching_evidence_intervals(
     chunk_text: str,
 ) -> list[tuple[int, int]]:
     """Return evidence character ranges supported by a single chunk."""
-    _, intervals = match_details(evidence_text, chunk_text)
+    matched_chars, intervals = match_details(evidence_text, chunk_text)
 
-    return list(intervals)
+    evidence_length = len(normalize_text(evidence_text))
+    if (
+        intervals
+        and evidence_length
+        and matched_chars / evidence_length >= MIN_FRAGMENT_COVERAGE
+    ):
+        matched_intervals = [(intervals[0][0], intervals[-1][1])]
+    else:
+        matched_intervals = list(intervals)
+
+    evidence = normalize_text(evidence_text)
+    search_start = 0
+    for math_span in MATH_SPAN_RE.finditer(evidence_text):
+        span_text = math_span.group(0)
+        normalized_span = normalize_text(span_text)
+        span_tokens = normalized_span.split()
+        if len(span_tokens) < MIN_MATH_SEGMENT_TOKENS:
+            continue
+
+        span_start = evidence.find(normalized_span, search_start)
+        if span_start < 0:
+            continue
+        search_start = span_start + len(normalized_span)
+
+        if math_token_coverage(span_text, chunk_text) < MIN_MATH_COVERAGE:
+            continue
+
+        matched_intervals.append(
+            (span_start, span_start + len(normalized_span))
+        )
+
+    if matched_intervals:
+        chunk = normalize_text(chunk_text)
+        first_start = min(start for start, _ in matched_intervals)
+        last_end = max(end for _, end in matched_intervals)
+        prefix = evidence[:first_start].strip()
+        suffix = evidence[last_end:].strip()
+
+        if prefix and len(prefix) < MIN_MATCH_CHARS and prefix in chunk:
+            matched_intervals.append((0, first_start))
+        if suffix and len(suffix) < MIN_MATCH_CHARS and suffix in chunk:
+            matched_intervals.append((last_end, len(evidence)))
+
+    return matched_intervals
 
 
 def calculate_combined_evidence_coverage(
@@ -435,7 +612,7 @@ def calculate_combined_evidence_coverage(
         merged_start, merged_end = intervals[0]
 
         for start, end in intervals[1:]:
-            if start <= merged_end:
+            if start <= merged_end + MAX_COVERAGE_GAP_CHARS:
                 merged_end = max(merged_end, end)
                 continue
 
@@ -554,7 +731,10 @@ def main() -> None:
                 chunk_text=chunk["content"],
             )
 
-            if coverage < MIN_CHUNK_COVERAGE:
+            if not chunk_contains_evidence(
+                evidence_texts=evidence_texts,
+                chunk_text=chunk["content"],
+            ):
                 continue
 
             relevant_chunks.append(

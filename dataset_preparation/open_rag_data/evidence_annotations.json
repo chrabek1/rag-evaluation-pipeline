@@ -1,0 +1,348 @@
+﻿[
+    {
+        "query_id":  "9199173b-3ed1-4118-88cd-1713fc5fa8a7",
+        "evidence_texts":  [
+                               "both $\\alpha$ and $\\beta$ decrease with increasing heterogeneity in the effective microbial death rate."
+                           ]
+    },
+    {
+        "query_id":  "1d585069-a446-47fa-a74d-0387316ea330",
+        "evidence_texts":  [
+                               "Since Sylber-Segment has a shorter sequence length than the target, thus making the CTC-based recognition task inapplicable, we replace the scores using the aforementioned RNN-T model, and we find a reasonable performance in PR as PER of 5.98, while ASR is lagging behind by a large margin.",
+                               "As our model features are syllabic, this structure may need to be resolved to be converted to characters, adding an additional layer of complexity on top of mapping phonemic features to characters, which is hard to resolve in a limited resource setting.",
+                               "Also, there is a huge drop in speaker identity detection (SID) when our syllabic embedding is used, indicating that the speaker information is somewhat marginalized out.",
+                               "Also, the failure in slot filling (SF) and automatic speech verification (ASV) by Sylber-Segment is attributed to the fact that S3PRL is tuned to a lengthy input of speech representation with a regular sampling rate.",
+                               "Further investigation is required, for a proper application of syllabic embedding to those tasks."
+                           ]
+    },
+    {
+        "query_id":  "283afa84-f0c8-40a7-a6f1-fb2a6b97c761",
+        "evidence_texts":  [
+                               "The only data required to fully characterize an StQP is the data matrix Q. However, in many applications the matrix Q is uncertain.",
+                               "One of the most natural ways to deal with uncertain objective functions is via robust optimization [2].",
+                               "In that paradigm, the decision-maker has to decide upon an uncertainty set $\\mathcal{U}$ which encapsulates all the known information about the uncertain parameter.",
+                               "The uncertain parameter (in this case the uncertain data matrix Q ) is supposed to reside within the uncertainty set $\\mathcal{U}$, as violations are not allowed [10].",
+                               "The uncertain matrix Q consisted of a nominal part $\\mathrm{Q}^{(\\text {nom })}$ and an uncertain additive perturbation $U$.",
+                               "Passing from a robust to stochastic setting with known expectation, a natural alternative to get rid of the uncertainty is the here-and-now problem (random quantities are designated by a tilde sign)\n\n$$\n\\min _{\\mathbf{x} \\in \\Delta} \\mathbb{E}\\left[\\mathbf{x}^{\\top} \\tilde{\\mathbf{Q}} \\mathbf{x}\\right]=\\min _{\\mathbf{x} \\in \\Delta} \\mathbf{x}^{\\top} \\mathbb{E}[\\tilde{\\mathbf{Q}}] \\mathbf{x}\n$$\n\nwhere the uncertain matrix $\\tilde{\\mathbf{Q}}$ is replaced by its expectation $\\mathbb{E}[\\tilde{\\mathbf{Q}}]$."
+                           ]
+    },
+    {
+        "query_id":  "f210906a-b4a4-4b97-84df-106214024650",
+        "evidence_texts":  [
+                               "demographics, most notably gender, but also the interaction of gender, ethnicity, and region, play an important role in predicting job transitions."
+                           ]
+    },
+    {
+        "query_id":  "1f675e98-47b5-45fc-92fa-3a7e0802d794",
+        "evidence_texts":  [
+                               "However, the repulsive potential tends to expel the atoms from the high-intensity region, leading to a new equilibrium position inside the combined IR and blue traps, where the intensity of the blue laser is lower.",
+                               "We have modeled the combined traps and found that the equilibrium position moves by about one waist along $x$, meaning that the atoms feel a blue intensity reduced by a factor $e^{-2}$."
+                           ]
+    },
+    {
+        "query_id":  "be608e3f-d284-4b13-b37d-5dd2571a8572",
+        "evidence_texts":  [
+                               "In object detection, this is not the case because $p(y)$ is affected by the location and the object class.",
+                               "Following [2], we define the class priors as:",
+                               "p(y, o, u)=p(y \\mid o, u) \\cdot p(o, u)=p(y, u) \\cdot p(o, u)",
+                               "where $o$ is an object, irrespective of class, and $u$ is the location inside the image."
+                           ]
+    },
+    {
+        "query_id":  "a67c14c3-e33b-4bbc-9dd5-da246e9bd038",
+        "evidence_texts":  [
+                               "In the same work, the authors derived the beta-Poisson approximation,\n\n$$\nP^{\\left(C_{1}^{\\prime}\\right)}\\left(\\alpha, \\beta, \\mu_{n}\\right) \\simeq P^{\\left(\\hat{C_{1}}^{\\prime}\\right)}\\left(\\alpha, \\beta, \\mu_{n}\\right) \\equiv 1-\\left(1+\\frac{\\mu_{n}}{\\beta}\\right)^{-\\alpha}\n$$\n\nwhich is valid for $\\beta \\gg \\alpha$ and $\\beta \\gg 1$, i.e. for $\\mu_{x} \\ll 1$ and $v_{x} \\ll \\mu_{x}$ (cf."
+                           ]
+    },
+    {
+        "query_id":  "3e55376e-2d0a-4ed9-be09-519b3123e6f5",
+        "evidence_texts":  [
+                               "A beam of Dy atoms is slowed and cooled by a Zeeman slower and a laser operating on the 421 nm transition line."
+                           ]
+    },
+    {
+        "query_id":  "2589f76f-da96-427c-96f8-c6e34d2e4d1a",
+        "evidence_texts":  [
+                               "However, as we will demonstrate in Section 3.3, even metrics that are typically defined at the aggregate level such as the true SE and the RMSE can be evaluated in the three-level MLMM framework, at least to good approximation, and thus gain the added benefits of the three-level approach for these metrics as well."
+                           ]
+    },
+    {
+        "query_id":  "40b75706-3856-4768-ad60-d331b8739f84",
+        "evidence_texts":  [
+                               "if only average effects are of interest, aggregation provides a reasonable approach, and the variability in aggregated performance measures can be taken into account by using the inverse of the squared Monte Carlo SEs as weights."
+                           ]
+    },
+    {
+        "query_id":  "8c270ba7-7698-4fe5-82dc-4790162878e0",
+        "evidence_texts":  [
+                               "its purpose is to smooth out zero values in $\\mathbb{1}\\left(n_{y}(\\mathbf{u})\\right)$ calculation."
+                           ]
+    },
+    {
+        "query_id":  "c35f4948-506a-46c4-9259-114920f407ee",
+        "evidence_texts":  [
+                               "Results show that the estimated SE provided by each metamodel essentially captures a different source of uncertainty (see Abadie et al., 2020).",
+                               "That is, when we bootstrap the 72,900 model results, we get SEs that match those of the OLS metamodel; when we block bootstrap the 24,300 simulated datasets, we get SEs that match those of the random intercepts MLMM; when we block bootstrap the 243 simulation conditions, we get SEs that match those of the random slopes MLMM.",
+                               "If we are most interested in the generalizability of our results to other similar but untested simulation conditions, the random slopes MLMM provides the level of uncertainty consistent with this goal because in most simulation studies, we intend to demonstrate conclusions that we cannot prove analytically but expect or intend to hold in settings similar to the conditions tested."
+                           ]
+    },
+    {
+        "query_id":  "3e072125-e130-438c-b264-0bfb622cdf65",
+        "evidence_texts":  [
+                               "In this case, the logit $z_{i}$ performs two tasks simultaneously: It discriminates among the foreground classes and performs background-to-foreground classification.",
+                               "Thus, to correctly apply foreground calibration, we first need to decouple the foreground and background predictions.",
+                               "$\\mathrm{F}_{b}\\left(z_{i}\\right)=\\eta\\left(\\mathrm{C}\\left(z_{i}\\right)-\\log _{\\beta}\\left(\\frac{\\Phi(y)^{\\lambda}}{\\sum_{i}^{C} \\Phi(i)^{\\lambda}}\\right)+\\log _{\\beta}\\left(\\frac{1}{C}\\right)\\right) \\cdot \\eta\\left(z_{i}\\right)$,",
+                               "where $\\eta\\left(z_{i}\\right)$ is the sigmoid activation function that acts as a filter for low-scoring proposals."
+                           ]
+    },
+    {
+        "query_id":  "d170153a-7d5e-476c-ba33-6de0d2a76bdb",
+        "evidence_texts":  [
+                               "In practice LLMs work in the space of \"tokens,\" where words can be transformed into a sequence of tokens using a process called \"tokenization.\" We let $\\mathcal{V}_{\\text {LLM }}$ be the set of all possible tokens (also known as the vocabulary set) for a particular LLM."
+                           ]
+    },
+    {
+        "query_id":  "99f847b7-45cd-427c-8b12-70f3f293a025",
+        "evidence_texts":  [
+                               "FRACAL is essentially a post-processing method that calibrates the classification logits of the detector using precomputed weights based on the class and space statistics of the trainset."
+                           ]
+    },
+    {
+        "query_id":  "7de7f3ef-aeb4-4b1c-b923-a4655e1146d4",
+        "evidence_texts":  [
+                               "## 1 Introduction\n\nThe standard quadratic optimization problem (StQP) consists of minimizing a quadratic form over the standard simplex\n\n$$\n\\ell(\\mathrm{Q}):=\\min _{\\mathbf{x} \\in \\Delta} \\mathbf{x}^{\\top} \\mathrm{Q} \\mathbf{x}\n$$\n\nwhere $\\mathrm{Q} \\in \\mathbb{R}^{n \\times n}$ is a symmetric matrix, and $\\Delta:=\\left\\{\\mathbf{x} \\in \\mathbb{R}^{n}: \\mathbf{e}^{\\top} \\mathbf{x}=1, \\mathbf{x} \\geq \\mathbf{0}\\right\\}$ is the standard simplex in $\\mathbb{R}^{n}$.",
+                               "it is NP-hard without assumptions on the definiteness of the matrix Q.",
+                               "Still, the StQP is a very flexible optimization class that allows for modelling of diverse problems such as portfolio optimization problems [14], pairwise clustering [16] and replicator dynamics [4]."
+                           ]
+    },
+    {
+        "query_id":  "5632e246-99c7-4022-8937-419d803184cf",
+        "evidence_texts":  [
+                               "When considering a linearly polarized laser field the vectorial contribution, being proportional to $\\left|\\boldsymbol{e} \\times \\boldsymbol{e}^{*}\\right|$, vanishes and the quantity $\\alpha(\\omega)$ can be written for a state with non-zero angular momentum [28]:\n\n$$\n\\alpha(\\omega)=\\alpha_{s}(\\omega)+\\frac{3 M_{J}^{2}-J(J+1)}{J(2 J-1)} \\frac{3 \\cos ^{2} \\theta-1}{2} \\alpha_{t}(\\omega)\n$$\n\nHere $J$ represents the total electronic angular momentum of the atomic ground state and $M_{J}$ is the projection of $J$ along the quantization axis, while $\\alpha_{s}(\\omega)$ and $\\alpha_{t}(\\omega)$ are the scalar and tensorial part of the dynamical polarizability, respectively."
+                           ]
+    },
+    {
+        "query_id":  "73e5221b-147a-467b-a6c3-9efdd828cebb",
+        "evidence_texts":  [
+                               "We proceed by evaluating how the predictive quality of FT-7B fine-tuned on $\\mathcal{D}_{\\text {all }}^{\\text {(train) }}$, our best-performing predictive model, changes when we make predictions about $y_{i, t}$ using time-invariant covariates, $x_{i}$, time-varying covariates and jobs reported in the $k$ most recent observations of $\\left\\{x_{i, \\tau}\\right\\}_{\\tau=t-k}^{t},\\left\\{y_{i, \\tau}\\right\\}_{\\tau=t-k}^{t-1}$, reporting",
+                               "A greater value of $k$ exposes the model to more information about the individual\u0027s career history and should lead to an improved prediction accuracy.",
+                               "Finally, we build a matrix of perplexity metrics assessing model\u0027s performance under different levels of exposure to past information.",
+                               "Table 13 summarizes model performance when it only has access to a limited number of past observations while predicting the next occupation.",
+                               "Truncating the career history thus leads to a significant decrease in predictive performance, although for transitions at the end of a worker\u0027s career, most of the predictive benefit is achieved with 10 or 15 years of history."
+                           ]
+    },
+    {
+        "query_id":  "6722ea4f-d84c-4b58-92d7-9d5edf35030e",
+        "evidence_texts":  [
+                               "The atoms are then collected in a magneto-optical trap (MOT) operating on the 626 nm line, transferred to an infrared (IR) optical dipole trap enhanced by an in-vacuum cavity, and finally trapped in two crossed IR beams where the final evaporation stage to condensation is realized."
+                           ]
+    },
+    {
+        "query_id":  "85ced6b1-438a-4b14-b973-4b1b440e7028",
+        "evidence_texts":  [
+                               "Our experiments demonstrate that our best-performing approach, directly predicting jobs through text tokens using FT-LABOR-LLM, achieves superior perplexity scores compared to the previous state-of-the-art CAREER model."
+                           ]
+    },
+    {
+        "query_id":  "8e8a20c2-12ee-49eb-bb8d-2b4b04bf04a4",
+        "evidence_texts":  [
+                               "The model then estimates the probability of transitioning from occupation $y$ to $y^{\\prime}$ (where all individuals are in the \"null\" occupation when $t=0$ ) as\n\n$$\n\\hat{P}_{\\text {Empirical }}\\left(y_{i, t} \\mid x_{i, \\leq t}, y_{i,\u003ct}\\right)=\\frac{\\#^{(\\text {train })} \\mid y_{i, t-1} \\rightarrow y_{i, t} \\mid+1}{\\#^{(\\text {train })} \\mid y_{i, t-1} \\mid+1}\n$$\n\nThe empirical model does not use any covariates or other information beyond the immediately preceding occupation to make predictions."
+                           ]
+    },
+    {
+        "query_id":  "1c4dd9be-2066-4a09-8d73-aa2b1fb5dec0",
+        "evidence_texts":  [
+                               "First, the three-level MLMM provides all the affordances of the two level model, assuming we can express our targeted performance metric in terms of an average of an estimate-level measure.",
+                               "Substantively, the random slope variances $\\left(\\psi_{1}^{2}, \\psi_{2}^{2}\\right)$ have both an intuitive and practically important meaning and allow for explorations of how generalizable the contrast between possible estimators are across the tested conditions.",
+                               "The two-level MLMM cannot provide a similar metric of generalizability because analogous random slopes models are not identified because the outcome can be \"perfectly\" fit by the model (Muthén, 2000), thus giving up a powerful measure of the generalizability of the results compared to three-level models of the disaggregated data.",
+                               "However, as we will demonstrate in Section 3.3, even metrics that are typically defined at the aggregate level such as the true SE and the RMSE can be evaluated in the three-level MLMM framework, at least to good approximation, and thus gain the added benefits of the three-level approach for these metrics as well."
+                           ]
+    },
+    {
+        "query_id":  "1b6de0bc-db6b-4db1-a2f5-d134a1e2ee8f",
+        "evidence_texts":  [
+                               "We use five static covariates for each individual, dropping individuals for whom this information is missing: personal id, gender, race/ethnicity, region, and birth year."
+                           ]
+    },
+    {
+        "query_id":  "21e88b71-6415-4e1a-ab48-d265c64a8bcc",
+        "evidence_texts":  [
+                               "Sylber outperforms all previous approaches in every metric other than recall and cluster purity.",
+                               "The results indicate that our model can detect and discover syllables better than the previous approaches."
+                           ]
+    },
+    {
+        "query_id":  "646594d1-efc5-4e39-8e35-412df3141d74",
+        "evidence_texts":  [
+                               "These are mathematical functions that map a dose to the probability of infection [8].",
+                               "Dose-response models have been effectively utilised in previous works to characterise the probability of infection across diverse microbial species and host populations [14, 15, 16, $17,18,19,20,21,22,23,24,25,26]$."
+                           ]
+    },
+    {
+        "query_id":  "42baf452-048d-4a65-ba96-95b6cb5375df",
+        "evidence_texts":  [
+                               "each dataset is divided into three subdatasets: training, validation and test.",
+                               "That is, the resume data resulting from PSID81, NLSY79, and NLSY97 is structured as \"train.job,\" \"valid.job,\" and \"test.job.\" In each file, each row corresponds to one individual in the sample, and jobs are designated using a classification code, such as O*NET or occ1990dd."
+                           ]
+    },
+    {
+        "query_id":  "ce1fbd0d-df13-49e5-92bd-894f168326d8",
+        "evidence_texts":  [
+                               "in the limit of small infectivity, the expected probability of infection, $\\hat{P}$, is a decreasing function of both $v_{x}$ and $v_{n}$."
+                           ]
+    },
+    {
+        "query_id":  "ad04523d-ab6c-414d-9c58-5ed28d2fbe86",
+        "evidence_texts":  [
+                               "transforms measurements into the direct-quadrature (dq) coordinate frame, where the rotating frame frequency is determined to facilitate a simpler and more accurate estimation.",
+                               "By isolating the variation-sensitive q-axis and relying solely on the less sensitive d-axis, the method further minimizes the impact of variations."
+                           ]
+    },
+    {
+        "query_id":  "cc184120-0607-4726-b3c1-a840a2d98dd3",
+        "evidence_texts":  [
+                               "we find a reasonable performance in PR as PER of 5.98, while ASR is lagging behind by a large margin.",
+                               "our models achieve higher keyword spotting accuracy (KS) and intent classification (IC) compared to the HuBERT base model in all 3 versions.",
+                               "Also, there is a huge drop in speaker identity detection (SID) when our syllabic embedding is used, indicating that the speaker information is somewhat marginalized out.",
+                               "Also, the failure in slot filling (SF) and automatic speech verification (ASV) by Sylber-Segment is attributed to the fact that S3PRL is tuned to a lengthy input of speech representation with a regular sampling rate."
+                           ]
+    },
+    {
+        "query_id":  "a5c6b6dc-c7a9-4de0-8e14-b64de888b83e",
+        "evidence_texts":  [
+                               "The light near 405 nm , coming from the fiber, passes through a $\\lambda / 4$ waveplate in series to have a pure linear polarization, and is reflected by a polarizing beam splitter."
+                           ]
+    },
+    {
+        "query_id":  "74c3d526-6941-4aea-b577-6ab76d6932e2",
+        "evidence_texts":  [
+                               "a major challenge for H 1 IM cosmological studies is to accurately subtract the foreground contamination."
+                           ]
+    },
+    {
+        "query_id":  "431d2179-fff2-4909-97e2-32c3316847ca",
+        "evidence_texts":  [
+                               "It has been rigorously shown that heterogeneity in the infectivity of microbial populations ingested by a host enhances the chances of infection (heterogeneity of type I, Theorem 2.2).",
+                               "heterogeneity of type II, where microbial infectivity varies across hosts, has been demonstrated to reduce the expected probability of infection.",
+                               "Moreover, the ubiquitous flattening of the dose-response curve observed in experiments has also been shown to be associated with an increase in the variance of infectivity.",
+                               "Across these models, the expected probability of infection decreases when increasing the heterogeneity of infectivity regardless of the infectivity expectation, as summarised in Proposition 4.5 (cf. $P^{(A)}$ and $\\left.P^{\\left(C_{1}\\right)}\\right)$."
+                           ]
+    },
+    {
+        "query_id":  "5284ca2a-cf22-4f20-b6c6-a20855685d50",
+        "evidence_texts":  [
+                               "a special variant of this model is equivalent to a particular robust formulation."
+                           ]
+    },
+    {
+        "query_id":  "54794ee1-92d1-4e56-865a-224dda2788ae",
+        "evidence_texts":  [
+                               "1 (b), where an inverter is connected to the grid with a voltage of $480, V_{\\mathrm{ms} \\text { L-L }}$ and a frequency of 59.99 Hz , through a variable impedance."
+                           ]
+    },
+    {
+        "query_id":  "79309a10-de24-4c93-b417-2ddd8c210597",
+        "evidence_texts":  [
+                               "offering three key benefits: 1) a fast, linear-time syllable segmentation algorithm, 2) efficient syllabic tokenization with an average of 4.27 tokens per second, and 3) novel phonological units suited for efficient spoken language modeling.",
+                               "highly robust and generalizes to out-of-domain data and unseen languages without any tuning.",
+                               "fully intelligible speech can be reconstructed from Sylber tokens with a significantly lower bitrate than baseline SSL tokens."
+                           ]
+    },
+    {
+        "query_id":  "b16783f0-6596-41be-9514-10982968030f",
+        "evidence_texts":  [
+                               "U(\\boldsymbol{r}, \\omega)=-\\frac{\\operatorname{Re}[\\alpha(\\omega)]}{2 \\epsilon_{0} c} I(\\boldsymbol{r})"
+                           ]
+    },
+    {
+        "query_id":  "8505f230-e76f-4ba8-a07f-c005cd863730",
+        "evidence_texts":  [
+                               "$\\lambda_{\\min }\\left(\\mathrm{Q}_{i}^{(\\text {nom })}\\right) \\in[-3.2,-2.7]$"
+                           ]
+    },
+    {
+        "query_id":  "983044b7-55b9-4a52-8434-4b07d877634d",
+        "evidence_texts":  [
+                               "the MLMM better matches the data-generating process of a simulation by accounting for the dependence of results arising from models fit to the same data set or drawn from the same simulation conditions."
+                           ]
+    },
+    {
+        "query_id":  "88d0b775-3bbb-4dec-8e59-e551ee9fc5c2",
+        "evidence_texts":  [
+                               "the object distributions of the train and the test set remain the same and only the foreground class distribution changes."
+                           ]
+    },
+    {
+        "query_id":  "528354b5-296a-468b-ba31-78f9856ad3a2",
+        "evidence_texts":  [
+                               "the decision-maker has to decide upon an uncertainty set $\\mathcal{U}$ which encapsulates all the known information about the uncertain parameter.",
+                               "the uncertain matrix $\\tilde{\\mathbf{Q}}$ is replaced by its expectation $\\mathbb{E}[\\tilde{\\mathbf{Q}}]$."
+                           ]
+    },
+    {
+        "query_id":  "ab55b783-48a0-41a8-a6f6-681f793eed98",
+        "evidence_texts":  [
+                               "we achieve around or more than $4 \\times$ gains in bitrate and coding-rate compared to HuBERT baselines."
+                           ]
+    },
+    {
+        "query_id":  "64055ea7-adca-470c-99d2-15919ab7ed3a",
+        "evidence_texts":  [
+                               "accounts for the dependent data structure that arises from fitting multiple models to the same simulated data set."
+                           ]
+    },
+    {
+        "query_id":  "73cb4852-25f8-4c14-bad1-28aaf8c9a5a3",
+        "evidence_texts":  [
+                               "Within the $20 \\%$, we have the source of noise be $75 \\%$ environmental noise and $25 \\%$ other speech."
+                           ]
+    },
+    {
+        "query_id":  "ddf9dfa2-8a4b-4bee-89a1-5578336eb5a8",
+        "evidence_texts":  [
+                               "The VDF-RLS algorithm selectively updates historical information when new data is acquired, enabling fast estimation similar to CF-RLS and Kalman filters when excitation is present, while maintaining stability in the absence of persistent excitation, like the RLS algorithm without forgetting."
+                           ]
+    },
+    {
+        "query_id":  "c83d5b4d-4547-4b4c-a5e9-a86a008c8254",
+        "evidence_texts":  [
+                               "learns to transform speech waveform into a syllabic embedding that is well aligned with linguistic theories."
+                           ]
+    },
+    {
+        "query_id":  "30a0bf06-8d40-4a89-ba30-03582bbfb300",
+        "evidence_texts":  [
+                               "with lower perplexity indicating that a model\u0027s predictions are more accurate."
+                           ]
+    },
+    {
+        "query_id":  "fef2aa60-1684-4f4e-8758-89b857b5d088",
+        "evidence_texts":  [
+                               "Then the empirical risk can be defined as $L_{\\text {Disc }}\\left(q \\mid x_{L}, x_{R}\\right):=\\mathbb{E}_{\\alpha \\in[0,1]} \\mathbb{1}_{\\alpha\u003cq} p\\left(x_{R} \\mid x_{\\alpha}\\right)+$ $\\mathbb{1}_{\\alpha \\geq q} p\\left(x_{L} \\mid x_{\\alpha}\\right)$, for the decision boundary at $q \\in[0,1]$.",
+                               "Discriminability index (DI) is then defined as the risk at the optimal boundary, averaged over word pairs:",
+                               "For frame-wise SSL models, the best layers with the lowest DIs are chosen."
+                           ]
+    },
+    {
+        "query_id":  "ca35d598-a95d-4618-a2f0-21a8bd24545b",
+        "evidence_texts":  [
+                               "accounts for the dependent data structure that arises from fitting multiple models to the same simulated data set."
+                           ]
+    },
+    {
+        "query_id":  "83d96ef0-bf1f-4e5c-9ed5-0cd33d4878d3",
+        "evidence_texts":  [
+                               "The randomness in measured perplexity for a given model arises from several sources: sampling variation in the training data, randomness in the fine-tuning pipeline (e.g., data shuffling for a stochastic gradient descent optimizer), and sampling variation of the test data.",
+                               "To estimate the uncertainty arising from the first two sources, we bootstrap the training set used for fine-tuning (sampling at the individual level) and estimate the variation in measures of the performance of models across bootstrap samples.",
+                               "We refer to the resulting standard errors as \"training-set-bootstrapped.\" To capture sampling variation of the training set, we sample with replacement.",
+                               "To estimate the uncertainty arising from sampling variation in the test set, we bootstrap the test set and refer to the resulting standard errors as \"test-set-bootstrap.\" We sample at the individual level with replacement and, in the analysis we report below, use 100 bootstrap replications.",
+                               "We employ a similar bootstrapping approach to calculate the test-set-bootstrap standard errors for the differences in perplexities between the two models."
+                           ]
+    },
+    {
+        "query_id":  "c1dfd0e6-2bbb-4220-a9fe-170a26a2a891",
+        "evidence_texts":  [
+                               "3 O*NET \n\nThe O*NET dataset is the main occupational information database in the United States, developed by the U.S."
+                           ]
+    }
+]
