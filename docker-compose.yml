@@ -40,9 +40,10 @@ services:
     env_file:
       - .env
     volumes:
-      - ./backend:/app
-      - /app/.venv
-      - ./dane.csv:/data/dane.csv:ro
+        - ./backend:/app
+        - /app/.venv
+        - ${CORPUS_HOST_PATH:-./dane.csv}:/data/dane.csv:ro
+        - ${GOLDEN_DATASET_HOST_PATH:-./golden_dataset.json}:/data/golden_dataset.json:ro
     container_name: rag-eval-backend
     ports:
       - "8000:8000"

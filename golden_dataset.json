@@ -99,7 +99,8 @@
         "chunk_id": "2404.00822v2.pdf_0060",
         "evidence_coverage": 0.25
       }
-    ]
+    ],
+    "expected_answer": "Increases in heterogeneity related to effective microbial death rates lead to decreases in both alpha and beta parameters. Conversely, increasing expectations for these rates results in higher values for alpha and beta, indicating their sensitivity to changes in underlying biological conditions."
   },
   {
     "query_id": "1d585069-a446-47fa-a74d-0387316ea330",
@@ -121,7 +122,8 @@
         "chunk_id": "2410.07168v2.pdf_0084",
         "evidence_coverage": 0.3413
       }
-    ]
+    ],
+    "expected_answer": "Syllabic embeddings could be improved in areas such as speaker identity detection, slot filling, and automatic speech verification due to their current limitations with handling longer sequences effectively."
   },
   {
     "query_id": "283afa84-f0c8-40a7-a6f1-fb2a6b97c761",
@@ -151,7 +153,8 @@
         "chunk_id": "2411.14884v3.pdf_0012",
         "evidence_coverage": 0.274
       }
-    ]
+    ],
+    "expected_answer": "Uncertainty in data affects StQPs by introducing variability in the matrix used for calculations. This uncertainty can be managed through robust optimization techniques, where an uncertainty set encapsulates all known information about uncertain parameters. The decision-maker must ensure that these parameters remain within this set to avoid violations."
   },
   {
     "query_id": "f210906a-b4a4-4b97-84df-106214024650",
@@ -173,7 +176,8 @@
         "chunk_id": "2406.17972v3.pdf_0127",
         "evidence_coverage": 0.3121
       }
-    ]
+    ],
+    "expected_answer": "Incorporating demographic factors such as gender, ethnicity, and region enhances job transition predictions by providing additional context that influences career paths. These variables help refine the model's understanding of individual differences in occupational trajectories, leading to more accurate forecasts."
   },
   {
     "query_id": "1f675e98-47b5-45fc-92fa-3a7e0802d794",
@@ -191,7 +195,8 @@
         "chunk_id": "2403.18677v2.pdf_0024",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "be608e3f-d284-4b13-b37d-5dd2571a8572",
@@ -273,7 +278,8 @@
         "chunk_id": "2410.11774v2.pdf_0009",
         "evidence_coverage": 0.25
       }
-    ]
+    ],
+    "expected_answer": "The term $p(y, o, u)$ represents the class priors defined as $p(y \\mid o, u) \\cdot p(o, u)=p(y, u) \\cdot p(o, u)$ where $o$ is an object and $u$ is the location inside the image."
   },
   {
     "query_id": "a67c14c3-e33b-4bbc-9dd5-da246e9bd038",
@@ -399,7 +405,8 @@
         "chunk_id": "2404.00822v2.pdf_0045",
         "evidence_coverage": 0.2623
       }
-    ]
+    ],
+    "expected_answer": "No, the beta-Poisson approximation is valid for \\(\\beta \\gg \\alpha\\) and \\(\\beta \\gg 1\\)."
   },
   {
     "query_id": "3e55376e-2d0a-4ed9-be09-519b3123e6f5",
@@ -417,7 +424,8 @@
         "chunk_id": "2403.18677v2.pdf_0018",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "2589f76f-da96-427c-96f8-c6e34d2e4d1a",
@@ -435,7 +443,8 @@
         "chunk_id": "2401.07294v4.pdf_0062",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Performance metrics like true standard error or standard error calibration, usually defined at an aggregate level, can still be effectively evaluated within a three-level MLMM framework. This approach allows for added benefits and approximations that enhance inference and interpretability."
   },
   {
     "query_id": "40b75706-3856-4768-ad60-d331b8739f84",
@@ -453,7 +462,8 @@
         "chunk_id": "2401.07294v4.pdf_0061",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Aggregation is suitable when only average effects are considered because it simplifies analysis by focusing on overall trends rather than individual variations or interactions that may require more complex modeling approaches like those offered by multilevel frameworks."
   },
   {
     "query_id": "8c270ba7-7698-4fe5-82dc-4790162878e0",
@@ -471,7 +481,8 @@
         "chunk_id": "2410.11774v2.pdf_0037",
         "evidence_coverage": 0.9841
       }
-    ]
+    ],
+    "expected_answer": "The SmoothInfo method incorporates a smoothing factor to address zero values that occur with rare classes having few samples. This makes it more tolerant of sparse data compared to other methods."
   },
   {
     "query_id": "c35f4948-506a-46c4-9259-114920f407ee",
@@ -493,7 +504,8 @@
         "chunk_id": "2401.07294v4.pdf_0030",
         "evidence_coverage": 0.5742
       }
-    ]
+    ],
+    "expected_answer": "The random slopes MLMM captures the level of uncertainty consistent with generalizability to other similar but untested simulation conditions."
   },
   {
     "query_id": "3e072125-e130-438c-b264-0bfb622cdf65",
@@ -515,7 +527,8 @@
         "chunk_id": "2410.11774v2.pdf_0007",
         "evidence_coverage": 0.2917
       }
-    ]
+    ],
+    "expected_answer": "Foreground and background predictions are decoupled by filtering out background proposals using the model's predictions with a sigmoid activation function as a filter for low-scoring proposals."
   },
   {
     "query_id": "d170153a-7d5e-476c-ba33-6de0d2a76bdb",
@@ -605,7 +618,8 @@
         "chunk_id": "2406.17972v3.pdf_0159",
         "evidence_coverage": 0.2521
       }
-    ]
+    ],
+    "expected_answer": "Tokenization is a process where words are transformed into a sequence of tokens."
   },
   {
     "query_id": "99f847b7-45cd-427c-8b12-70f3f293a025",
@@ -623,7 +637,8 @@
         "chunk_id": "2410.11774v2.pdf_0018",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "The purpose of the FRACAL method is to calibrate the classification logits of the detector using precomputed weights based on class and space statistics, decreasing frequent class predictions and increasing rare class predictions."
   },
   {
     "query_id": "7de7f3ef-aeb4-4b1c-b923-a4655e1146d4",
@@ -665,7 +680,8 @@
         "chunk_id": "2411.14884v3.pdf_0016",
         "evidence_coverage": 0.2519
       }
-    ]
+    ],
+    "expected_answer": "The standard quadratic optimization problem (StQP) involves minimizing a quadratic form over the standard simplex, which is a set of linear constraints. It is significant because it represents one of the simplest non-convex objective functions and can model various complex problems, such as portfolio optimization and maximum clique problems. Despite its simplicity, StQP can be NP-hard without specific assumptions on the matrix involved."
   },
   {
     "query_id": "5632e246-99c7-4022-8937-419d803184cf",
@@ -715,7 +731,8 @@
         "chunk_id": "2403.18677v2.pdf_0011",
         "evidence_coverage": 0.2509
       }
-    ]
+    ],
+    "expected_answer": "No, in a linearly polarized laser field, the vectorial contribution vanishes."
   },
   {
     "query_id": "73e5221b-147a-467b-a6c3-9efdd828cebb",
@@ -749,7 +766,8 @@
         "chunk_id": "2406.17972v3.pdf_0032",
         "evidence_coverage": 0.2528
       }
-    ]
+    ],
+    "expected_answer": "The predictive performance of the CAREER model improves with longer career history data. Specifically, using 10 or 15 years of historical data significantly enhances prediction accuracy compared to just 5 years, highlighting a trade-off between model performance and the cost of collecting long-term career data."
   },
   {
     "query_id": "6722ea4f-d84c-4b58-92d7-9d5edf35030e",
@@ -767,7 +785,8 @@
         "chunk_id": "2403.18677v2.pdf_0018",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "The laser operates on the 626 nm line."
   },
   {
     "query_id": "85ced6b1-438a-4b14-b973-4b1b440e7028",
@@ -785,7 +804,8 @@
         "chunk_id": "2406.17972v3.pdf_0121",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Yes, fine-tuning smaller LLMs with additional career data surpasses the performance of fine-tuning larger models."
   },
   {
     "query_id": "8e8a20c2-12ee-49eb-bb8d-2b4b04bf04a4",
@@ -959,7 +979,8 @@
         "chunk_id": "2406.17972v3.pdf_0101",
         "evidence_coverage": 0.2506
       }
-    ]
+    ],
+    "expected_answer": "It estimates the probability of transitioning from one occupation to another based on training data frequencies."
   },
   {
     "query_id": "1c4dd9be-2066-4a09-8d73-aa2b1fb5dec0",
@@ -981,7 +1002,8 @@
         "chunk_id": "2401.07294v4.pdf_0062",
         "evidence_coverage": 0.4341
       }
-    ]
+    ],
+    "expected_answer": "The three-level Multilevel Mixed Model (MLMM) offers all the advantages of a two-level model while providing additional insights into generalizability through random slope variances. This is not possible with the two-level model, which cannot identify analogous random slopes models."
   },
   {
     "query_id": "1b6de0bc-db6b-4db1-a2f5-d134a1e2ee8f",
@@ -1011,7 +1033,8 @@
         "chunk_id": "2406.17972v3.pdf_0004",
         "evidence_coverage": 0.2638
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "21e88b71-6415-4e1a-ab48-d265c64a8bcc",
@@ -1033,7 +1056,8 @@
         "chunk_id": "2410.07168v2.pdf_0008",
         "evidence_coverage": 0.31
       }
-    ]
+    ],
+    "expected_answer": "The Sylber model outperforms previous methods in most metrics, particularly in mapping ground truth syllables with cleaner output features than HuBERT or SDHuBERT. However, it falls short on recall and cluster purity, suggesting potential oversegmentation by SDHuBERT."
   },
   {
     "query_id": "646594d1-efc5-4e39-8e35-412df3141d74",
@@ -1143,7 +1167,8 @@
         "chunk_id": "2404.00822v2.pdf_0052",
         "evidence_coverage": 0.2526
       }
-    ]
+    ],
+    "expected_answer": "Dose-response models map a given dose to the probability of infection, providing a mathematical framework to estimate how likely an infection is after exposure. These models are crucial for assessing risk across different microbial species and host populations."
   },
   {
     "query_id": "42baf452-048d-4a65-ba96-95b6cb5375df",
@@ -1161,7 +1186,8 @@
         "chunk_id": "2406.17972v3.pdf_0258",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Job data is structured into individual data files labeled \"train.job,\" \"valid.job,\" and \"test.job\" corresponding to training, validation, and test sets."
   },
   {
     "query_id": "ce1fbd0d-df13-49e5-92bd-894f168326d8",
@@ -1383,7 +1409,8 @@
         "chunk_id": "2404.00822v2.pdf_0036",
         "evidence_coverage": 0.2623
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "ad04523d-ab6c-414d-9c58-5ed28d2fbe86",
@@ -1401,7 +1428,8 @@
         "chunk_id": "2410.14077v2.pdf_0030",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Transforming measurements into the dq coordinate frame aids in simplifying calculations and improving accuracy by isolating variation-sensitive components. The q-axis, being sensitive to variations, is minimized while relying on the less sensitive d-axis, thus reducing errors caused by grid voltage fluctuations."
   },
   {
     "query_id": "cc184120-0607-4726-b3c1-a840a2d98dd3",
@@ -1423,7 +1451,8 @@
         "chunk_id": "2410.07168v2.pdf_0084",
         "evidence_coverage": 0.3803
       }
-    ]
+    ],
+    "expected_answer": "The Sylber models generally outperform the HuBERT base model in keyword spotting (KS) and intent classification (IC), but they show reduced effectiveness in speaker identity detection (SID), slot filling (SF), and automatic speech verification (ASV). This is attributed to challenges with handling lengthy inputs at regular sampling rates. In phoneme recognition, measured by PER, HuBERT performs better than all versions of Sylber."
   },
   {
     "query_id": "a5c6b6dc-c7a9-4de0-8e14-b64de888b83e",
@@ -1453,7 +1482,8 @@
         "chunk_id": "2403.18677v2.pdf_0023",
         "evidence_coverage": 0.2632
       }
-    ]
+    ],
+    "expected_answer": "Pure linear polarization is achieved by passing through a $\\lambda /4$ waveplate and a polarizing beam splitter."
   },
   {
     "query_id": "74c3d526-6941-4aea-b577-6ab76d6932e2",
@@ -1475,7 +1505,8 @@
         "chunk_id": "2412.02582v2.pdf_0012",
         "evidence_coverage": 0.6346
       }
-    ]
+    ],
+    "expected_answer": "Foreground contamination poses a major challenge in H1 intensity mapping surveys because it can obscure or distort the signals from neutral hydrogen, making it difficult to accurately map cosmic structures. Effective subtraction of these foregrounds is crucial for obtaining reliable data."
   },
   {
     "query_id": "431d2179-fff2-4909-97e2-32c3316847ca",
@@ -1521,7 +1552,8 @@
         "chunk_id": "2404.00822v2.pdf_0055",
         "evidence_coverage": 0.25
       }
-    ]
+    ],
+    "expected_answer": "Heterogeneity in microbial infectivity can enhance the chances of infection when there is variation within the microbial population ingested by a host. This type of heterogeneity increases the likelihood of infection compared to scenarios where infectivity is uniform."
   },
   {
     "query_id": "5284ca2a-cf22-4f20-b6c6-a20855685d50",
@@ -1547,7 +1579,8 @@
         "chunk_id": "2411.14884v3.pdf_0015",
         "evidence_coverage": 0.25
       }
-    ]
+    ],
+    "expected_answer": "The chance-constrained epigraphic StQP can be less conservative than robust StQPs, particularly when the confidence level for probabilistic optimality is not excessively high. This suggests that it may offer more flexibility and efficiency under certain conditions compared to traditional robust approaches."
   },
   {
     "query_id": "54794ee1-92d1-4e56-865a-224dda2788ae",
@@ -1657,7 +1690,8 @@
         "chunk_id": "2410.14077v2.pdf_0005",
         "evidence_coverage": 0.2537
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "79309a10-de24-4c93-b417-2ddd8c210597",
@@ -1675,7 +1709,8 @@
         "chunk_id": "2410.07168v2.pdf_0002",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "A self-supervised learning framework allows the Sylber model to bootstrap its own unsupervised syllabic segmentation, leading to highly structured and robust representations. This approach enhances efficiency by reducing information loss during compression and supports better generalization across diverse datasets."
   },
   {
     "query_id": "b16783f0-6596-41be-9514-10982968030f",
@@ -1713,7 +1748,8 @@
         "chunk_id": "2403.18677v2.pdf_0012",
         "evidence_coverage": 0.4762
       }
-    ]
+    ],
+    "expected_answer": "The AC Stark shift of the atomic ground state is modeled as \\( U(\\boldsymbol{r}, \\omega) = -\\frac{\\operatorname{Re}[\\alpha(\\omega)]}{2 \\epsilon_{0} c} I(\\boldsymbol{r}) \\)."
   },
   {
     "query_id": "8505f230-e76f-4ba8-a07f-c005cd863730",
@@ -1767,7 +1803,8 @@
         "chunk_id": "2411.14884v3.pdf_0017",
         "evidence_coverage": 0.2927
       }
-    ]
+    ],
+    "expected_answer": "The range of the minimum eigenvalues for the generated nominal matrices is \\([-3.2, -2.7]\\)."
   },
   {
     "query_id": "983044b7-55b9-4a52-8434-4b07d877634d",
@@ -1789,7 +1826,8 @@
         "chunk_id": "2401.07294v4.pdf_0046",
         "evidence_coverage": 0.2886
       }
-    ]
+    ],
+    "expected_answer": "MLMMs allow for estimates of the generalizability of effects beyond the tested simulation conditions by providing prediction intervals or ranges of empirical Bayes estimates."
   },
   {
     "query_id": "88d0b775-3bbb-4dec-8e59-e551ee9fc5c2",
@@ -1811,7 +1849,8 @@
         "chunk_id": "2410.11774v2.pdf_0037",
         "evidence_coverage": 0.3223
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "528354b5-296a-468b-ba31-78f9856ad3a2",
@@ -1845,7 +1884,8 @@
         "chunk_id": "2411.14884v3.pdf_0028",
         "evidence_coverage": 0.2624
       }
-    ]
+    ],
+    "expected_answer": "In a robust setting, decision-makers use an uncertainty set to account for all possible variations within known limits, ensuring no violations occur outside this set. In contrast, a stochastic setting replaces uncertain matrices with their expected values or considers them as random variables following known distributions, allowing for probabilistic handling of uncertainties."
   },
   {
     "query_id": "ab55b783-48a0-41a8-a6f6-681f793eed98",
@@ -1899,7 +1939,8 @@
         "chunk_id": "2410.07168v2.pdf_0033",
         "evidence_coverage": 0.25
       }
-    ]
+    ],
+    "expected_answer": "Yes, there is an improvement in coding-rate when using duration-informed tokens compared to previous methods."
   },
   {
     "query_id": "64055ea7-adca-470c-99d2-15919ab7ed3a",
@@ -1925,7 +1966,8 @@
         "chunk_id": "2401.07294v4.pdf_0046",
         "evidence_coverage": 0.2743
       }
-    ]
+    ],
+    "expected_answer": "Considering dependent data structures is crucial because ignoring them can lead to biased or misleading conclusions. When multiple models are fitted on the same dataset without acknowledging these dependencies, it may result in overconfidence about results' robustness or misinterpretation regarding variable effects."
   },
   {
     "query_id": "73cb4852-25f8-4c14-bad1-28aaf8c9a5a3",
@@ -2003,7 +2045,8 @@
         "chunk_id": "2410.07168v2.pdf_0085",
         "evidence_coverage": 0.2529
       }
-    ]
+    ],
+    "expected_answer": "Yes."
   },
   {
     "query_id": "ddf9dfa2-8a4b-4bee-89a1-5578336eb5a8",
@@ -2025,7 +2068,8 @@
         "chunk_id": "2410.14077v2.pdf_0016",
         "evidence_coverage": 0.263
       }
-    ]
+    ],
+    "expected_answer": "It maintains stability like the RLS algorithm without forgetting."
   },
   {
     "query_id": "c83d5b4d-4547-4b4c-a5e9-a86a008c8254",
@@ -2043,7 +2087,8 @@
         "chunk_id": "2410.07168v2.pdf_0040",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "The Sylber framework aims to transform speech waveforms into syllabic embeddings that align with linguistic theories, offering potential for interpretable and efficient speech tokenization and scalable spoken language modeling."
   },
   {
     "query_id": "30a0bf06-8d40-4a89-ba30-03582bbfb300",
@@ -2061,7 +2106,8 @@
         "chunk_id": "2406.17972v3.pdf_0060",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "Lower."
   },
   {
     "query_id": "fef2aa60-1684-4f4e-8758-89b857b5d088",
@@ -2087,7 +2133,8 @@
         "chunk_id": "2410.07168v2.pdf_0076",
         "evidence_coverage": 0.2607
       }
-    ]
+    ],
+    "expected_answer": "The Discriminability Index (DI) is used to determine how well a probability model can distinguish between rhyming word pairs by calculating the average risk at an optimal decision boundary. This helps in assessing whether a given word is more likely to be on the left or right based on certain features."
   },
   {
     "query_id": "ca35d598-a95d-4618-a2f0-21a8bd24545b",
@@ -2113,7 +2160,8 @@
         "chunk_id": "2401.07294v4.pdf_0046",
         "evidence_coverage": 0.2743
       }
-    ]
+    ],
+    "expected_answer": "The theoretical rationale for using MLMM lies in their ability to handle complex data hierarchies inherent in many simulation studies. By incorporating this complexity into analysis, MLMM provide more accurate estimates and interpretations, reflecting true underlying processes rather than artifacts introduced by simplistic modeling approaches."
   },
   {
     "query_id": "83d96ef0-bf1f-4e5c-9ed5-0cd33d4878d3",
@@ -2135,7 +2183,8 @@
         "chunk_id": "2406.17972v3.pdf_0062",
         "evidence_coverage": 0.6149
       }
-    ]
+    ],
+    "expected_answer": "Uncertainty in performance metrics is quantified by bootstrapping both the training set and test set, estimating variation across bootstrap samples, and calculating standard errors referred to as \"training-set-bootstrapped\" and \"test-set-bootstrap.\""
   },
   {
     "query_id": "c1dfd0e6-2bbb-4220-a9fe-170a26a2a891",
@@ -2153,6 +2202,7 @@
         "chunk_id": "2406.17972v3.pdf_0001",
         "evidence_coverage": 1.0
       }
-    ]
+    ],
+    "expected_answer": "The O*NET dataset is the main occupational information database in the United States."
   }
 ]

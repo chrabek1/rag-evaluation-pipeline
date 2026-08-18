@@ -4,8 +4,9 @@ import sys
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCRIPTS_DIR = PROJECT_ROOT / "scripts"
+REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
+PREPARATION_ROOT = Path(__file__).resolve().parent
+SCRIPTS_DIR = PREPARATION_ROOT
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,7 +41,7 @@ def run_script(script_name: str, *arguments: str) -> None:
         *arguments,
     ]
     print(f"\n=== {script_name} ===", flush=True)
-    subprocess.run(command, cwd=PROJECT_ROOT, check=True)
+    subprocess.run(command, cwd=REPOSITORY_ROOT, check=True)
 
 
 def main() -> None:
@@ -63,17 +64,18 @@ def main() -> None:
 
     print("\nAnnotation dataset preparation completed successfully.")
     print("Outputs:")
-    print("  - open_rag_data/selected_documents.json")
-    print("  - open_rag_data/selected_questions.json")
+    print("  - dataset_preparation/open_rag_data/selected_documents.json")
+    print("  - dataset_preparation/open_rag_data/selected_questions.json")
     if not args.skip_pdf_download:
-        print("  - open_rag_data/selected_pdfs/")
+        print("  - dataset_preparation/open_rag_data/selected_pdfs/")
     print("\nNext manual step:")
     print(
-        "  Create or update open_rag_data/evidence_annotations.json "
+        "  Create or update "
+        "dataset_preparation/open_rag_data/evidence_annotations.json "
         "using only the ground_truth_text assigned to each question."
     )
     print("\nAfter annotation, build the golden dataset with:")
-    print("  uv run python scripts/build_golden_dataset.py")
+    print("  python dataset_preparation/build_golden_dataset.py")
 
 
 if __name__ == "__main__":

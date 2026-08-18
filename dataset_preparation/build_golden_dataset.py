@@ -8,11 +8,16 @@ from functools import lru_cache
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CHUNKS_PATH = PROJECT_ROOT / "dane.csv"
-QUESTIONS_PATH = PROJECT_ROOT / "open_rag_data/selected_questions.json"
-EVIDENCE_PATH = PROJECT_ROOT / "open_rag_data/evidence_annotations.json"
-OUTPUT_PATH = PROJECT_ROOT / "open_rag_data/golden_dataset.json"
+REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
+PREPARATION_ROOT = Path(__file__).resolve().parent
+DATA_DIR = PREPARATION_ROOT / "open_rag_data"
+OPEN_RAGBENCH_DIR = DATA_DIR / "open_ragbench/pdf/arxiv"
+
+CHUNKS_PATH = REPOSITORY_ROOT / "dane.csv"
+QUESTIONS_PATH = DATA_DIR / "selected_questions.json"
+EVIDENCE_PATH = DATA_DIR / "evidence_annotations.json"
+ANSWERS_PATH = OPEN_RAGBENCH_DIR / "answers.json"
+OUTPUT_PATH = REPOSITORY_ROOT / "golden_dataset.json"
 
 # Krótsze dopasowania często są przypadkowymi wspólnymi frazami.
 MIN_MATCH_CHARS = 15
@@ -502,7 +507,25 @@ def validate_evidence_annotations(
 def main() -> None:
     questions = load_json(QUESTIONS_PATH)
     evidence_annotations = load_json(EVIDENCE_PATH)
+    answers = load_json(ANSWERS_PATH)
     chunks_by_filename = load_chunks()
+
+    if not isinstance(answers, dict):
+        raise ValueError("answers.json must contain a query_id-to-answer object")
+
+    answer_errors = []
+    for question in questions:
+        query_id = question["query_id"]
+        answer = answers.get(query_id)
+        if not isinstance(answer, str) or not answer.strip():
+            answer_errors.append(
+                f"Missing or empty answer for query_id {query_id}"
+            )
+
+    if answer_errors:
+        raise ValueError(
+            "Answer validation failed:\n\n" + "\n".join(answer_errors)
+        )
 
     evidence_by_query_id = validate_evidence_annotations(
         questions,
@@ -564,6 +587,7 @@ def main() -> None:
             {
                 "query_id": query_id,
                 "question": question["question"],
+                "expected_answer": answers[query_id],
                 "type": question["type"],
                 "source": question["source"],
                 "doc_id": question["doc_id"],
@@ -608,7 +632,7 @@ def main() -> None:
     print(f"Evidence annotations: {len(evidence_annotations)}")
     print("Records without relevant chunks: 0")
     print("Validation: PASS")
-    print(f"Saved to: {OUTPUT_PATH.relative_to(PROJECT_ROOT)}")
+    print(f"Saved to: {OUTPUT_PATH.relative_to(REPOSITORY_ROOT)}")
 
 
 if __name__ == "__main__":

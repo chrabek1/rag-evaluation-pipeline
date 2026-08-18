@@ -19,3 +19,7 @@ class EmbedRequest(BaseModel):
 class EmbedResponse(BaseModel):
     vectors: list[list[float]]
     
+
+class ModelInfoResponse(BaseModel):
+    model: str
+    embedding_dimension: int = Field(gt=0)

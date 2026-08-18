@@ -4,9 +4,13 @@ import statistics
 from pathlib import Path
 
 
-CHUNKS_PATH = Path("dane.csv")
-QUESTIONS_PATH = Path("open_rag_data/selected_questions.json")
-EVIDENCE_PATH = Path("open_rag_data/evidence_annotations.json")
+REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
+PREPARATION_ROOT = Path(__file__).resolve().parent
+DATA_DIR = PREPARATION_ROOT / "open_rag_data"
+
+CHUNKS_PATH = REPOSITORY_ROOT / "dane.csv"
+QUESTIONS_PATH = DATA_DIR / "selected_questions.json"
+EVIDENCE_PATH = DATA_DIR / "evidence_annotations.json"
 
 
 def load_json(path: Path):

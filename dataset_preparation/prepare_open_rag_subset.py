@@ -4,18 +4,19 @@ from pathlib import Path
 from urllib.request import urlretrieve
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PREPARATION_ROOT = Path(__file__).resolve().parent
 TARGET_CHARS = 700_000
 
-BASE_DIR = PROJECT_ROOT / "open_rag_data/open_ragbench/pdf/arxiv"
+BASE_DIR = PREPARATION_ROOT / "open_rag_data/open_ragbench/pdf/arxiv"
 CORPUS_DIR = BASE_DIR / "corpus"
 QRELS_PATH = BASE_DIR / "qrels.json"
 QUERIES_PATH = BASE_DIR / "queries.json"
+ANSWERS_PATH = BASE_DIR / "answers.json"
 PDF_URLS_PATH = BASE_DIR / "pdf_urls.json"
 
-PDF_DIR = PROJECT_ROOT / "open_rag_data/selected_pdfs"
-DOCUMENTS_PATH = PROJECT_ROOT / "open_rag_data/selected_documents.json"
-QUESTIONS_OUTPUT_PATH = PROJECT_ROOT / "open_rag_data/selected_questions.json"
+PDF_DIR = PREPARATION_ROOT / "open_rag_data/selected_pdfs"
+DOCUMENTS_PATH = PREPARATION_ROOT / "open_rag_data/selected_documents.json"
+QUESTIONS_OUTPUT_PATH = PREPARATION_ROOT / "open_rag_data/selected_questions.json"
 
 EXCLUDED_SOURCES = {"text-image", "text-table-image"}
 
@@ -64,6 +65,7 @@ def main() -> None:
     args = parse_args()
     qrels = load_json(QRELS_PATH)
     queries = load_json(QUERIES_PATH)
+    answers = load_json(ANSWERS_PATH)
     pdf_urls = load_json(PDF_URLS_PATH)
 
     relevant_doc_ids = list(
@@ -115,11 +117,18 @@ def main() -> None:
         if query is None or query.get("source") in EXCLUDED_SOURCES:
             continue
 
+        expected_answer = answers.get(query_id)
+        if not isinstance(expected_answer, str) or not expected_answer.strip():
+            raise ValueError(
+                f"Missing or empty answer for query {query_id}"
+            )
+
         section_id = relation["section_id"]
         selected_questions.append(
             {
                 "query_id": query_id,
                 "question": query["query"],
+                "expected_answer": expected_answer,
                 "type": query["type"],
                 "source": query.get("source"),
                 "doc_id": doc_id,
@@ -161,8 +170,8 @@ def main() -> None:
     print(f"Total characters: {total_chars:,}")
     print(f"Downloaded PDFs: {downloaded}")
     print(f"Reused PDFs: {reused}")
-    print(f"Manifest: {DOCUMENTS_PATH.relative_to(PROJECT_ROOT)}")
-    print(f"Questions: {QUESTIONS_OUTPUT_PATH.relative_to(PROJECT_ROOT)}")
+    print(f"Manifest: {DOCUMENTS_PATH.relative_to(PREPARATION_ROOT)}")
+    print(f"Questions: {QUESTIONS_OUTPUT_PATH.relative_to(PREPARATION_ROOT)}")
 
 
 if __name__ == "__main__":

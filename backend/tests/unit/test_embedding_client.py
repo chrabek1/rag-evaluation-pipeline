@@ -69,3 +69,26 @@ async def test_embed_propagates_http_error() -> None:
         await client.embed(["example text"])
 
     await client.close()
+    
+@pytest.mark.asyncio
+async def test_get_info_returns_embedding_model_info() -> None:
+    client = EmbeddingClient("http://embedding-service:8001")
+
+    response = Mock()
+    response.json.return_value = {
+        "model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+    }
+    response.raise_for_status.return_value = None
+
+    client._client.get = AsyncMock(return_value=response)
+
+    model_info = await client.get_info()
+
+    client._client.get.assert_awaited_once_with("/info")
+    response.raise_for_status.assert_called_once_with()
+
+    assert model_info.model == "BAAI/bge-m3"
+    assert model_info.embedding_dimension == 1024
+
+    await client.close()

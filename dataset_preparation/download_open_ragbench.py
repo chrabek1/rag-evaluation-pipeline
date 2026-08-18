@@ -7,8 +7,8 @@ from urllib.parse import quote
 from urllib.request import Request, urlopen
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "open_rag_data/open_ragbench/pdf/arxiv"
+PREPARATION_ROOT = Path(__file__).resolve().parent
+OUTPUT_DIR = PREPARATION_ROOT / "open_rag_data/open_ragbench/pdf/arxiv"
 
 DEFAULT_REPOSITORY = "deepmatics/open_ragbench"
 DEFAULT_REVISION = "main"
@@ -146,7 +146,7 @@ def main() -> None:
 
     print(f"Downloaded files: {downloaded}")
     print(f"Reused existing files: {reused}")
-    print(f"Saved to: {OUTPUT_DIR.relative_to(PROJECT_ROOT)}")
+    print(f"Saved to: {OUTPUT_DIR.relative_to(PREPARATION_ROOT)}")
 
 
 if __name__ == "__main__":

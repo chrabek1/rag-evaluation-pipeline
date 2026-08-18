@@ -2,6 +2,8 @@ import logging
 
 import httpx
 
+from app.models.embedding_model_info import EmbeddingModelInfo
+
 
 logger=logging.getLogger(__name__)
 
@@ -34,6 +36,22 @@ class EmbeddingClient:
         logger.info("Received %d embeddings", len(vectors))
         
         return vectors
+    
+    async def get_info(self) -> EmbeddingModelInfo:
+        logger.info("Requesting embedding model information")
+        
+        response = await self._client.get("/info")
+        response.raise_for_status()
+        
+        model_info = EmbeddingModelInfo.model_validate(response.json())
+        
+        logger.info(
+            "Embedding model: %s, dimension: %d",
+            model_info.model,
+            model_info.embedding_dimension,
+        )
+        
+        return model_info
     
     async def close(self) -> None:
         await self._client.aclose()

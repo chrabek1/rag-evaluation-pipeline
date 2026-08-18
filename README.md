@@ -9,52 +9,24 @@
 
 ## Overview
 
-RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval experiments and evaluation. It loads a fixed corpus of prepared document chunks from CSV, generates dense embeddings with [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3), and stores them in PostgreSQL with `pgvector` for vector similarity search.
+RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval experiments and evaluation. It loads a corpus of prepared document chunks from CSV, generates dense embeddings with a configured Sentence Transformers model (by default [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3)), and stores them in PostgreSQL with `pgvector` for vector similarity search.
 
-## Preparing the golden dataset
+## Evaluation inputs
 
-Golden-dataset preparation is split into two parts because evidence annotation
-is a manual quality-control step.
+The runtime pipeline consumes two prepared, versioned artifacts:
 
-### 1. Prepare data for annotation
+- `dane.csv` — the fixed chunk corpus indexed by the retrieval system;
+- `golden_dataset.json` — validated questions and their relevant chunk IDs.
 
-Download Open RAGBench, select the document subset, download the selected PDFs,
-and create `selected_documents.json` and `selected_questions.json` with:
+Golden-dataset preparation is a separate, offline workflow. It is not executed
+when the services start, when the corpus is indexed, or when retrieval is run.
+Its scripts, intermediate Open RAGBench data, annotation instructions, and
+reproduction steps are documented in
+[`dataset_preparation/README.md`](dataset_preparation/README.md).
 
-```powershell
-uv run python scripts\prepare_annotation_dataset.py
-```
-
-The script stops after preparing the questions. Use each question and its
-assigned `ground_truth_text` to manually create or update:
-
-```text
-open_rag_data/evidence_annotations.json
-```
-
-Each `evidence_texts` entry must be an exact substring of the corresponding
-`ground_truth_text`.
-
-### 2. Build the golden dataset
-
-After the annotations are ready, map evidence to the fixed chunks, validate the
-records, and write the final dataset with:
-
-```powershell
-uv run python scripts\build_golden_dataset.py
-```
-
-The second stage requires two project-specific artifacts:
-
-- `dane.csv` — the fixed chunk corpus used by the retrieval system;
-- `open_rag_data/evidence_annotations.json` — human-curated evidence
-  annotations.
-
-They cannot be reconstructed from Open RAGBench alone. Keeping `dane.csv`
-fixed is intentional because changing the chunking would change the retrieval
-evaluation target.
-
-Keeping the corpus fixed ensures retrieval strategies are comparable without differences introduced by re-chunking.
+This boundary keeps the evaluation pipeline independent from the source and
+annotation method used to create a golden dataset. The pipeline only needs a
+dataset that conforms to the expected input contract.
 
 ## Architecture
 
@@ -65,7 +37,7 @@ flowchart LR
     B --> C[IndexingService]
     C --> D[EmbeddingClient]
     D --> E[embedding_service]
-    E --> F[BAAI/bge-m3]
+    E --> F[Configured embedding model]
     C --> G[ChunkRepository]
     G --> H[(PostgreSQL + pgvector)]
   end
@@ -132,11 +104,55 @@ EMBEDDING_SERVICE_URL=http://embedding_service:8001
 DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval
 TEST_DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval_test
 CORPUS_PATH=/data/dane.csv
+GOLDEN_DATASET_PATH=/data/golden_dataset.json
+
+# Optional host paths used by Docker Compose
+CORPUS_HOST_PATH=./dane.csv
+GOLDEN_DATASET_HOST_PATH=./golden_dataset.json
 ```
 
 - The backend loads configuration from the file specified as `env_file` in `docker-compose.yml`.
 - For local development copy `.env.example` → `.env` and adjust values as needed.
 - Do not commit `.env` to the repository.
+
+### Replacing the input data or embedding model
+
+The runtime configuration is independent from the included example dataset.
+To use another corpus or golden dataset, set their host paths in `.env`:
+
+```dotenv
+CORPUS_HOST_PATH=./path/to/chunks.csv
+GOLDEN_DATASET_HOST_PATH=./path/to/golden_dataset.json
+```
+
+Docker Compose mounts these files at the container paths configured by
+`CORPUS_PATH` and `GOLDEN_DATASET_PATH`. The corpus must be a UTF-8 CSV file
+with `filename` and `content` columns. The golden dataset contract is described
+in [`dataset_preparation/README.md`](dataset_preparation/README.md#golden-dataset-contract).
+
+To use another Sentence Transformers embedding model, change:
+
+```dotenv
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+```
+
+Rebuild the embedding service after changing the model:
+
+```bash
+docker compose up -d --build embedding_service
+```
+
+The backend obtains the model name and vector dimension dynamically from the
+embedding service. If the new model has a different vector dimension, the
+existing pgvector column is incompatible and indexing stops with an explicit
+error. Recreate the PostgreSQL data volume and index the complete corpus again:
+
+```bash
+# Warning: this removes the local PostgreSQL data stored by this Compose project.
+docker compose down -v
+docker compose up -d --build
+docker compose exec backend uv run python scripts/index_chunks.py
+```
 
 ### 2. Start the services
 
@@ -192,9 +208,16 @@ This returns the top-k retrieved chunks for the query using the configured simil
 | `chunk_id` | Stable unique chunk identifier |
 | `filename` | Source document filename |
 | `content` | Original chunk text |
-| `embedding` | 1024-dimensional embedding generated by `BAAI/bge-m3` |
+| `embedding` | Vector embedding whose dimension is obtained dynamically from the embedding service |
 
-The application initializes the pgvector extension and the `chunks` table before opening the repository connection pool.
+Before initializing the `chunks` table, the backend requests the configured
+model name and embedding dimension from the embedding service `/info` endpoint.
+The retrieved dimension is used when declaring the pgvector column.
+
+If the table already exists with a different vector dimension, initialization
+fails with an explicit error. Changing the embedding model therefore requires
+recreating the stored embeddings.
+
 Note: retrieval is implemented using cosine similarity over stored vector embeddings. The `score` value on `RetrievedChunk` is the similarity/score returned by the search and is not an evaluation metric.
 ## Testing
 
@@ -259,12 +282,18 @@ rag-evaluation-pipeline/
 │   │   └── unit/             # service logic tests
 │   ├── Dockerfile
 │   └── requirements.txt
+├── dataset_preparation/      # offline golden-dataset preparation workflow
+│   ├── open_rag_data/        # manifests, annotations and ignored source data
+│   ├── build_golden_dataset.py
+│   ├── prepare_annotation_dataset.py
+│   └── README.md
 ├── docs/                     # research and evaluation notes
-├── scripts/                  # data preparation utilities
 ├── docker/
 │   └── postgres/
 │       └── init.sql
 ├── docker-compose.yml
+├── dane.csv                  # fixed corpus consumed by the pipeline
+├── golden_dataset.json       # validated evaluation input
 ├── .env.example
 ├── README.md
 ```

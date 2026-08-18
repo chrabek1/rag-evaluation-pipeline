@@ -1,4 +1,5 @@
-/open_rag_data
+/dataset_preparation/open_rag_data/open_ragbench/
+/dataset_preparation/open_rag_data/selected_pdfs/
 .env
 .venv/
 __pycache__/
