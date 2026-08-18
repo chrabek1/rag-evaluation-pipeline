@@ -11,3 +11,4 @@ class RetrievalMetricsResult:
     ndcg_at_k: float
     graded_ndcg_at_k: float
     weighted_precision_at_k: float
+    evidence_coverage_at_k: float

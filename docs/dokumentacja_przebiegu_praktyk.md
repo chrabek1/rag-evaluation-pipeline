@@ -23,7 +23,7 @@ Pierwszym etapem było zapoznanie się z metodami oceny systemów RAG oraz wybó
 1. **Retrieval** — sprawdzenie, czy system znajduje właściwe fragmenty i umieszcza je odpowiednio wysoko w rankingu.
 2. **Generation** — sprawdzenie, czy odpowiedź jest zgodna z pobranym kontekstem i odpowiada na pytanie.
 
-Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k i weighted Precision@k**. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
+Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k, weighted Precision@k i EvidenceCoverage@k**. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
 
 Research wykazał również najważniejsze ryzyka: data leakage, zbyt łatwe pytania syntetyczne, niepełne oznaczenia relewancji oraz uzależnienie ground truth od konkretnego chunkowania. Wnioski te wpłynęły później na sposób przygotowania golden datasetu. Szczegółowy opis znajduje się w `rag_evaluation_research.md`.
 
@@ -121,31 +121,43 @@ Zweryfikowane evidence odnosi się do tekstu źródłowego, natomiast system wys
 
 Dla każdego chunka obliczane jest `evidence_coverage`, czyli część całego evidence dla pytania obecna w tym chunku. Relevance jest ustalana osobno dla każdego fragmentu `evidence_texts`, a nie przez jeden globalny próg coverage. Uwzględniane są lokalne dopasowania tekstu, evidence przecięte granicą chunków oraz osobne reguły dla wzorów matematycznych.
 
-Dodatkowo obliczane jest `evidence_coverage_percentage` dla całego pytania. Wartość ta pokazuje, jaki procent evidence pokrywa suma wybranych relevant chunks. Pokrycie jest liczone jako unia dopasowanych zakresów, dlatego ten sam tekst znaleziony w kilku chunkach nie jest zaliczany wielokrotnie.
+Dodatkowo builder sprawdza łączne pokrycie evidence przez wszystkie wybrane relevant chunks. Pokrycie jest liczone jako unia dopasowanych zakresów, dlatego ten sam tekst znaleziony w kilku chunkach nie jest zaliczany wielokrotnie. Każde pytanie musi osiągnąć pełne pokrycie; wynik tej walidacji nie jest zapisywany w finalnym pliku.
 
 Oddzielenie evidence od granic chunków było celową decyzją: przy zmianie strategii chunkowania adnotacje źródłowe pozostają aktualne i mogą zostać ponownie zmapowane. Relevant chunks są więc wynikiem mapowania evidence na konkretny korpus, a nie pierwotnym źródłem ground truth.
 
 ### Struktura golden datasetu
 
-Finalny `golden_dataset.json` jest tablicą 50 rekordów. Każdy rekord łączy dane pytania z Open RAGBench, evidence wyekstrahowane przy pomocy LLM i zweryfikowane względem źródła oraz listę chunków uznanych za relewantne:
+Finalny `golden_dataset.json` zawiera wspólne metadane i 50 rekordów potrzebnych do ewaluacji. Dane audytowe pozostają w plikach procesu przygotowania i nie są powielane w kontrakcie backendu:
 
 ```json
 {
-  "query_id": "...",
-  "question": "...",
-  "expected_answer": "...",
-  "type": "abstractive",
-  "source": "text",
-  "doc_id": "...",
-  "filename": "....pdf",
-  "section_id": 17,
-  "ground_truth_text": "...",
-  "evidence_text": "...",
-  "evidence_coverage_percentage": 100.0,
-  "relevant_chunks": [
+  "metadata": {
+    "schema_version": 1,
+    "evidence_interval_gap_tolerance": 3
+  },
+  "records": [
     {
-      "chunk_id": "....pdf_0013",
-      "evidence_coverage": 1.0
+      "query_id": "...",
+      "question": "...",
+      "expected_answer": "...",
+      "evidence": [
+        {
+          "text": "...",
+          "normalized_length": 120
+        }
+      ],
+      "relevant_chunks": [
+        {
+          "chunk_id": "....pdf_0013",
+          "evidence_coverage": 1.0,
+          "evidence_intervals": [
+            {
+              "evidence_index": 0,
+              "intervals": [[0, 120]]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
@@ -155,22 +167,20 @@ Znaczenie poszczególnych pól jest następujące:
 
 | Pole | Znaczenie |
 | --- | --- |
-| `query_id` | Unikalny identyfikator pytania zachowany z Open RAGBench. |
-| `question` | Treść pytania przekazywana później do retrievera. |
-| `expected_answer` | Odpowiedź referencyjna z Open RAGBench używana w ewaluacji generowania. |
-| `type` | Typ pytania określony w benchmarku, np. `abstractive`. |
-| `source` | Modalność źródła pytania; w wybranym podzbiorze pozostawiono pytania tekstowe. |
-| `doc_id` | Identyfikator właściwego dokumentu w Open RAGBench. |
-| `filename` | Nazwa PDF-u odpowiadającego dokumentowi i chunkom w `dane.csv`. |
-| `section_id` | Identyfikator sekcji wskazanej przez relację `qrels`. |
-| `ground_truth_text` | Pełny tekst referencyjnej sekcji Open RAGBench. Pole pozwala zachować pochodzenie evidence i ponownie zweryfikować adnotację. |
-| `evidence_text` | Fragmenty potrzebne do odpowiedzi, wyekstrahowane przy pomocy LLM i zweryfikowane względem źródła. Jeżeli w `evidence_annotations.json` było ich kilka, w finalnym rekordzie są łączone spacją. |
-| `evidence_coverage_percentage` | Procent evidence pokryty łącznie przez wszystkie wybrane relevant chunks. |
-| `relevant_chunks` | Lista chunków zawierających znaczącą część co najmniej jednego fragmentu evidence, uporządkowana malejąco według coverage. |
-| `relevant_chunks[].chunk_id` | Stabilny identyfikator chunka w postaci nazwy pliku i kolejnego numeru. |
-| `relevant_chunks[].evidence_coverage` | Część całego evidence pokryta przez pojedynczy chunk, zapisana w zakresie od `0` do `1`. |
+| `metadata.schema_version` | Wersja kontraktu pliku. |
+| `metadata.evidence_interval_gap_tolerance` | Wspólna tolerancja scalania przedziałów dla wszystkich rekordów. |
+| `records[].query_id` | Unikalny identyfikator pytania zachowany z Open RAGBench. |
+| `records[].question` | Treść pytania przekazywana do retrievera. |
+| `records[].expected_answer` | Odpowiedź referencyjna używana później w ewaluacji generowania. |
+| `records[].evidence` | Lista oddzielnych, zweryfikowanych fragmentów evidence wraz z ich znormalizowaną długością. |
+| `records[].evidence[].text` | Oryginalna treść zweryfikowanego fragmentu evidence. |
+| `records[].evidence[].normalized_length` | Długość znormalizowanego fragmentu, używana przy obliczaniu `EvidenceCoverage@k`. |
+| `records[].relevant_chunks` | Lista chunków zawierających znaczącą część co najmniej jednego fragmentu evidence. |
+| `records[].relevant_chunks[].chunk_id` | Stabilny identyfikator chunka w postaci nazwy pliku i kolejnego numeru. |
+| `records[].relevant_chunks[].evidence_coverage` | Część całego evidence pokryta przez pojedynczy chunk, zapisana w zakresie od `0` do `1`. |
+| `records[].relevant_chunks[].evidence_intervals` | Przedziały znormalizowanego evidence pokrywane przez chunk, używane do obliczania unii pokrycia dla top-k. |
 
-Taka struktura zawiera zarówno dane potrzebne do uruchomienia ewaluacji (`query_id`, `question`, `relevant_chunks`), jak i informacje umożliwiające audyt sposobu utworzenia ground truth (`ground_truth_text`, `evidence_text` i wartości coverage). Metryki retrievalowe będą porównywać identyfikatory chunków zwróconych przez system z `chunk_id` zapisanymi w `relevant_chunks`.
+Taka struktura zawiera zarówno dane potrzebne do uruchomienia ewaluacji, jak i informacje umożliwiające audyt sposobu utworzenia ground truth. Metryki binarne porównują identyfikatory zwróconych chunków z `relevant_chunks`, metryki stopniowane wykorzystują `evidence_coverage`, a `EvidenceCoverage@k` scala zapisane przedziały i nie liczy tego samego fragmentu wielokrotnie.
 
 ### Problemy z dopasowaniem tekstu
 
@@ -197,7 +207,7 @@ Zrealizowane zostały zadania obejmujące research, wybór danych, środowisko, 
 
 Do wykonania pozostają:
 
-- połączenie golden datasetu, retrievalu i evaluatora w jeden przebieg,
+- wczytywanie golden datasetu w backendzie i połączenie go z retrieval oraz evaluatorem,
 - implementacja generowania odpowiedzi i ewaluacja Faithfulness oraz Answer Relevance,
 - porównanie różnych wartości `top_k`,
 - dodanie i ocena rerankera `BAAI/bge-reranker-v2-m3`,

@@ -18,6 +18,7 @@ QUESTIONS_PATH = DATA_DIR / "selected_questions.json"
 EVIDENCE_PATH = DATA_DIR / "evidence_annotations.json"
 ANSWERS_PATH = OPEN_RAGBENCH_DIR / "answers.json"
 OUTPUT_PATH = REPOSITORY_ROOT / "golden_dataset.json"
+GOLDEN_DATASET_SCHEMA_VERSION = 1
 
 # Krótsze dopasowania często są przypadkowymi wspólnymi frazami.
 MIN_MATCH_CHARS = 15
@@ -573,6 +574,59 @@ def matching_evidence_intervals(
     return matched_intervals
 
 
+def merge_evidence_intervals(
+    intervals: list[tuple[int, int]],
+) -> list[tuple[int, int]]:
+    """Merge overlapping ranges and small PDF-formatting gaps."""
+    if not intervals:
+        return []
+
+    merged = []
+    merged_start, merged_end = sorted(intervals)[0]
+
+    for start, end in sorted(intervals)[1:]:
+        if start <= merged_end + MAX_COVERAGE_GAP_CHARS:
+            merged_end = max(merged_end, end)
+            continue
+
+        merged.append((merged_start, merged_end))
+        merged_start, merged_end = start, end
+
+    merged.append((merged_start, merged_end))
+
+    return merged
+
+
+def build_chunk_evidence_intervals(
+    evidence_texts: list[str],
+    chunk_text: str,
+) -> list[dict]:
+    """Build serializable evidence ranges covered by one chunk."""
+    evidence_intervals = []
+
+    for evidence_index, evidence_text in enumerate(evidence_texts):
+        intervals = merge_evidence_intervals(
+            matching_evidence_intervals(
+                evidence_text=evidence_text,
+                chunk_text=chunk_text,
+            )
+        )
+        if not intervals:
+            continue
+
+        evidence_intervals.append(
+            {
+                "evidence_index": evidence_index,
+                "intervals": [
+                    [start, end]
+                    for start, end in intervals
+                ],
+            }
+        )
+
+    return evidence_intervals
+
+
 def calculate_combined_evidence_coverage(
     evidence_texts: list[str],
     chunk_texts: list[str],
@@ -605,21 +659,8 @@ def calculate_combined_evidence_coverage(
                 )
             )
 
-        if not intervals:
-            continue
-
-        intervals.sort()
-        merged_start, merged_end = intervals[0]
-
-        for start, end in intervals[1:]:
-            if start <= merged_end + MAX_COVERAGE_GAP_CHARS:
-                merged_end = max(merged_end, end)
-                continue
-
-            covered_chars += merged_end - merged_start
-            merged_start, merged_end = start, end
-
-        covered_chars += merged_end - merged_start
+        for start, end in merge_evidence_intervals(intervals):
+            covered_chars += end - start
 
     return min(
         covered_chars / total_evidence_chars,
@@ -681,6 +722,19 @@ def validate_evidence_annotations(
     return annotation_by_id
 
 
+def build_golden_dataset_payload(records: list[dict]) -> dict:
+    """Wrap evaluation records in the versioned dataset contract."""
+    return {
+        "metadata": {
+            "schema_version": GOLDEN_DATASET_SCHEMA_VERSION,
+            "evidence_interval_gap_tolerance": (
+                MAX_COVERAGE_GAP_CHARS
+            ),
+        },
+        "records": records,
+    }
+
+
 def main() -> None:
     questions = load_json(QUESTIONS_PATH)
     evidence_annotations = load_json(EVIDENCE_PATH)
@@ -709,7 +763,8 @@ def main() -> None:
         evidence_annotations,
     )
 
-    golden_dataset = []
+    records = []
+    incomplete_coverage = []
 
     for question in questions:
         query_id = question["query_id"]
@@ -744,6 +799,12 @@ def main() -> None:
                         coverage,
                         4,
                     ),
+                    "evidence_intervals": (
+                        build_chunk_evidence_intervals(
+                            evidence_texts=evidence_texts,
+                            chunk_text=chunk["content"],
+                        )
+                    ),
                 }
             )
             relevant_chunk_texts.append(chunk["content"])
@@ -753,40 +814,36 @@ def main() -> None:
             reverse=True,
         )
 
-        evidence_text = " ".join(evidence_texts)
-        evidence_coverage_percentage = round(
-            calculate_combined_evidence_coverage(
-                evidence_texts=evidence_texts,
-                chunk_texts=relevant_chunk_texts,
-            )
-            * 100,
-            2,
+        combined_coverage = calculate_combined_evidence_coverage(
+            evidence_texts=evidence_texts,
+            chunk_texts=relevant_chunk_texts,
         )
+        if combined_coverage < 1.0:
+            incomplete_coverage.append(
+                (query_id, round(combined_coverage, 4))
+            )
 
-        golden_dataset.append(
+        records.append(
             {
                 "query_id": query_id,
                 "question": question["question"],
                 "expected_answer": answers[query_id],
-                "type": question["type"],
-                "source": question["source"],
-                "doc_id": question["doc_id"],
-                "filename": filename,
-                "section_id": question["section_id"],
-                "ground_truth_text": question[
-                    "ground_truth_text"
+                "evidence": [
+                    {
+                        "text": text,
+                        "normalized_length": len(
+                            normalize_text(text)
+                        ),
+                    }
+                    for text in evidence_texts
                 ],
-                "evidence_text": evidence_text,
-                "evidence_coverage_percentage": (
-                    evidence_coverage_percentage
-                ),
                 "relevant_chunks": relevant_chunks,
             }
         )
 
     no_relevant_chunks = [
         item["query_id"]
-        for item in golden_dataset
+        for item in records
         if not item["relevant_chunks"]
     ]
 
@@ -795,6 +852,14 @@ def main() -> None:
             "No relevant chunks found for query_ids: "
             f"{no_relevant_chunks}"
         )
+
+    if incomplete_coverage:
+        raise ValueError(
+            "Combined evidence coverage is below 1.0 for: "
+            f"{incomplete_coverage}"
+        )
+
+    golden_dataset = build_golden_dataset_payload(records)
 
     with OUTPUT_PATH.open(
         "w",
@@ -808,7 +873,7 @@ def main() -> None:
         )
         file.write("\n")
 
-    print(f"Golden dataset records: {len(golden_dataset)}")
+    print(f"Golden dataset records: {len(records)}")
     print(f"Evidence annotations: {len(evidence_annotations)}")
     print("Records without relevant chunks: 0")
     print("Validation: PASS")

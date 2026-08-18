@@ -1,7 +1,35 @@
 from dataset_preparation.build_golden_dataset import (
+    build_golden_dataset_payload,
     chunk_contains_evidence,
     contains_evidence_fragment,
 )
+
+
+def test_golden_dataset_contract_stores_shared_metadata_once() -> None:
+    records = [
+        {
+            "query_id": "query-1",
+            "evidence": [
+                {
+                    "text": "reviewed evidence",
+                    "normalized_length": 17,
+                }
+            ],
+        }
+    ]
+
+    payload = build_golden_dataset_payload(records)
+
+    assert payload == {
+        "metadata": {
+            "schema_version": 1,
+            "evidence_interval_gap_tolerance": 3,
+        },
+        "records": records,
+    }
+    assert "evidence_interval_gap_tolerance" not in records[0]
+    assert "evidence_texts" not in records[0]
+    assert "evidence_lengths" not in records[0]
 
 
 def test_math_evidence_accepts_reordered_pdf_tokens() -> None:

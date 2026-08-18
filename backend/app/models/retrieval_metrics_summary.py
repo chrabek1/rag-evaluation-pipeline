@@ -12,3 +12,4 @@ class RetrievalMetricsSummary:
     mean_ndcg_at_k: float
     mean_graded_ndcg_at_k: float
     mean_weighted_precision_at_k: float
+    mean_evidence_coverage_at_k: float

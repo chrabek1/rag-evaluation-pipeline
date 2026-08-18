@@ -24,6 +24,7 @@ def test_aggregate_returns_mean_metrics() -> None:
             ndcg_at_k=0.6,
             graded_ndcg_at_k=0.7,
             weighted_precision_at_k=0.3,
+            evidence_coverage_at_k=0.9,
         ),
         RetrievalMetricsResult(
             k=5,
@@ -34,6 +35,7 @@ def test_aggregate_returns_mean_metrics() -> None:
             ndcg_at_k=0.2,
             graded_ndcg_at_k=0.5,
             weighted_precision_at_k=0.1,
+            evidence_coverage_at_k=0.5,
         ),
     ]
 
@@ -50,6 +52,9 @@ def test_aggregate_returns_mean_metrics() -> None:
     assert summary.mean_graded_ndcg_at_k == pytest.approx(0.6)
     assert summary.mean_weighted_precision_at_k == pytest.approx(
         0.2
+    )
+    assert summary.mean_evidence_coverage_at_k == pytest.approx(
+        0.7
     )
 
 
@@ -75,6 +80,7 @@ def test_aggregate_rejects_results_with_different_k() -> None:
         ndcg_at_k=1.0,
         graded_ndcg_at_k=1.0,
         weighted_precision_at_k=1.0,
+        evidence_coverage_at_k=1.0,
     )
     second_result = RetrievalMetricsResult(
         k=5,
@@ -85,6 +91,7 @@ def test_aggregate_rejects_results_with_different_k() -> None:
         ndcg_at_k=1.0,
         graded_ndcg_at_k=1.0,
         weighted_precision_at_k=1.0,
+        evidence_coverage_at_k=1.0,
     )
 
     with pytest.raises(

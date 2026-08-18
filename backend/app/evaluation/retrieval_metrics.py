@@ -191,3 +191,83 @@ def weighted_precision_at_k(
     ]
     
     return sum(top_k_relevance_scores) / k
+
+def evidence_coverage_at_k(
+    evidence_lengths: list[int],
+    evidence_intervals_by_chunk_id: dict[
+        str,
+        dict[int, list[tuple[int, int]]],
+    ],
+    retrieved_chunk_ids: list[str],
+    k: int,
+    interval_gap_tolerance: int,
+) -> float:
+    if k <= 0:
+        raise ValueError("k must be greater than 0")
+    
+    if not evidence_lengths:
+        raise ValueError("evidence_lengths must not be empty")
+    
+    if any(length <= 0 for length in evidence_lengths):
+        raise ValueError(
+            "evidence lengths must be greater than 0"
+        )
+    
+    if interval_gap_tolerance < 0:
+        raise ValueError(
+            "interval_gap_tolerance must not be negative"
+        )
+    
+    intervals_by_evidence_index = {
+        index: []
+        for index in range(len(evidence_lengths))
+    }
+    
+    for chunk_id, intervals_by_index in (
+        evidence_intervals_by_chunk_id.items()
+    ):
+        for evidence_index, intervals in intervals_by_index.items():
+            if evidence_index not in intervals_by_evidence_index:
+                raise ValueError(
+                    f"invalid evidence index for chunk {chunk_id}"
+                )
+            
+            evidence_length = evidence_lengths[evidence_index]
+            
+            for start, end in intervals:
+                if not 0 <= start < end <= evidence_length:
+                    raise ValueError(
+                        f"invalid evidence interval for chunk {chunk_id}"
+                    )
+    for chunk_id in retrieved_chunk_ids[:k]:
+        intervals_by_index = (
+            evidence_intervals_by_chunk_id.get(chunk_id, {})
+        )
+        
+        for evidence_index, intervals in intervals_by_index.items():
+            intervals_by_evidence_index[
+                evidence_index
+            ].extend(intervals)
+    
+    covered_characters = 0
+    
+    for intervals in intervals_by_evidence_index.values():
+        if not intervals:
+            continue
+        
+        sorted_intervals = sorted(intervals)
+        merged_start, merged_end = sorted_intervals[0]
+        
+        for start, end in sorted_intervals[1:]:
+            if start <= merged_end + interval_gap_tolerance:
+                merged_end = max(merged_end, end)
+                continue
+            
+            covered_characters +=merged_end - merged_start
+            merged_start, merged_end = start, end
+            
+        covered_characters += merged_end - merged_start
+    
+    total_evidence_characters =sum(evidence_lengths)
+    
+    return covered_characters / total_evidence_characters

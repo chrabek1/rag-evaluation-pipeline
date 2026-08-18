@@ -246,40 +246,59 @@ relevance independently.
 The resulting per-chunk score is stored as `evidence_coverage` and rounded to
 four decimal places.
 
-The builder also calculates `evidence_coverage_percentage` for all selected
-relevant chunks together. It merges the evidence ranges covered by individual
-chunks before counting them, so the same fragment retrieved in multiple chunks
-is not counted more than once. Small gaps of at most three normalized
-characters are treated as PDF formatting differences when they occur inside a
-confirmed local match. Short prefixes or suffixes below the 15-character block
-limit are included only when they occur next to an already confirmed match in
-the same chunk. The combined value is converted to a percentage and rounded to
-two decimal places.
+The builder also validates the combined coverage of all selected relevant
+chunks. It merges their evidence ranges before counting them, so the same
+fragment is not counted more than once. Every question must reach full
+combined coverage. This validation result is not stored in the final dataset.
 
 ## Golden dataset contract
 
-The runtime evaluation pipeline needs only these fields:
+The retrieval evaluation pipeline uses these fields:
 
 ```json
 {
-  "query_id": "question-id",
-  "question": "Question sent to the retriever",
-  "expected_answer": "Reference answer from Open RAGBench",
-  "relevant_chunks": [
+  "metadata": {
+    "schema_version": 1,
+    "evidence_interval_gap_tolerance": 3
+  },
+  "records": [
     {
-      "chunk_id": "document.pdf_0001",
-      "evidence_coverage": 0.75
+      "query_id": "question-id",
+      "question": "Question sent to the retriever",
+      "expected_answer": "Reference answer from Open RAGBench",
+      "evidence": [
+        {
+          "text": "Reviewed evidence fragment",
+          "normalized_length": 28
+        }
+      ],
+      "relevant_chunks": [
+        {
+          "chunk_id": "document.pdf_0001",
+          "evidence_coverage": 0.75,
+          "evidence_intervals": [
+            {
+              "evidence_index": 0,
+              "intervals": [[0, 21]]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
 ```
 
-`expected_answer` can be used later by generation-quality metrics. The
-generated file also retains provenance and audit fields such as
-`ground_truth_text`, `evidence_text`, evidence coverage, document identifiers,
-and per-chunk coverage. These fields document how the relevance labels were
-created, but retrieval metrics should not depend on the Open RAGBench-specific
-preparation process.
+The metadata applies to every record. Each `evidence` item keeps the reviewed
+text together with its normalized length. Interval coordinates refer to that
+normalized text, and `evidence_index` identifies its position in the list.
+`EvidenceCoverage@k` merges intervals from the retrieved top-k chunks using
+`evidence_interval_gap_tolerance`, so overlapping evidence is counted only
+once. The backend must not normalize these coordinates again.
+
+`expected_answer` can be used later by generation-quality metrics. Preparation
+and audit data remain in `selected_questions.json` and
+`evidence_annotations.json`; they are not duplicated in the runtime contract.
 
 ## Rebuilding safely
 

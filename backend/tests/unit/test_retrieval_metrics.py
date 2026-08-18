@@ -10,6 +10,7 @@ from app.evaluation.retrieval_metrics import (
     ndcg_at_k,
     graded_ndcg_at_k,
     weighted_precision_at_k,
+    evidence_coverage_at_k,
     
 )
 
@@ -478,4 +479,136 @@ def test_weighted_precision_at_k_rejects_empty_relevance_mapping() -> None:
             relevance_by_chunk_id={},
             retrieved_chunk_ids=["chunk-1"],
             k=1,
+        )
+
+def test_evidence_coverage_at_k_merges_overlapping_intervals() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 60)],
+            },
+            "chunk-2": {
+                0: [(40, 100)],
+            },
+        },
+        retrieved_chunk_ids=["chunk-1", "chunk-2"],
+        k=2,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == 1.0
+
+
+def test_evidence_coverage_at_k_counts_disjoint_intervals() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 30)],
+            },
+            "chunk-2": {
+                0: [(60, 100)],
+            },
+        },
+        retrieved_chunk_ids=["chunk-1", "chunk-2"],
+        k=2,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == pytest.approx(0.7)
+
+
+def test_evidence_coverage_at_k_handles_multiple_evidence() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100, 50],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 50)],
+            },
+            "chunk-2": {
+                1: [(0, 50)],
+            },
+        },
+        retrieved_chunk_ids=["chunk-1", "chunk-2"],
+        k=2,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == pytest.approx(100 / 150)
+
+
+def test_evidence_coverage_at_k_uses_only_first_k_results() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 50)],
+            },
+            "chunk-2": {
+                0: [(50, 100)],
+            },
+        },
+        retrieved_chunk_ids=[
+            "chunk-1",
+            "unknown-chunk",
+            "chunk-2",
+        ],
+        k=2,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == pytest.approx(0.5)
+
+
+def test_evidence_coverage_at_k_merges_formatting_gap() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 49)],
+            },
+            "chunk-2": {
+                0: [(52, 100)],
+            },
+        },
+        retrieved_chunk_ids=["chunk-1", "chunk-2"],
+        k=2,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == 1.0
+
+
+def test_evidence_coverage_at_k_returns_zero_for_unknown_chunks() -> None:
+    result = evidence_coverage_at_k(
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-1": {
+                0: [(0, 100)],
+            },
+        },
+        retrieved_chunk_ids=["unknown-chunk"],
+        k=1,
+        interval_gap_tolerance=3,
+    )
+
+    assert result == 0.0
+
+
+def test_evidence_coverage_at_k_rejects_invalid_interval() -> None:
+    with pytest.raises(
+        ValueError,
+        match="invalid evidence interval",
+    ):
+        evidence_coverage_at_k(
+            evidence_lengths=[100],
+            evidence_intervals_by_chunk_id={
+                "chunk-1": {
+                    0: [(20, 101)],
+                },
+            },
+            retrieved_chunk_ids=["chunk-1"],
+            k=1,
+            interval_gap_tolerance=3,
         )

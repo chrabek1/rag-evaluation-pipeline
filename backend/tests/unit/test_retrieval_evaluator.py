@@ -18,6 +18,16 @@ def test_evaluate_returns_all_retrieval_metrics() -> None:
             "chunk-2": 0.8,
             "chunk-4": 0.4,
         },
+        evidence_lengths=[100],
+        evidence_intervals_by_chunk_id={
+            "chunk-2": {
+                0: [(0, 80)],
+            },
+            "chunk-4": {
+                0: [(80, 100)],
+            },
+        },
+        interval_gap_tolerance=3,
         retrieved_chunk_ids=[
             "chunk-1",
             "chunk-2",
@@ -54,6 +64,7 @@ def test_evaluate_returns_all_retrieval_metrics() -> None:
     assert result.weighted_precision_at_k == pytest.approx(
         0.8 / 3
     )
+    assert result.evidence_coverage_at_k == pytest.approx(0.8)
 
 
 def test_evaluate_rejects_duplicate_retrieved_chunks() -> None:
@@ -65,6 +76,13 @@ def test_evaluate_rejects_duplicate_retrieved_chunks() -> None:
     ):
         evaluator.evaluate(
             relevance_by_chunk_id={"chunk-1": 1.0},
+            evidence_lengths=[100],
+            evidence_intervals_by_chunk_id={
+                "chunk-1": {
+                    0: [(0, 100)],
+                },
+            },
+            interval_gap_tolerance=3,
             retrieved_chunk_ids=[
                 "chunk-1",
                 "chunk-1",

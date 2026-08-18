@@ -6,6 +6,7 @@ from app.evaluation.retrieval_metrics import (
     recall_at_k,
     reciprocal_rank_at_k,
     weighted_precision_at_k,
+    evidence_coverage_at_k,
 )
 from app.models.retrieval_metrics_result import RetrievalMetricsResult
 
@@ -14,6 +15,12 @@ class RetrievalEvaluator:
     def evaluate(
         self,
         relevance_by_chunk_id: dict[str, float],
+        evidence_lengths: list[int],
+        evidence_intervals_by_chunk_id: dict[
+            str,
+            dict[int, list[tuple[int, int]]],
+        ],
+        interval_gap_tolerance: int,
         retrieved_chunk_ids: list[str],
         k: int,
     ) -> RetrievalMetricsResult:
@@ -65,4 +72,11 @@ class RetrievalEvaluator:
                 retrieved_chunk_ids,
                 k,
             ),
+            evidence_coverage_at_k=evidence_coverage_at_k(
+                evidence_lengths,
+                evidence_intervals_by_chunk_id,
+                retrieved_chunk_ids,
+                k,
+                interval_gap_tolerance
+            )
         )

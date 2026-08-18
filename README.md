@@ -69,7 +69,7 @@ Implemented:
 - repository-level persistence logic for chunk records
 - Docker Compose environment with service health checks
 - FastAPI embedding service with model and schema validation
-- automated unit and integration tests for backend and embedding service (44 passing backend tests)
+- automated unit and integration tests for backend and embedding service (92 passing backend tests)
 - reproducible full-corpus indexing from an empty database
 - vector retrieval with cosine similarity
 - configurable `top_k` for retrieval
@@ -79,10 +79,12 @@ Implemented:
 - dedicated, automatically-created `rag_eval_test` database for tests
 - Open RAGBench subset preparation for manual annotation
 - manually curated evidence annotations and validated golden dataset
+- retrieval evaluation metrics: Precision@k, Recall@k, HitRate@k, MRR@k,
+  nDCG@k, Graded nDCG@k, Weighted Precision@k and EvidenceCoverage@k
+- per-question retrieval evaluation and aggregate metric summaries
 
 Planned:
 
-- retrieval evaluation metrics
 - end-to-end evaluation pipeline / benchmark automation
 
 ## Quick Start
@@ -242,7 +244,7 @@ The backend test suite covers:
 - indexing pipeline integration tests
 - retrieval pipeline integration tests
 
-Current test status: 44 passing backend tests.
+Current test status: 92 passing backend tests.
 
 ## Project Structure
 
@@ -253,10 +255,13 @@ rag-evaluation-pipeline/
 │   │   ├── clients/          # external service clients
 │   │   ├── core/             # application configuration
 │   │   ├── db/               # database connection and schema
+│   │   ├── evaluation/       # retrieval metrics, evaluator and aggregation
 │   │   ├── loaders/          # corpus loading
 │   │   ├── models/           # domain models
 │   │   │   ├── chunk.py
-│   │   │   └── retrieved_chunk.py
+│   │   │   ├── retrieved_chunk.py
+│   │   │   ├── retrieval_metrics_result.py
+│   │   │   └── retrieval_metrics_summary.py
 │   │   ├── repositories/     # persistence layer
 │   │   └── services/         # application services
 │   │       └── retrieval_service.py
@@ -271,6 +276,9 @@ rag-evaluation-pipeline/
 │   │   │   └── test_retrieval_pipeline.py
 │   │   └── unit/
 │   │       ├── test_chunk.py
+│   │       ├── test_retrieval_evaluator.py
+│   │       ├── test_retrieval_metrics.py
+│   │       ├── test_retrieval_metrics_aggregator.py
 │   │       └── test_retrieval_service.py
 │   ├── Dockerfile
 │   ├── pyproject.toml

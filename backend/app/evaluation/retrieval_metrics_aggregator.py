@@ -51,4 +51,8 @@ class RetrievalMetricsAggregator:
                 result.weighted_precision_at_k
                 for result in results
             ),
+            mean_evidence_coverage_at_k=fmean(
+                result.evidence_coverage_at_k
+                for result in results
+            ),
         )
