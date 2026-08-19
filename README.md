@@ -69,7 +69,7 @@ Implemented:
 - repository-level persistence logic for chunk records
 - Docker Compose environment with service health checks
 - FastAPI embedding service with model and schema validation
-- automated unit and integration tests for backend and embedding service (92 passing backend tests)
+- automated unit and integration tests for backend and embedding service (147 passing backend tests)
 - reproducible full-corpus indexing from an empty database
 - vector retrieval with cosine similarity
 - configurable `top_k` for retrieval
@@ -80,7 +80,8 @@ Implemented:
 - Open RAGBench subset preparation for manual annotation
 - manually curated evidence annotations and validated golden dataset
 - retrieval evaluation metrics: Precision@k, Recall@k, HitRate@k, MRR@k,
-  nDCG@k, Graded nDCG@k, Weighted Precision@k and EvidenceCoverage@k
+  nDCG@k, Graded nDCG@k, normalized Weighted Precision@k and
+  EvidenceCoverage@k
 - per-question retrieval evaluation and aggregate metric summaries
 
 Planned:
@@ -244,7 +245,7 @@ The backend test suite covers:
 - indexing pipeline integration tests
 - retrieval pipeline integration tests
 
-Current test status: 92 passing backend tests.
+Current test status: 147 passing backend tests.
 
 ## Project Structure
 
