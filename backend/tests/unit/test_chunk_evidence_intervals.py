@@ -1,9 +1,9 @@
 import pytest
 
-from app.models.chunk_evidence_intervals import (
+from app.models.golden_dataset import (
     ChunkEvidenceIntervals,
+    EvidenceInterval,
 )
-from app.models.evidence_interval import EvidenceInterval
 
 
 def test_chunk_evidence_intervals_stores_data() -> None:

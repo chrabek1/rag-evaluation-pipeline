@@ -1,6 +1,6 @@
 import pytest
 
-from app.models.evidence_interval import EvidenceInterval
+from app.models.golden_dataset import EvidenceInterval
 
 
 def test_evidence_interval_stores_boundaries() -> None:

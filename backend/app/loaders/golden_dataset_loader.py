@@ -1,13 +1,15 @@
 import json
 from pathlib import Path
 
-from app.models.chunk_evidence_intervals import ChunkEvidenceIntervals
-from app.models.evidence_interval import EvidenceInterval
-from app.models.golden_dataset import GoldenDataset
-from app.models.golden_dataset_metadata import GoldenDatasetMetadata
-from app.models.golden_dataset_record import GoldenDatasetRecord
-from app.models.golden_evidence import GoldenEvidence
-from app.models.golden_relevant_chunk import GoldenRelevantChunk
+from app.models.golden_dataset import (
+    ChunkEvidenceIntervals,
+    EvidenceInterval,
+    GoldenDataset,
+    GoldenDatasetMetadata,
+    GoldenDatasetRecord,
+    GoldenEvidence,
+    GoldenRelevantChunk,
+)
 
 
 class GoldenDatasetLoader:

@@ -1,133 +1,164 @@
 # Dokumentacja przebiegu praktyk zawodowych
 
-## Cel praktyk
+Celem praktyk jest przygotowanie prototypu służącego do porównywania jakości różnych konfiguracji systemu RAG. Zakres prac odpowiada czterem epikom zdefiniowanym w Jirze: Research, Setup prototypu, Pipeline ewaluacyjny i Podsumowanie.
 
-Celem pracy było przygotowanie podstaw prototypu służącego do porównywania jakości retrievalu w systemach RAG. Zakres został podzielony w Jirze na cztery obszary: research, przygotowanie środowiska, budowę pipeline'u ewaluacyjnego oraz podsumowanie wyników.
+## 1. Research
 
-W ramach dotychczasowych prac:
+### 1.1. Sposób ewaluacji i wybór narzędzi
 
-- przeanalizowałem metody ewaluacji systemów RAG,
-- porównałem dostępne narzędzia ewaluacyjne,
-- wybrałem publiczny korpus testowy,
-- przygotowałem lokalne środowisko z PostgreSQL i pgvector,
-- uruchomiłem indeksowanie i wyszukiwanie wektorowe,
-- zbudowałem ręcznie zweryfikowany golden dataset,
-- zaimplementowałem i przetestowałem metryki retrievalu oraz agregację wyników.
+Ewaluację systemu RAG można podzielić na dwa osobne obszary:
 
-Kolejne etapy obejmują uruchamianie pełnych eksperymentów, ewaluację generowania odpowiedzi i raportowanie wyników.
+1. **Retrieval** — ocena, czy system znajduje właściwe fragmenty dokumentów i umieszcza je odpowiednio wysoko w rankingu.
+2. **Generation** — ocena, czy wygenerowana odpowiedź odpowiada na pytanie i jest zgodna z dostarczonym kontekstem.
 
-## Analiza metod i metryk ewaluacji RAG
+Do klasycznej oceny retrievalu można wykorzystać:
 
-Pierwszym etapem było zapoznanie się z metodami oceny systemów RAG oraz wybór metryk odpowiednich dla planowanego prototypu. W ramach analizy wyróżniłem dwa obszary, które w przyszłości powinny być oceniane osobno:
+- `Precision@k` — część wyników top-k, które są relewantne;
+- `Recall@k` — część wszystkich relewantnych chunków odnaleziona w top-k;
+- `HitRate@k` — informację, czy w top-k znajduje się przynajmniej jeden relewantny chunk;
+- `MRR@k` — ocenę pozycji pierwszego relewantnego wyniku;
+- `nDCG@k` — ocenę kolejności wszystkich relewantnych wyników.
 
-1. **Retrieval** — sprawdzenie, czy system znajduje właściwe fragmenty i umieszcza je odpowiednio wysoko w rankingu.
-2. **Generation** — sprawdzenie, czy odpowiedź jest zgodna z pobranym kontekstem i odpowiada na pytanie.
+Metryki binarne nie rozróżniają chunka zawierającego całą potrzebną informację od chunka pokrywającego tylko jej część. Dlatego w ewaluacji można wykorzystać również stopień pokrycia evidence przez pojedynczy chunk:
 
-Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k, weighted Precision@k i EvidenceCoverage@k**. Weighted Precision@k jest normalizowane względem sumy ocen idealnego top-k, dzięki czemu idealny zestaw wyników otrzymuje `1.0` niezależnie od rozłożenia evidence między chunkami. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
+- `graded nDCG@k` pozwala uwzględnić zarówno coverage, jak i pozycję chunka;
+- znormalizowane `weighted Precision@k` pozwala porównać jakość znalezionego zestawu z najlepszym możliwym zestawem top-k;
+- `EvidenceCoverage@k` pozwala obliczyć unię odnalezionych przedziałów evidence, bez wielokrotnego zaliczania tego samego fragmentu obecnego w kilku chunkach.
 
-Research wykazał również najważniejsze ryzyka: data leakage, zbyt łatwe pytania syntetyczne, niepełne oznaczenia relewancji oraz uzależnienie ground truth od konkretnego chunkowania. Wnioski te wpłynęły później na sposób przygotowania golden datasetu. Szczegółowy opis znajduje się w `rag_evaluation_research.md`.
+W ramach researchu porównałem RAGAS, DeepEval, TruLens i Arize Phoenix. Narzędzia te są szczególnie użyteczne w ocenie generation, ponieważ wspierają metryki semantyczne i podejście LLM-as-a-Judge. RAGAS wybrałem jako główne narzędzie do dalszej pracy ze względu na koncentrację na ewaluacji RAG oraz dostępność metryk takich jak Faithfulness i Answer Relevance.
 
-## Porównanie narzędzi ewaluacyjnych
+RAGAS może być także użyteczny w ocenie retrievalu, między innymi przez metryki Context Precision i Context Recall. Są to jednak oceny semantyczne, często zależne od modelu oceniającego. RAGAS nie zastępuje prostych, deterministycznych metryk opartych na identyfikatorach chunków, ich pozycji i własnych adnotacjach coverage. Takie metryki łatwiej kontrolować, interpretować i rozszerzać o zasady specyficzne dla przygotowanego golden datasetu.
 
-Porównałem RAGAS, DeepEval, TruLens i Arize Phoenix pod względem integracji z pgvector, dostępnych metryk, kosztu użycia LLM-as-a-Judge, dokumentacji i złożoności wdrożenia.
+Z tego powodu przyjąłem następujący podział:
 
-Jako głównego kandydata wybrałem **RAGAS**, ponieważ jest bezpośrednio ukierunkowany na ewaluację RAG i może przyjmować wyniki z własnego retrievera. **DeepEval** został wskazany jako druga opcja, szczególnie przydatna w przyszłych testach regresyjnych i integracji z `pytest`. TruLens i Phoenix oferują rozbudowane tracing i observability, ale na etapie prostego prototypu wprowadzają większą złożoność niż jest potrzebna.
+- ewaluację retrievalu zaimplementuję samodzielnie z użyciem klasycznych i własnych metryk opartych na evidence coverage;
+- do ewaluacji generation wykorzystam RAGAS;
+- oba etapy połączę w jeden pipeline end-to-end, zachowując osobne wyniki.
 
-Klasyczne metryki retrievalowe mają być liczone samodzielnie, bez wywołań LLM. RAGAS ma być wykorzystywany tam, gdzie potrzebna jest ocena semantyczna. Pełne porównanie znajduje się w `rag_evaluation_tools_comparison.md`.
+Pozwoli to ustalić nie tylko, która konfiguracja generuje lepsze odpowiedzi, lecz również czy jej wynik wynika z jakości retrievalu, czy z możliwości modelu generującego. Szczegółowy research znajduje się w `rag_evaluation_research.md`, a porównanie narzędzi w `rag_evaluation_tools_comparison.md`.
 
-## Przygotowanie prototypu
+### 1.2. Wybór danych testowych
 
-Środowisko zostało zbudowane jako zestaw usług uruchamianych przez Docker Compose:
+Jako publiczne dane testowe wybrałem Open RAGBench (`deepmatics/open_ragbench`) udostępniony na Hugging Face. Benchmark zawiera dane przygotowane na podstawie dokumentów z kilku domen. W projekcie wykorzystałem część opartą na publikacjach naukowych z arXiv.
 
-- `backend` odpowiada za wczytywanie chunków, indeksowanie i retrieval,
-- `embedding_service` udostępnia model embeddingowy `BAAI/bge-m3`,
-- PostgreSQL z rozszerzeniem pgvector przechowuje embeddingi i wykonuje wyszukiwanie wektorowe.
+Open RAGBench udostępnia:
 
-Zależności Pythona są zarządzane przez `uv`, a konfiguracja, między innymi adres bazy, model embeddingowy i ścieżka korpusu, jest przekazywana przez zmienne środowiskowe. Przygotowałem jedną komendę indeksującą cały korpus oraz osobny skrypt do testowego wyszukiwania z konfigurowalnym `top_k`.
+- dokumenty źródłowe i adresy plików PDF;
+- ustrukturyzowany tekst dokumentów podzielony na sekcje;
+- pytania przypisane do dokumentów;
+- odpowiedzi referencyjne;
+- relacje `qrels`, które wskazują dokument i sekcję powiązaną z pytaniem;
+- informację o typie źródła, między innymi tekstowym lub wymagającym interpretacji obrazu.
 
-Embedding service udostępnia endpoint zwracający nazwę modelu i rozmiar wektora. Backend pobiera te dane, dzięki czemu wymiar embeddingu nie jest hardkodowany. Dla aktualnego modelu `BAAI/bge-m3` baza używa typu `vector(1024)`.
+Taka struktura pozwala wykorzystać benchmark jako podstawę golden datasetu: pytanie może zostać wysłane do retrievera, odpowiedź referencyjna użyta w ewaluacji generation, a wskazana sekcja dokumentu stanowi źródło do wyznaczenia właściwych fragmentów. Samo `qrels` nie daje jednak gotowych identyfikatorów chunków dla własnego sposobu chunkowania, dlatego sekcje źródłowe wymagają dalszego doprecyzowania i zmapowania na korpus używany przez prototyp.
 
-Indeksowanie jest idempotentne: ponowne uruchomienie aktualizuje istniejące rekordy zamiast tworzyć duplikaty. Korpus zawiera 735 chunków, a ich identyfikatory są stabilne. Dodałem również testy jednostkowe i integracyjne obejmujące modele danych, klienta embeddingowego, repozytorium, indeksowanie oraz retrieval.
+## 2. Setup prototypu
 
-## Wybór danych testowych
+### 2.1. Przygotowanie podzbioru dokumentów
 
-Jako publiczne źródło danych wybrałem Open RAGBench (`deepmatics/open_ragbench`) udostępniony na Hugging Face. Wykorzystałem część benchmarku przygotowaną na podstawie publikacji naukowych z arXiv.
+Za pomocą skryptu `prepare_open_rag_subset.py` wybrałem podzbiór Open RAGBench o łącznej objętości możliwie bliskiej 700 000 znaków. Limit znaków pozwolił lepiej kontrolować wielkość danych niż sama liczba dokumentów, ponieważ publikacje znacznie różnią się długością.
 
-W Open RAGBench pliki PDF przetworzono do ustrukturyzowanych dokumentów tekstowych podzielonych na sekcje. Osobno zapisano pytania, odpowiedzi referencyjne, adresy PDF oraz relacje `qrels`, które przypisują pytanie do właściwego dokumentu i sekcji. Benchmark zapewnił więc gotowe pytania i wskazania źródłowe, ale wymagał doprecyzowania fragmentów rzeczywiście potrzebnych do odpowiedzi.
+Wraz z dokumentami wybrałem wszystkie przypisane do nich pytania. Pominąłem pytania typu `text-image` i `text-table-image`, ponieważ otrzymane chunki zawierają wyłącznie tekst i nie zachowują informacji z obrazów ani tabel zapisanych jako obrazy. Pozostawienie takich pytań prowadziłoby do przypadków, których retriever tekstowy nie mógłby poprawnie rozwiązać.
 
-Wybrałem podzbiór o objętości możliwie bliskiej **700 000 znaków**. Limit znaków lepiej kontrolował wielkość korpusu niż sama liczba PDF-ów, ponieważ publikacje znacznie różniły się długością. Ostateczny podzbiór obejmuje:
+Finalny podzbiór obejmuje:
 
-- 9 dokumentów PDF,
-- 698 275 znaków tekstu,
-- 50 pytań.
+- 9 dokumentów PDF;
+- 698 275 znaków tekstu;
+- 50 pytań tekstowych.
 
-Odrzuciłem pytania wymagające interpretacji obrazu (`text-image` i `text-table-image`), ponieważ prototyp przetwarza tekst. Wybór jest odtwarzalny dzięki manifestowi `selected_documents.json`, a dane pytań i sekcji są zapisane w `selected_questions.json`.
+Plik `dane.csv` zawierał 735 gotowych chunków. W prototypie nie wykonywałem ponownego chunkowania, lecz indeksowałem dostarczone fragmenty.
 
-## Przygotowanie golden datasetu
+Wybór jest zapisany w `selected_documents.json`, a pytania wraz z odpowiedziami i sekcjami źródłowymi w `selected_questions.json`. Dzięki temu ten etap można odtworzyć bez ponownego ręcznego wybierania danych.
 
-### Problem oznaczania relevant chunks na podstawie Open RAGBench
+### 2.2. Architektura i sposób tworzenia prototypu
 
-Open RAGBench zapewnia gotowe pytania oraz relacje `qrels`, które przypisują każdemu pytaniu właściwy dokument i `section_id`. Tekst wskazanej sekcji został zapisany w projekcie jako `ground_truth_text`. Oznacza on obszar dokumentu, na podstawie którego przygotowano pytanie, ale nie wskazuje jeszcze konkretnych chunków, które należy uznać za relevant.
+Prototyp działa w środowisku Docker Compose i jest podzielony na dwa serwisy aplikacyjne:
 
-Retriever pracuje na 735 chunkach z `dane.csv`, utworzonych wcześniej z dokumentów PDF. Granice tych chunków nie pokrywają się z granicami sekcji Open RAGBench. Dodatkowo sekcje referencyjne są wyraźnie większe od chunków. Pokazuje to porównanie długości tekstów:
+- `backend` odpowiada za wczytywanie danych, indeksowanie, komunikację z bazą, retrieval i ewaluację;
+- `embedding_service` udostępnia osobną usługę generującą embeddingi przy użyciu modelu `BAAI/bge-m3`.
+
+Dodatkowym elementem infrastruktury jest PostgreSQL z rozszerzeniem pgvector, który przechowuje embeddingi 735 chunków i wykonuje wyszukiwanie wektorowe. Embedding service udostępnia endpoint zwracający nazwę modelu i wymiar embeddingu, dlatego backend nie ma zahardkodowanego rozmiaru wektora. Dla aktualnego modelu baza korzysta z typu `vector(1024)`.
+
+Podczas tworzenia prototypu korzystałem z ChatGPT i Codexa. Kod `backend` i `embedding_service` przepisywałem ręcznie, funkcja po funkcji. Pozwalało mi to dokładnie rozumieć działanie rozwiązania i świadomie podejmować decyzje architektoniczne. Testy oraz pomocnicze skrypty służące do przygotowania i walidacji datasetu były w większości generowane przez Codex i wymagały z mojej strony znacznie mniejszej ingerencji.
+
+### 2.3. Przygotowanie golden datasetu
+
+Open RAGBench dostarcza pytanie, odpowiedź referencyjną, identyfikator dokumentu, `section_id` oraz tekst odpowiadającej mu sekcji. W projekcie tekst sekcji jest zachowywany jako `ground_truth_text`. Sekcja wskazuje obszar dokumentu, na podstawie którego utworzono pytanie, ale nie określa jeszcze, które chunki z `dane.csv` powinny zostać uznane za relewantne.
+
+#### 2.3.1. Evidence
+
+Granice sekcji Open RAGBench nie pokrywają się z granicami 735 gotowych chunków. Sekcje są też istotnie większe od chunków. Jedna sekcja może obejmować wiele chunków, również takich, które nie zawierają informacji potrzebnych do odpowiedzi. Uznanie ich wszystkich za relewantne prowadziłoby do zbyt szerokich etykiet i zawyżania jakości retrievalu.
+
+Dlatego zdecydowałem się stworzyć evidence, czyli krótkie fragmenty `ground_truth_text` zawierające informacje potrzebne do udzielenia odpowiedzi. Przygotowałem je z pomocą LLM, następnie zweryfikowałem i zapisałem w `evidence_annotations.json`.
+
+Porównanie długości tekstów pokazuje różnicę między pełną sekcją, chunkami i evidence:
 
 | Rodzaj tekstu | Liczba | Minimum | Mediana | Średnia | Maksimum |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Chunki | 735 | 105 | 1 036 | 976,20 | 2 022 |
 | `ground_truth_text` | 50 | 328 | 1 828,50 | 2 824,46 | 13 575 |
-| `evidence_texts` | 50 | 76 | 240,50 | 361,40 | 1 199 |
+| Evidence łącznie dla pytania | 50 | 76 | 240,50 | 361,40 | 1 199 |
 
-Średni `ground_truth_text` ma około **2,9 razy więcej znaków niż przeciętny chunk**, a jego mediana jest **1,76 raza większa od mediany chunka**. Najdłuższa sekcja ma 13 575 znaków, czyli jest ponad trzynaście razy dłuższa od medianowego chunka. Sekcja referencyjna może więc obejmować wiele chunków.
+Średni `ground_truth_text` jest około 2,9 razy dłuższy od przeciętnego chunka, a jego mediana jest 1,76 raza większa od mediany chunka.
 
-Analiza treści `ground_truth_text` wykazała również, że znaczna część sekcji nie zawiera informacji istotnych dla odpowiedzi na przypisane pytanie. Gdyby relevant chunks wyznaczać na podstawie samej przynależności do sekcji albo dowolnego pokrycia jej tekstu, za relevant mógłby zostać uznany chunk zawierający wyłącznie poboczny fragment sekcji. Retriever otrzymywałby wtedy pozytywną ocenę za znalezienie tekstu, który nie pozwala odpowiedzieć na pytanie. Powiększałoby to zbiór etykiet relewancji i obniżało jakość golden datasetu, a późniejsze wyniki Precision@k i Recall@k byłyby mało wiarygodne.
-
-### Ekstrakcja evidence z `ground_truth_text`
-
-Aby rozwiązać ten problem, przy pomocy LLM wyekstrahowałem z każdej sekcji tylko fragmenty istotne w kontekście danego pytania. Wynik zapisałem w `evidence_annotations.json` jako listę `evidence_texts`. LLM służył do wskazania fragmentów, a nie do wygenerowania odpowiedzi lub uzupełnienia brakującej wiedzy.
-
-Podczas tworzenia adnotacji obowiązywały następujące wytyczne:
-
-- dla danego pytania można było korzystać wyłącznie z odpowiadającego mu `ground_truth_text`,
-- każdy `evidence_text` musiał być dokładnym substringiem tekstu źródłowego,
-- zabronione było parafrazowanie, poprawianie tekstu i dodawanie wiedzy zewnętrznej,
-- evidence miało obejmować wszystkie informacje potrzebne do odpowiedzi, w tym warunki, ograniczenia i wyjątki,
-- jeżeli potrzebne informacje znajdowały się w kilku miejscach sekcji, zapisywano kilka fragmentów,
-- fragmenty zachowywano jako pełne zdania, aby nie traciły znaczenia,
-- w razie wątpliwości pozostawiano nieco szerszy kontekst, ponieważ pominięcie istotnej informacji było groźniejsze niż niewielki nadmiar,
-- usuwano duplikaty oraz informacje całkowicie niezwiązane z pytaniem,
-- jeżeli sekcja rzeczywiście nie dostarczałaby przydatnej informacji, lista evidence miała pozostać pusta zamiast zawierać zgadywaną treść.
-
-Adnotacje zostały następnie kilkukrotnie zweryfikowane pod względem kompletności, przydatności, pełności zdań i dokładnej zgodności z tekstem źródłowym. Każdy niepusty fragment został też automatycznie sprawdzony jako substring właściwego `ground_truth_text`. Ostatecznie wszystkie 50 rekordów otrzymało evidence. Mediana evidence wynosi 240,5 znaku, czyli około 23% długości medianowego chunka i około 13% medianowego `ground_truth_text`.
-
-W dwóch przypadkach pytanie było bardziej szczegółowe od przypisanej sekcji. Zachowano wtedy najlepszy dostępny kontekst z `ground_truth_text`, ale rekordy te należy interpretować jako częściowo dopasowane do materiału referencyjnego.
-
-Przepływ przygotowania etykiet relewancji wyglądał następująco:
+Najdłuższy `ground_truth_text` ma 13 575 znaków i obejmuje 12 chunków. Evidence ma 147 znaków i mieści się w chunku `0049`.
 
 ```text
-pytanie + section_id + ground_truth_text
-                    ↓
-  ekstrakcja evidence_texts przy pomocy LLM
-                    ↓
-     ręczna i automatyczna weryfikacja
-                    ↓
-  mapowanie evidence na chunki z dane.csv
-                    ↓
-              relevant chunks
+ground_truth_text
+├───────────────────────────────────────────────────────────┤
+0                                                      13 575
+
+chunki
+├0038┼0039┼0040┼0041┼0042┼0043┼0044┼0045┼0046┼0047┼0048┼0049┤
+
+evidence
+                                                       ├E1┤
+                                       E1: 147 znaków w chunku 0049
 ```
 
-### Mapowanie evidence na relevant chunks
+Schemat przedstawia kolejność fragmentów, a nie dokładną skalę ich długości. Evidence zajmuje około 1,1% całego tekstu, dlatego zostało powiększone.
 
-Zweryfikowane evidence odnosi się do tekstu źródłowego, natomiast system wyszukuje w 735 gotowych chunkach z `dane.csv`. Dlatego dla każdego pytania najpierw ograniczałem kandydatów do chunków pochodzących z dokumentu wskazanego przez `qrels`, a następnie porównywałem ich treść z każdym fragmentem evidence.
+Podczas tworzenia evidence przyjąłem następujące zasady:
 
-Dla każdego chunka obliczane jest `evidence_coverage`, czyli część całego evidence dla pytania obecna w tym chunku. Relevance jest ustalana osobno dla każdego fragmentu `evidence_texts`, a nie przez jeden globalny próg coverage. Uwzględniane są lokalne dopasowania tekstu, evidence przecięte granicą chunków oraz osobne reguły dla wzorów matematycznych.
+- evidence może pochodzić wyłącznie z `ground_truth_text` przypisanego do danego pytania;
+- każdy fragment musi być dokładnym substringiem tekstu źródłowego;
+- nie wolno parafrazować, poprawiać treści ani dodawać wiedzy zewnętrznej;
+- evidence powinno zawierać wszystkie informacje potrzebne do odpowiedzi, w tym warunki, ograniczenia i wyjątki;
+- informacje pochodzące z kilku miejsc należy zapisać jako osobne fragmenty;
+- należy zachowywać pełne zdania i nie usuwać kontekstu potrzebnego do ich interpretacji;
+- każdy fragment powinien zostać sprawdzony w kontekście pytania, odpowiedzi referencyjnej i dokumentu PDF.
 
-Dodatkowo builder sprawdza łączne pokrycie evidence przez wszystkie wybrane relevant chunks. Pokrycie jest liczone jako unia dopasowanych zakresów, dlatego ten sam tekst znaleziony w kilku chunkach nie jest zaliczany wielokrotnie. Każde pytanie musi osiągnąć pełne pokrycie; wynik tej walidacji nie jest zapisywany w finalnym pliku.
+#### 2.3.2. Chunk relevance
 
-Oddzielenie evidence od granic chunków było celową decyzją: przy zmianie strategii chunkowania adnotacje źródłowe pozostają aktualne i mogą zostać ponownie zmapowane. Relevant chunks są więc wynikiem mapowania evidence na konkretny korpus, a nie pierwotnym źródłem ground truth.
+Chunk jest uznawany za relewantny na podstawie pokrycia evidence, a nie samej przynależności do sekcji.
 
-### Struktura golden datasetu
+Dla pojedynczego chunka coverage jest liczone jako:
 
-Finalny `golden_dataset.json` zawiera wspólne metadane i 50 rekordów potrzebnych do ewaluacji. Dane audytowe pozostają w plikach procesu przygotowania i nie są powielane w kontrakcie backendu:
+```text
+evidence_coverage =
+    liczba pokrytych znaków znormalizowanego evidence
+    / łączna liczba znaków wszystkich znormalizowanych fragmentów evidence
+```
+
+| Właściwość | Wartość |
+| --- | ---: |
+| Liczba pytań | 50 |
+| Liczba fragmentów evidence | 96 |
+| Liczba relewantnych chunków | 77 |
+| Średnia liczba relewantnych chunków na pytanie | 1,54 |
+| Mediana relewantnych chunków na pytanie | 1 |
+| Zakres liczby relewantnych chunków | 1–4 |
+| Średnie coverage pojedynczego chunka | 71,1% |
+| Mediana coverage pojedynczego chunka | 77,7% |
+| Łączne coverage evidence dla każdego pytania | 100% |
+
+Pełne zestawienie dla poszczególnych pytań znajduje się w pliku [`golden_dataset_relevance.md`](golden_dataset_relevance.md).
+
+Zapisane przedziały pozwalają liczyć unię pokrycia i nie zaliczać wielokrotnie tej samej części evidence dopasowanej do kilku chunków.
+
+#### 2.3.3. Struktura golden datasetu
+
+Finalny `golden_dataset.json` zawiera wspólne metadane i listę rekordów:
 
 ```json
 {
@@ -148,7 +179,7 @@ Finalny `golden_dataset.json` zawiera wspólne metadane i 50 rekordów potrzebny
       ],
       "relevant_chunks": [
         {
-          "chunk_id": "....pdf_0013",
+          "chunk_id": "document.pdf_0013",
           "evidence_coverage": 1.0,
           "evidence_intervals": [
             {
@@ -163,55 +194,30 @@ Finalny `golden_dataset.json` zawiera wspólne metadane i 50 rekordów potrzebny
 }
 ```
 
-Znaczenie poszczególnych pól jest następujące:
+`question` jest wejściem retrievera, `expected_answer` może zostać użyte w ewaluacji generation, `evidence` zachowuje zweryfikowane fragmenty źródłowe, a `relevant_chunks` dostarcza etykiety i wartości potrzebne do metryk retrievalu. Finalny dataset obejmuje 50 pytań i 77 relevant chunks. Każde pytanie ma co najmniej jeden relevant chunk oraz pełne łączne pokrycie evidence.
 
-| Pole | Znaczenie |
+## 3. Pipeline ewaluacyjny
+
+### 3.1. Ewaluacja retrievalu
+
+Dla każdego pytania retriever zwraca ranking top-k chunków. Porównuję go z `relevant_chunks` zapisanymi w golden datasecie, obliczam metryki dla pojedynczego pytania, a następnie agreguję wyniki dla całego zbioru.
+
+Do podstawowej oceny wykorzystuję metryki binarne, w których chunk jest relewantny albo nierelewantny:
+
+| Metryka | Znaczenie |
 | --- | --- |
-| `metadata.schema_version` | Wersja kontraktu pliku. |
-| `metadata.evidence_interval_gap_tolerance` | Wspólna tolerancja scalania przedziałów dla wszystkich rekordów. |
-| `records[].query_id` | Unikalny identyfikator pytania zachowany z Open RAGBench. |
-| `records[].question` | Treść pytania przekazywana do retrievera. |
-| `records[].expected_answer` | Odpowiedź referencyjna używana później w ewaluacji generowania. |
-| `records[].evidence` | Lista oddzielnych, zweryfikowanych fragmentów evidence wraz z ich znormalizowaną długością. |
-| `records[].evidence[].text` | Oryginalna treść zweryfikowanego fragmentu evidence. |
-| `records[].evidence[].normalized_length` | Długość znormalizowanego fragmentu, używana przy obliczaniu `EvidenceCoverage@k`. |
-| `records[].relevant_chunks` | Lista chunków zawierających znaczącą część co najmniej jednego fragmentu evidence. |
-| `records[].relevant_chunks[].chunk_id` | Stabilny identyfikator chunka w postaci nazwy pliku i kolejnego numeru. |
-| `records[].relevant_chunks[].evidence_coverage` | Część całego evidence pokryta przez pojedynczy chunk, zapisana w zakresie od `0` do `1`. |
-| `records[].relevant_chunks[].evidence_intervals` | Przedziały znormalizowanego evidence pokrywane przez chunk, używane do obliczania unii pokrycia dla top-k. |
+| `Precision@k` | Jaka część zwróconych top-k chunków jest relewantna. |
+| `Recall@k` | Jaka część wszystkich relewantnych chunków została odnaleziona w top-k. |
+| `HitRate@k` | Czy w top-k znajduje się przynajmniej jeden relewantny chunk. |
+| `MRR@k` | Jak wysoko znajduje się pierwszy relewantny wynik. Dla pojedynczego pytania liczony jest Reciprocal Rank, a MRR jest jego średnią dla wszystkich pytań. |
+| `nDCG@k` | Czy wszystkie relewantne chunki znajdują się możliwie wysoko w rankingu. Niższe pozycje mają mniejszą wagę. |
 
-Taka struktura zawiera zarówno dane potrzebne do uruchomienia ewaluacji, jak i informacje umożliwiające audyt sposobu utworzenia ground truth. Metryki binarne porównują identyfikatory zwróconych chunków z `relevant_chunks`, metryki stopniowane wykorzystują `evidence_coverage`, a `EvidenceCoverage@k` scala zapisane przedziały i nie liczy tego samego fragmentu wielokrotnie.
+Przypisanie każdemu relewantnemu chunkowi wartości `evidence_coverage` pozwala ocenić nie tylko, czy chunk jest trafny, ale również jaką część informacji potrzebnej do odpowiedzi zawiera. Dzięki temu można uwzględnić stopień relewantności, kolejność wyników i łączne pokrycie evidence w metrykach `Graded nDCG@k`, `Weighted Precision@k` oraz `EvidenceCoverage@k`.
 
-### Problemy z dopasowaniem tekstu
+| Metryka | Znaczenie |
+| --- | --- |
+| `Graded nDCG@k` | Ocenia kolejność wyników, używając coverage jako stopnia relewantności. Najwyżej powinny znajdować się chunki pokrywające największą część evidence. |
+| `Weighted Precision@k` | Porównuje sumę coverage zwróconych chunków z najlepszą możliwą sumą coverage dla top-k. Wynik jest znormalizowany, dlatego pełne odnalezienie najlepszego zestawu daje `1.0`. |
+| `EvidenceCoverage@k` | Mierzy, jaka część całego evidence została pokryta przez unię chunków z top-k. Ten sam przedział evidence dopasowany do kilku chunków jest liczony tylko raz. |
 
-Tekst benchmarku zawiera Markdown i LaTeX, natomiast `dane.csv` powstał przez ekstrakcję tekstu z PDF. Powodowało to różnice w symbolach, odstępach i kolejności indeksów matematycznych, na przykład `Q_i^(nom)` oraz `Q (nom) i`. Proste porównanie znaków zaniżało coverage mimo obecności właściwego fragmentu.
-
-Rozszerzyłem normalizację o obsługę LaTeX-u, symboli matematycznych, wariantów minusa, liczb rozdzielonych spacjami i słów przerwanych końcem linii. Matcher łączy tylko lokalne, uporządkowane bloki tekstu. Duże fragmenty LaTeX są porównywane osobno z kontrolą wartości liczbowych i tokenów kotwiczących, co ogranicza dopasowania podobnych, ale różnych wzorów.
-
-### Reguły relevance i coverage
-
-Początkowo relevance wyznaczał globalny próg `MIN_CHUNK_COVERAGE = 0.25`. Rozwiązanie powodowało false positives dla często powtarzających się fraz i podobnych wzorów matematycznych, dlatego zostało zastąpione oceną każdego fragmentu evidence osobno.
-
-Aktualne reguły wymagają co najmniej 30 dopasowanych znaków oraz odpowiednio: 80% lokalnego dopasowania, 40% jednego spójnego bloku albo 35% przy podziale evidence na granicy chunków. Wzory matematyczne wymagają 85% zgodności tokenów oraz zgodności liczb i tokenów kotwiczących.
-
-Aktualny golden dataset zawiera 50 pytań i 77 relevant chunks. Średnia wynosi 1,54 chunka na pytanie, mediana 1, maksimum 4. Każde pytanie ma co najmniej jeden relevant chunk i 100% łącznego evidence coverage.
-
-### Walidacja końcowa
-
-Builder sprawdza zgodność i unikalność `query_id`, obecność odpowiedzi i evidence, dokładne występowanie evidence w `ground_truth_text`, zgodność dokumentów oraz brak pytań bez relevant chunks. Finalny `golden_dataset.json` zawiera 50 zweryfikowanych rekordów i 100% łącznego evidence coverage dla każdego pytania.
-
-
-## Stan realizacji i dalsze etapy
-
-Zrealizowane zostały zadania obejmujące research, wybór danych, środowisko, indeksowanie, retrieval, golden dataset, metryki retrievalu, evaluator i agregację wyników.
-
-Do wykonania pozostają:
-
-- wczytywanie golden datasetu w backendzie i połączenie go z retrieval oraz evaluatorem,
-- implementacja generowania odpowiedzi i ewaluacja Faithfulness oraz Answer Relevance,
-- porównanie różnych wartości `top_k`,
-- dodanie i ocena rerankera `BAAI/bge-reranker-v2-m3`,
-- automatyczne generowanie tabeli wyników dla wielu konfiguracji,
-- przygotowanie dashboardu lub raportu końcowego.
-
-Najważniejszym rezultatem obecnego etapu jest spójne środowisko oraz zweryfikowany zbiór referencyjny. Bez dobrego golden datasetu dalsze metryki byłyby łatwe do policzenia, ale ich wyniki nie byłyby wiarygodne.
+Wszystkie metryki przyjmują wartości od `0.0` do `1.0`, a wyższy wynik oznacza lepszy retrieval. Klasyczne metryki oceniają trafność identyfikatorów i ranking, natomiast metryki stopniowane pokazują, ile informacji potrzebnej do odpowiedzi rzeczywiście znaleziono.

@@ -1,10 +1,8 @@
 import pytest
 
-from app.models.chunk_evidence_intervals import (
+from app.models.golden_dataset import (
     ChunkEvidenceIntervals,
-)
-from app.models.evidence_interval import EvidenceInterval
-from app.models.golden_relevant_chunk import (
+    EvidenceInterval,
     GoldenRelevantChunk,
 )
 

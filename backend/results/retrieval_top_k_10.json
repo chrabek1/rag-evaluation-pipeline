@@ -1,0 +1,3871 @@
+{
+  "configuration": {
+    "top_k": 10,
+    "embedding_model": "BAAI/bge-m3",
+    "embedding_dimension": 1024
+  },
+  "summary": {
+    "k": 10,
+    "query_count": 50,
+    "mean_precision_at_k": 0.11800000000000001,
+    "mean_recall_at_k": 0.8383333333333333,
+    "mean_hit_rate_at_k": 0.9,
+    "mrr_at_k": 0.6824126984126984,
+    "mean_ndcg_at_k": 0.6799657309146115,
+    "mean_graded_ndcg_at_k": 0.6850056450626143,
+    "mean_weighted_precision_at_k": 0.860837416398372,
+    "mean_evidence_coverage_at_k": 0.8759787664808866
+  },
+  "queries": [
+    {
+      "query_id": "64055ea7-adca-470c-99d2-15919ab7ed3a",
+      "question": "Why is it important to consider dependent data structures in Monte Carlo simulations?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0046",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6515892978693729
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0038",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6355009268373756
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0040",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.631528477921247
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0044",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5949893480552062
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0026",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5808541082317742
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0041",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5782410926151076
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0053",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5770747317627325
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0022",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.573243217862961
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0023",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5712908932469146
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0036",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5629019997774453
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "graded_ndcg_at_k": 0.5,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "ca35d598-a95d-4618-a2f0-21a8bd24545b",
+      "question": "What theoretical rationale supports using multilevel metamodels in simulation studies?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0040",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6993159293312955
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0044",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6789776289158356
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0024",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.675883651603787
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0034",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6540353882940464
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0013",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6263120806534288
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0030",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.613251787029156
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0045",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6044538381370209
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0027",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6022974432199434
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0041",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5991080521473957
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0042",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5984670876542978
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "1c4dd9be-2066-4a09-8d73-aa2b1fb5dec0",
+      "question": "What are the benefits of using a three-level Multilevel Mixed Model in Monte Carlo simulation studies compared to a two-level model?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0061",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6792261420527339
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0040",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6662216980323761
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0044",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6604506564677591
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0013",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6473557353019899
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0042",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6317306506232422
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0032",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6081685137999848
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0062",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6058412500979403
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0024",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5983123657069871
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0053",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5967500680834187
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0015",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5957438818950452
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.8175295903539445,
+        "graded_ndcg_at_k": 0.8857728051231741,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "2589f76f-da96-427c-96f8-c6e34d2e4d1a",
+      "question": "How can performance metrics typically defined at an aggregate level be evaluated within a multilevel framework?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0062",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6850242035112566
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0044",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6173080573861645
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0061",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6131919574611152
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0007",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6094936495717566
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0059",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5800305950659879
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0040",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5775165226335115
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0049",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5700897830671292
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0042",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5668823629810541
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0053",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5668646772938583
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0004",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5469534723134928
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "40b75706-3856-4768-ad60-d331b8739f84",
+      "question": "Why might aggregation be suitable when only average effects are considered in simulation studies?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0015",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5990859566757021
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0057",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5797131579857931
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0067",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.567533058895688
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0036",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5601553559534784
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0020",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5582217740482682
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0062",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5570960112924599
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0037",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5513202773511825
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0008",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5512908265379379
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0011",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5509265290091232
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0014",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5502082005329333
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.0,
+        "recall_at_k": 0.0,
+        "hit_rate_at_k": 0.0,
+        "reciprocal_rank_at_k": 0.0,
+        "ndcg_at_k": 0.0,
+        "graded_ndcg_at_k": 0.0,
+        "weighted_precision_at_k": 0.0,
+        "evidence_coverage_at_k": 0.0
+      }
+    },
+    {
+      "query_id": "983044b7-55b9-4a52-8434-4b07d877634d",
+      "question": "What is a notable benefit of using multilevel metamodels (MLMM) in simulation studies?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0040",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.7472523372251301
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0044",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.7252834871580308
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0013",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6917051856693626
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0045",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6755314477263198
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0014",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6702254217997456
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0021",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6679989893437142
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0055",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6613449050599224
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0011",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6448585563729473
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0017",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6432018321987977
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0015",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6422309448994332
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.2,
+        "ndcg_at_k": 0.38685280723454163,
+        "graded_ndcg_at_k": 0.38685280723454163,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "c35f4948-506a-46c4-9259-114920f407ee",
+      "question": "What does the random slopes MLMM capture in terms of uncertainty?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2401.07294v4.pdf_0030",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.7170165945877687
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2401.07294v4.pdf_0008",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6481875390894699
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0014",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.6078414916992188
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2401.07294v4.pdf_0061",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.602727788768047
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2401.07294v4.pdf_0007",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5918064117431641
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0004",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5833998918533325
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2401.07294v4.pdf_0066",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5719474298922685
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2401.07294v4.pdf_0056",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5669752199709052
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0060",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5596738528816564
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0078",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5580258175180913
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 0.5,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "graded_ndcg_at_k": 0.594802061270532,
+        "weighted_precision_at_k": 0.4877330716388616,
+        "evidence_coverage_at_k": 0.5466507177033493
+      }
+    },
+    {
+      "query_id": "5632e246-99c7-4022-8937-419d803184cf",
+      "question": "Does a linearly polarized laser field affect the vectorial contribution to polarizability?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0009",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.659956057666423
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0008",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.571348530907975
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0010",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5428838295603943
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0005",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5311236418633043
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0022",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5302359935852285
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0025",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5206496274664889
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2403.18677v2.pdf_0023",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5198543119083278
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2403.18677v2.pdf_0024",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5141743881262294
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2403.18677v2.pdf_0014",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5141029817554043
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2403.18677v2.pdf_0019",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.50739736788893
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.9197207891481876,
+        "graded_ndcg_at_k": 0.9277926364133883,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "b16783f0-6596-41be-9514-10982968030f",
+      "question": "What is the expression for the AC Stark shift of the atomic ground state?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0011",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5809003364503194
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0008",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5788990761161952
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0010",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5600740575746274
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0009",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.47705355423369766
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0018",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.45368702047699405
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0027",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.45206966996193254
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.11774v2.pdf_0065",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.45206761931566963
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0040",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.44805396222424965
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2403.18677v2.pdf_0021",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4398794281698304
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0050",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.4372851960745111
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "graded_ndcg_at_k": 0.6309297535714575,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "3e55376e-2d0a-4ed9-be09-519b3123e6f5",
+      "question": "Is a Zeeman slower used in the process of cooling Dy atoms?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0018",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5734942809644862
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0033",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4821068357165631
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0010",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.476415543342564
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0027",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.45984825013259056
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0001",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.45563915107483655
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0030",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4447448286566311
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0041",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.43891286849975897
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0036",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.43583867105456453
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2412.02582v2.pdf_0048",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.4300273618175512
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.14077v2.pdf_0011",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.42632589136449883
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "6722ea4f-d84c-4b58-92d7-9d5edf35030e",
+      "question": "What wavelength is the laser operating on when collecting atoms in a magneto-optical trap (MOT)?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0018",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5957674447506036
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0019",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.567997285604726
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0021",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5467510330601664
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0015",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.542719640026032
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0008",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5111003961831233
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0016",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5072414287616535
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2403.18677v2.pdf_0028",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.49932129687179017
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2403.18677v2.pdf_0022",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.498202219444712
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2403.18677v2.pdf_0020",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4977253226392262
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2403.18677v2.pdf_0003",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4928239722287633
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "a5c6b6dc-c7a9-4de0-8e14-b64de888b83e",
+      "question": "How is pure linear polarization achieved for light near 405 nm?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0014",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.6094957822861898
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0019",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.6048033583633046
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0006",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5758164434651841
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0012",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5561805201715196
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0025",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5473993364096518
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0023",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5263963216301774
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2403.18677v2.pdf_0018",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5194452358614836
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2403.18677v2.pdf_0003",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.508585631847396
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2403.18677v2.pdf_0004",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5084403450226659
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2403.18677v2.pdf_0028",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5071326477211362
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "graded_ndcg_at_k": 0.6309297535714575,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "1f675e98-47b5-45fc-92fa-3a7e0802d794",
+      "question": "Does the repulsive potential affect the equilibrium position of atoms in the trap?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2403.18677v2.pdf_0024",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5870316553442173
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2403.18677v2.pdf_0025",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5406466883613674
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2403.18677v2.pdf_0021",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5397952312414201
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2403.18677v2.pdf_0004",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5170737371212607
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2403.18677v2.pdf_0003",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.5002946407041928
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2403.18677v2.pdf_0012",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.49835345129411923
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2403.18677v2.pdf_0033",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4864450258214803
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2403.18677v2.pdf_0017",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.47723999483823754
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2403.18677v2.pdf_0001",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4751332543830056
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2403.18677v2.pdf_0009",
+          "filename": "2403.18677v2.pdf",
+          "score": 0.4741340420882121
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "646594d1-efc5-4e39-8e35-412df3141d74",
+      "question": "How do dose-response models help in understanding microbial infections?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2404.00822v2.pdf_0060",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7228644109625942
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2404.00822v2.pdf_0056",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7078149529640365
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2404.00822v2.pdf_0051",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7018088311496031
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2404.00822v2.pdf_0063",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6816871775705082
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2404.00822v2.pdf_0055",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.661592661880791
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0004",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.637894947466104
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2404.00822v2.pdf_0003",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6360382031213705
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2404.00822v2.pdf_0016",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6336677263280075
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2404.00822v2.pdf_0006",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.621919367003349
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2404.00822v2.pdf_0059",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6102607017910899
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "ce1fbd0d-df13-49e5-92bd-894f168326d8",
+      "question": "Does the expected probability of infection decrease with increasing variance in dose?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2404.00822v2.pdf_0015",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6551324714838831
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2404.00822v2.pdf_0014",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6528139139150546
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2404.00822v2.pdf_0063",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6504300236702012
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2404.00822v2.pdf_0016",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6454389902687686
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2404.00822v2.pdf_0026",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6449656525315679
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0047",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6374003507256311
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2404.00822v2.pdf_0050",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6321558952331587
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2404.00822v2.pdf_0043",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.628338835934471
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2404.00822v2.pdf_0049",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6176664461096271
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2404.00822v2.pdf_0025",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6093006003736734
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.1111111111111111,
+        "ndcg_at_k": 0.3010299956639812,
+        "graded_ndcg_at_k": 0.3010299956639812,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "a67c14c3-e33b-4bbc-9dd5-da246e9bd038",
+      "question": "Is the beta-Poisson approximation valid for all values of \\(\\beta\\) and \\(\\alpha\\)?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2404.00822v2.pdf_0057",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5849520142362125
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2404.00822v2.pdf_0027",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5373365327521044
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2404.00822v2.pdf_0028",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5341578285145114
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2404.00822v2.pdf_0056",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.515484094619751
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.11774v2.pdf_0054",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.4957670875012201
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0020",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.4949911242734081
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0010",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.49468246070638155
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2411.14884v3.pdf_0006",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.4870264530181885
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0010",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.4841629891104199
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0009",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.4829834719916053
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "graded_ndcg_at_k": 0.5,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "431d2179-fff2-4909-97e2-32c3316847ca",
+      "question": "How does heterogeneity in microbial infectivity affect infection probability?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2404.00822v2.pdf_0016",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7663091103662175
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2404.00822v2.pdf_0063",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7579035903272994
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2404.00822v2.pdf_0061",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7509395032561241
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2404.00822v2.pdf_0059",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7062603795891739
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2404.00822v2.pdf_0015",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.7012429446352658
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0060",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6955973272803682
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2404.00822v2.pdf_0062",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6946706771850784
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2404.00822v2.pdf_0054",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6883345021802829
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2404.00822v2.pdf_0040",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.687072712953536
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2404.00822v2.pdf_0012",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6823506151929463
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 0.6666666666666666,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.6508205185601091,
+        "graded_ndcg_at_k": 0.6003279157446682,
+        "weighted_precision_at_k": 0.846740176126693,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "9199173b-3ed1-4118-88cd-1713fc5fa8a7",
+      "question": "How do changes in effective microbial death rate influence parameters like alpha and beta?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2404.00822v2.pdf_0021",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6677829027176093
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2404.00822v2.pdf_0013",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6665405035470163
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2404.00822v2.pdf_0020",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6156772099310851
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2404.00822v2.pdf_0019",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6079439573338138
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2404.00822v2.pdf_0018",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6046713465844022
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0056",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.6015689847983183
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2404.00822v2.pdf_0063",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5733813897740104
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2404.00822v2.pdf_0038",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5641995179058568
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2404.00822v2.pdf_0023",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5627413131440718
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2404.00822v2.pdf_0057",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.5565757849893824
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "graded_ndcg_at_k": 0.6309297535714575,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "f210906a-b4a4-4b97-84df-106214024650",
+      "question": "How does incorporating demographic factors influence job transition predictions using LLMs?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0049",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6987123072915006
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0051",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6536596210992122
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0057",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6346426142006631
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0036",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6315638799407421
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0115",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6309596520090411
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0052",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6254384071157464
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0041",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6245560646057173
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0138",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6188614013038833
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0139",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6180826425552413
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0127",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6167016992987226
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "30a0bf06-8d40-4a89-ba30-03582bbfb300",
+      "question": "Is perplexity higher or lower for more accurate occupation models?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0060",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6946300682205014
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0095",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.67359534940692
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0176",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6623162031173706
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0135",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6585115586824166
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0168",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6549437046051025
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0109",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6532640250482585
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0167",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6524472054902116
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0170",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6502691924251135
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0124",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6463246134713073
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0061",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.646045623366146
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "83d96ef0-bf1f-4e5c-9ed5-0cd33d4878d3",
+      "question": "How is uncertainty in performance metrics quantified for occupation models?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0061",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.710372196193367
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0060",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6425045302515662
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0146",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6230956277038721
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0111",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6156976177422065
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0135",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.604338598768544
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0109",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5933899394738602
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0094",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5896713030730292
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0059",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.585887263523014
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0036",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5828245380907701
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0026",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5823296406662036
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 0.5,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "graded_ndcg_at_k": 0.6671278154687899,
+        "weighted_precision_at_k": 0.5583978458431503,
+        "evidence_coverage_at_k": 0.6691176470588235
+      }
+    },
+    {
+      "query_id": "d170153a-7d5e-476c-ba33-6de0d2a76bdb",
+      "question": "What is tokenization in the context of large language models (LLMs)?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0063",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6671110788451339
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0016",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6259786486625716
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0205",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6216147622558911
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0160",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.605102692818004
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0010",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5951271057128948
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0172",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.577709690741953
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0069",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.576245665550236
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0157",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5754082970442924
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0070",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5704760723454833
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0003",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5697482058480939
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "8e8a20c2-12ee-49eb-bb8d-2b4b04bf04a4",
+      "question": "What does the empirical transition frequency model estimate?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0025",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6152394964015058
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0083",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.609760815777854
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0113",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5945777764161425
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0109",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5929028679285749
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0177",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5901790056112746
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0111",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5835680465183324
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0110",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.579038740792012
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0082",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5789707914827927
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0081",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5763366990189824
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0080",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5721733230610676
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.0,
+        "recall_at_k": 0.0,
+        "hit_rate_at_k": 0.0,
+        "reciprocal_rank_at_k": 0.0,
+        "ndcg_at_k": 0.0,
+        "graded_ndcg_at_k": 0.0,
+        "weighted_precision_at_k": 0.0,
+        "evidence_coverage_at_k": 0.0
+      }
+    },
+    {
+      "query_id": "85ced6b1-438a-4b14-b973-4b1b440e7028",
+      "question": "Does fine-tuning smaller LLMs with additional career data surpass the performance of fine-tuning larger models?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0036",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6555426902225887
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0139",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.653407016599607
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0048",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.649347561520052
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0047",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.649169045587669
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0106",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6356136798858824
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0115",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6346697807312192
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0144",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6261049845971169
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0107",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6120131100443535
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0140",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6027944986216001
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0103",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.602185690272734
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.0,
+        "recall_at_k": 0.0,
+        "hit_rate_at_k": 0.0,
+        "reciprocal_rank_at_k": 0.0,
+        "ndcg_at_k": 0.0,
+        "graded_ndcg_at_k": 0.0,
+        "weighted_precision_at_k": 0.0,
+        "evidence_coverage_at_k": 0.0
+      }
+    },
+    {
+      "query_id": "73e5221b-147a-467b-a6c3-9efdd828cebb",
+      "question": "How does the predictive performance of the CAREER model compare when using different lengths of career history data?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0075",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.703382993147735
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0092",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6825426003286171
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0036",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6582880020141602
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0077",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6560326218605042
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0078",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6515069784530422
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0094",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6497380763760773
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0026",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6454306033510341
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0107",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6410037852231097
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0088",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6360794495367843
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0149",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6358916163444519
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.0,
+        "recall_at_k": 0.0,
+        "hit_rate_at_k": 0.0,
+        "reciprocal_rank_at_k": 0.0,
+        "ndcg_at_k": 0.0,
+        "graded_ndcg_at_k": 0.0,
+        "weighted_precision_at_k": 0.0,
+        "evidence_coverage_at_k": 0.0
+      }
+    },
+    {
+      "query_id": "1b6de0bc-db6b-4db1-a2f5-d134a1e2ee8f",
+      "question": "Does the PSID81 dataset include information on race/ethnicity?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0018",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6474715243982793
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0011",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6252745502269956
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0012",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6177693886207175
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0259",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5640017970804272
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0127",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5426094471891679
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0258",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5394054905965809
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0184",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5347084922480534
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0091",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5308475008657587
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0017",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5304317705001275
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0005",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.529850351499081
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 0.6666666666666666,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.43734888382569426,
+        "graded_ndcg_at_k": 0.4515115875617705,
+        "weighted_precision_at_k": 0.6961287149581957,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "c1dfd0e6-2bbb-4220-a9fe-170a26a2a891",
+      "question": "What is the main occupational information database in the United States?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0001",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.7065349745986024
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0079",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5294367671013217
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0090",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5291879388129903
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0080",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.529083395764229
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0147",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5223876860604506
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0066",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5213569662528778
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0044",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5203488134714186
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0086",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5173088291515463
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0238",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5084328328273208
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0011",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5083741232679944
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "42baf452-048d-4a65-ba96-95b6cb5375df",
+      "question": "How is job data structured in relation to training, validation, and test sets?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2406.17972v3.pdf_0258",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6533936468724327
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0147",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6377674885573028
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2406.17972v3.pdf_0205",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6221632070152266
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0261",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6210385190821676
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0196",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6157251779951429
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0044",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6155057411783094
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0088",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6058460528392215
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0146",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.6017758308253507
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0091",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5875619228947947
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0032",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5873501442640773
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "79309a10-de24-4c93-b417-2ddd8c210597",
+      "question": "What are the advantages of using a self-supervised learning framework for syllabic embeddings?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0040",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6688759924956557
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0005",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6626695994136169
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0002",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6486222341246082
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0039",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6287715622416608
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0093",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.623394604628796
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0008",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.597226101077381
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0012",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5915990052103702
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0009",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5857253743059664
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0011",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5710438404420474
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0076",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5682680776199128
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 0.6666666666666666,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.40179981797758046,
+        "graded_ndcg_at_k": 0.48768023567893004,
+        "weighted_precision_at_k": 0.9285987017945782,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "21e88b71-6415-4e1a-ab48-d265c64a8bcc",
+      "question": "How does the Sylber model perform in terms of syllable detection compared to other models?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0008",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7237377496078364
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0023",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7172332147081886
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0083",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7113741980345064
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0039",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7066378943159757
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0022",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7026473074362637
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0021",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7016872523203838
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0006",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6989044072855932
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0086",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6985576038750684
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0002",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6947378880098048
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0040",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6888596004927506
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 0.7870015235953258,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "c83d5b4d-4547-4b4c-a5e9-a86a008c8254",
+      "question": "What is the purpose of the Sylber framework in speech processing?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0040",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.76656758287066
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0002",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7450708817008955
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0008",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.742976493505525
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0005",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6877711806365645
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0086",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6621149983831108
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0006",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6596827906464843
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0012",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6490089877553895
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0039",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6448024491789173
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0041",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6400048327447495
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0095",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.639635200435257
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "73cb4852-25f8-4c14-bad1-28aaf8c9a5a3",
+      "question": "Is environmental noise used more frequently than other speech for mixing in the denoising objective?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0061",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7398858356339736
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0077",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6149586805676639
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0013",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6127717494964643
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0069",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5483875390023125
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0075",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5350637435913124
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0088",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5041705369949376
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0073",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5007673501968419
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0016",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.4999683499298513
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0041",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.4987847805023229
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0090",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.49434915184975026
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "fef2aa60-1684-4f4e-8758-89b857b5d088",
+      "question": "What is the purpose of using the Discriminability Index (DI) in analyzing rhyming word pairs?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0075",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6507917670979928
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0007",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6303760253934875
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0037",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.612039868947286
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0041",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5415739640759304
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0074",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5138442516327051
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0035",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5049154607976946
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0071",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.4691505170881165
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0073",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.4602714848032927
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0042",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.4523955938344518
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0018",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.45066390617754304
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 0.6666666666666666,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.6508205185601091,
+        "graded_ndcg_at_k": 0.6535549713298245,
+        "weighted_precision_at_k": 0.8110286708802783,
+        "evidence_coverage_at_k": 0.7936962750716332
+      }
+    },
+    {
+      "query_id": "ab55b783-48a0-41a8-a6f6-681f793eed98",
+      "question": "Is there an improvement in coding-rate when using duration-informed tokens compared to previous methods?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0079",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7107339250166556
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0078",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6729424395280496
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0026",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5800154018365379
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0030",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5754898100507526
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0096",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5732899729514187
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0010",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5650192758429572
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.14077v2.pdf_0036",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5595332550863603
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0033",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5559382968022509
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0028",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5516969705531098
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0031",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5514294012103081
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "1d585069-a446-47fa-a74d-0387316ea330",
+      "question": "In what areas do syllabic embeddings show potential for improvement based on current research findings?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0011",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6500080823898362
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0039",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6424619768582608
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0093",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6371715068817184
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0008",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6258465870710272
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0002",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6251144036582479
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0040",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6167122721672101
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0005",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.61503822534593
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0094",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6090457309429966
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0076",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5997340321699373
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0007",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5926793460441035
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.0,
+        "recall_at_k": 0.0,
+        "hit_rate_at_k": 0.0,
+        "reciprocal_rank_at_k": 0.0,
+        "ndcg_at_k": 0.0,
+        "graded_ndcg_at_k": 0.0,
+        "weighted_precision_at_k": 0.0,
+        "evidence_coverage_at_k": 0.0
+      }
+    },
+    {
+      "query_id": "cc184120-0607-4726-b3c1-a840a2d98dd3",
+      "question": "What are the key differences in performance between the Sylber models and the HuBERT base model across various speech processing tasks?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.07168v2.pdf_0083",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7529849108475607
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.07168v2.pdf_0030",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.706190859533451
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.07168v2.pdf_0090",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.7027529413545845
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.07168v2.pdf_0084",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6867782250907202
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.07168v2.pdf_0032",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6789659283696876
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0008",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6713738833220192
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0095",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6701031127541476
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.07168v2.pdf_0024",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6671935716636739
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.07168v2.pdf_0039",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6621104881631793
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.07168v2.pdf_0023",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.6620477840843505
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "graded_ndcg_at_k": 0.917099107457081,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "99f847b7-45cd-427c-8b12-70f3f293a025",
+      "question": "What is the purpose of the FRACAL method in object detection?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.11774v2.pdf_0026",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.7255189418792725
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.11774v2.pdf_0062",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.7086784492347826
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.11774v2.pdf_0024",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.7050203436588881
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.11774v2.pdf_0018",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.701215874858906
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.11774v2.pdf_0063",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6658378442622528
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.11774v2.pdf_0003",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6628794663333044
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.11774v2.pdf_0020",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6439158916473389
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.11774v2.pdf_0019",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6396629810333252
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.11774v2.pdf_0029",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6392654752074632
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.11774v2.pdf_0021",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6362218856811523
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.25,
+        "ndcg_at_k": 0.43067655807339306,
+        "graded_ndcg_at_k": 0.43067655807339306,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "88d0b775-3bbb-4dec-8e59-e551ee9fc5c2",
+      "question": "Does the foreground class distribution change between train and test sets?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.11774v2.pdf_0037",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5620509908138565
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2406.17972v3.pdf_0145",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5608810186386108
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.11774v2.pdf_0006",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5535165071487427
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0175",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5490028752985209
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2406.17972v3.pdf_0144",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5468277498134303
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2406.17972v3.pdf_0176",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5460658073425293
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.11774v2.pdf_0016",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5434266328811646
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0109",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.5403783047424746
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.11774v2.pdf_0017",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5395004106163528
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2406.17972v3.pdf_0091",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.537197193085735
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.14285714285714285,
+        "ndcg_at_k": 0.3333333333333333,
+        "graded_ndcg_at_k": 0.3333333333333333,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "be608e3f-d284-4b13-b37d-5dd2571a8572",
+      "question": "What does the term $p(y, o, u)$ represent in object detection?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.11774v2.pdf_0014",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6539629514261589
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.11774v2.pdf_0017",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6349372542054047
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.11774v2.pdf_0016",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6316042385573147
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.11774v2.pdf_0015",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6251289471907151
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2412.02582v2.pdf_0021",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.5701029217120542
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.11774v2.pdf_0037",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5673461991915227
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.07168v2.pdf_0021",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.5521641907496264
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.11774v2.pdf_0030",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.546817053123223
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.11774v2.pdf_0013",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5380929067024142
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.11774v2.pdf_0025",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5379067178452029
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6934264036172708,
+        "graded_ndcg_at_k": 0.6704387186562889,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "3e072125-e130-438c-b264-0bfb622cdf65",
+      "question": "How are foreground and background predictions decoupled in binary classifiers?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.11774v2.pdf_0008",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6527313759660753
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.11774v2.pdf_0017",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5874083567329088
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.11774v2.pdf_0036",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5715634823127029
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.11774v2.pdf_0015",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5559258760015098
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.11774v2.pdf_0034",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5515176550911057
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.11774v2.pdf_0018",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5506087377486559
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2406.17972v3.pdf_0043",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.54727619946117
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.11774v2.pdf_0030",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5319033740672792
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.11774v2.pdf_0040",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5304120377320298
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2412.02582v2.pdf_0011",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.5302831042825366
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 0.5,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.6131471927654584,
+        "graded_ndcg_at_k": 0.8560022005203206,
+        "weighted_precision_at_k": 0.7895,
+        "evidence_coverage_at_k": 0.7894736842105263
+      }
+    },
+    {
+      "query_id": "8c270ba7-7698-4fe5-82dc-4790162878e0",
+      "question": "How does the SmoothInfo method improve upon traditional fractal dimension calculation techniques?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.11774v2.pdf_0038",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.6409655954468073
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.11774v2.pdf_0024",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5584733582907955
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.11774v2.pdf_0026",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5441392822307137
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.11774v2.pdf_0037",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5390575642236325
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.11774v2.pdf_0062",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.5042034542863768
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.14077v2.pdf_0038",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5039151015231074
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.11774v2.pdf_0029",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.49983412025381657
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.11774v2.pdf_0061",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.49741394825536367
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.11774v2.pdf_0005",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.49671450178969745
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.11774v2.pdf_0028",
+          "filename": "2410.11774v2.pdf",
+          "score": 0.4958696508213377
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.25,
+        "ndcg_at_k": 0.43067655807339306,
+        "graded_ndcg_at_k": 0.43067655807339306,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "ad04523d-ab6c-414d-9c58-5ed28d2fbe86",
+      "question": "How does transforming measurements into the dq coordinate frame aid in impedance estimation?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.14077v2.pdf_0037",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6057347961865129
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.14077v2.pdf_0030",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5989022968891063
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.14077v2.pdf_0031",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5676575560773885
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.14077v2.pdf_0035",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5634943918579132
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.14077v2.pdf_0001",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5568990873366325
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.14077v2.pdf_0033",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5568008951186106
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.14077v2.pdf_0034",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.549404317211594
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0041",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.546274098531849
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.14077v2.pdf_0004",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5297284442024505
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.14077v2.pdf_0019",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5272326469421387
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6309297535714575,
+        "graded_ndcg_at_k": 0.6309297535714575,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "54794ee1-92d1-4e56-865a-224dda2788ae",
+      "question": "Is the inverter connected to a grid with a voltage of 480 V?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.14077v2.pdf_0027",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5982267500026982
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.14077v2.pdf_0031",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5887128604992794
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.14077v2.pdf_0014",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5829491267830664
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.14077v2.pdf_0032",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5825415080028347
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.14077v2.pdf_0040",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5589454103773344
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.14077v2.pdf_0039",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5485192806411228
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.14077v2.pdf_0034",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5429640633528129
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0026",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5427966884384574
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.14077v2.pdf_0003",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5395820415269121
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.14077v2.pdf_0033",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5332474947129209
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "graded_ndcg_at_k": 0.5,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "ddf9dfa2-8a4b-4bee-89a1-5578336eb5a8",
+      "question": "How does the VDF-RLS algorithm maintain stability in the absence of persistent excitation?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2410.14077v2.pdf_0016",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6863851511981923
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2410.14077v2.pdf_0038",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6735607586372128
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2410.14077v2.pdf_0025",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6389154576608823
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2410.14077v2.pdf_0017",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6356376465014953
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2410.14077v2.pdf_0039",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6195408701896667
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.14077v2.pdf_0014",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6135259866714478
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2410.14077v2.pdf_0030",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.6126033797983428
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0018",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.592370408546043
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2410.14077v2.pdf_0036",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5780793097733486
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2410.14077v2.pdf_0012",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5603660679081729
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.3333333333333333,
+        "ndcg_at_k": 0.5,
+        "graded_ndcg_at_k": 0.5,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "283afa84-f0c8-40a7-a6f1-fb2a6b97c761",
+      "question": "How does uncertainty in data affect standard quadratic optimization problems?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2411.14884v3.pdf_0028",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6881371531446007
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2411.14884v3.pdf_0001",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6815415850517508
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2401.07294v4.pdf_0036",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5830968046688352
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2411.14884v3.pdf_0024",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5763158969973502
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2411.14884v3.pdf_0003",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5759575881920214
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2401.07294v4.pdf_0047",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5672334085752742
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0002",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5530674913726721
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0009",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.5478404874421338
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2401.07294v4.pdf_0001",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5445981134834
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2401.07294v4.pdf_0079",
+          "filename": "2401.07294v4.pdf",
+          "score": 0.5426047818550116
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 0.5,
+        "ndcg_at_k": 0.6509209298071326,
+        "graded_ndcg_at_k": 0.6449752382005759,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "528354b5-296a-468b-ba31-78f9856ad3a2",
+      "question": "How do robust and stochastic settings differ when dealing with uncertain matrices in StQPs?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2411.14884v3.pdf_0001",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6950078268365526
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2411.14884v3.pdf_0028",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.681177595818747
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2411.14884v3.pdf_0005",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6648466981719058
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2411.14884v3.pdf_0024",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6050486744955005
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2411.14884v3.pdf_0007",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5741359172191433
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2411.14884v3.pdf_0014",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5587071083820383
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0008",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5558654302158165
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2411.14884v3.pdf_0026",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5519310400465639
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2411.14884v3.pdf_0011",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5494840531618729
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2411.14884v3.pdf_0003",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5466070663875817
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.8772153153380493,
+        "graded_ndcg_at_k": 0.9180202987993638,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "7de7f3ef-aeb4-4b1c-b923-a4655e1146d4",
+      "question": "What is the standard quadratic optimization problem (StQP) and why is it significant?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2411.14884v3.pdf_0028",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.7633221258753177
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2411.14884v3.pdf_0026",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.660699686837271
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2411.14884v3.pdf_0001",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6539659110328117
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2411.14884v3.pdf_0003",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5720299055522859
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2411.14884v3.pdf_0023",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5624055713640281
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2411.14884v3.pdf_0027",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5472842618013896
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0005",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5413219879481845
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2411.14884v3.pdf_0015",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5232432456918699
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2411.14884v3.pdf_0024",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5168889124658317
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2411.14884v3.pdf_0014",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5167864233041254
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.3,
+        "recall_at_k": 0.75,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 0.7757386182436072,
+        "graded_ndcg_at_k": 0.874395723397498,
+        "weighted_precision_at_k": 0.9237436386768447,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "8505f230-e76f-4ba8-a07f-c005cd863730",
+      "question": "What is the range of the minimum eigenvalues for the generated nominal matrices?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2411.14884v3.pdf_0011",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5560813115859425
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2411.14884v3.pdf_0025",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5300920885746435
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2411.14884v3.pdf_0021",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5107390297340226
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2406.17972v3.pdf_0101",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.4853340505760524
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2411.14884v3.pdf_0010",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.47642966964421773
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2410.07168v2.pdf_0067",
+          "filename": "2410.07168v2.pdf",
+          "score": 0.464327168255495
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0027",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.4622148368082748
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2406.17972v3.pdf_0030",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.46160730948404693
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2406.17972v3.pdf_0131",
+          "filename": "2406.17972v3.pdf",
+          "score": 0.46072646975517273
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2411.14884v3.pdf_0024",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.4584898402106985
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "5284ca2a-cf22-4f20-b6c6-a20855685d50",
+      "question": "How does the chance-constrained epigraphic StQP compare to robust StQPs?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2411.14884v3.pdf_0005",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.7469638586044312
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2411.14884v3.pdf_0028",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6493726999689385
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2411.14884v3.pdf_0014",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.6082820529769638
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2411.14884v3.pdf_0015",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5925273299217224
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2411.14884v3.pdf_0001",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.551092538302693
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2411.14884v3.pdf_0023",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5459411089490561
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2411.14884v3.pdf_0012",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.537911387557471
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2411.14884v3.pdf_0026",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5331906636726103
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2411.14884v3.pdf_0006",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5330301523208618
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2411.14884v3.pdf_0024",
+          "filename": "2411.14884v3.pdf",
+          "score": 0.5015164611916028
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.1,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 1.0,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    },
+    {
+      "query_id": "74c3d526-6941-4aea-b577-6ab76d6932e2",
+      "question": "How does foreground contamination affect H1 intensity mapping surveys?",
+      "retrieved_chunks": [
+        {
+          "rank": 1,
+          "chunk_id": "2412.02582v2.pdf_0012",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.6069036072704466
+        },
+        {
+          "rank": 2,
+          "chunk_id": "2412.02582v2.pdf_0016",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.5552656915625528
+        },
+        {
+          "rank": 3,
+          "chunk_id": "2412.02582v2.pdf_0011",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.547323904532782
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2412.02582v2.pdf_0015",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.5440524816513062
+        },
+        {
+          "rank": 5,
+          "chunk_id": "2412.02582v2.pdf_0008",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.4937363104866306
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2404.00822v2.pdf_0008",
+          "filename": "2404.00822v2.pdf",
+          "score": 0.49145567468073015
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2412.02582v2.pdf_0045",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.4896344859061643
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2410.14077v2.pdf_0003",
+          "filename": "2410.14077v2.pdf",
+          "score": 0.47385528683662415
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2412.02582v2.pdf_0018",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.4738137125968933
+        },
+        {
+          "rank": 10,
+          "chunk_id": "2412.02582v2.pdf_0013",
+          "filename": "2412.02582v2.pdf",
+          "score": 0.4729620250508789
+        }
+      ],
+      "metrics": {
+        "k": 10,
+        "precision_at_k": 0.2,
+        "recall_at_k": 1.0,
+        "hit_rate_at_k": 1.0,
+        "reciprocal_rank_at_k": 1.0,
+        "ndcg_at_k": 1.0,
+        "graded_ndcg_at_k": 0.9074911472487102,
+        "weighted_precision_at_k": 1.0,
+        "evidence_coverage_at_k": 1.0
+      }
+    }
+  ]
+}

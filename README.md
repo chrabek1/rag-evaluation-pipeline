@@ -69,7 +69,7 @@ Implemented:
 - repository-level persistence logic for chunk records
 - Docker Compose environment with service health checks
 - FastAPI embedding service with model and schema validation
-- automated unit and integration tests for backend and embedding service (147 passing backend tests)
+- automated unit and integration tests for backend and embedding service (166 passing backend tests)
 - reproducible full-corpus indexing from an empty database
 - vector retrieval with cosine similarity
 - configurable `top_k` for retrieval
@@ -83,10 +83,15 @@ Implemented:
   nDCG@k, Graded nDCG@k, normalized Weighted Precision@k and
   EvidenceCoverage@k
 - per-question retrieval evaluation and aggregate metric summaries
+- versioned golden dataset loader with contract validation
+- end-to-end retrieval evaluation pipeline and JSON result writer
+- retrieval evaluation CLI with configurable `top_k` and output path
 
 Planned:
 
-- end-to-end evaluation pipeline / benchmark automation
+- generation pipeline and generation-quality metrics
+- automated comparison of multiple retrieval configurations
+- reranking experiments
 
 ## Quick Start
 
@@ -203,6 +208,23 @@ docker compose exec backend \
 
 This returns the top-k retrieved chunks for the query using the configured similarity search.
 
+### Evaluate retrieval
+
+Run retrieval and calculate all retrieval metrics for every golden-dataset
+question:
+
+```bash
+docker compose exec backend \
+  uv run python scripts/evaluate_retrieval.py \
+  --top-k 5 \
+  --output results/retrieval_top_k_5.json
+```
+
+The JSON output contains the embedding configuration, aggregate summary and
+per-question retrieved chunks, similarity scores and metrics. Because the
+backend directory is mounted into the container, the example output is saved
+on the host as `backend/results/retrieval_top_k_5.json`.
+
 ## Database Schema
 
 | Column | Description |
@@ -245,7 +267,7 @@ The backend test suite covers:
 - indexing pipeline integration tests
 - retrieval pipeline integration tests
 
-Current test status: 147 passing backend tests.
+Current test status: 166 passing backend tests.
 
 ## Project Structure
 
@@ -256,18 +278,21 @@ rag-evaluation-pipeline/
 │   │   ├── clients/          # external service clients
 │   │   ├── core/             # application configuration
 │   │   ├── db/               # database connection and schema
-│   │   ├── evaluation/       # retrieval metrics, evaluator and aggregation
-│   │   ├── loaders/          # corpus loading
+│   │   ├── evaluation/       # metrics, evaluation pipeline and result writer
+│   │   ├── loaders/          # corpus and golden dataset loading
 │   │   ├── models/           # domain models
 │   │   │   ├── chunk.py
-│   │   │   ├── retrieved_chunk.py
+│   │   │   ├── golden_dataset.py
+│   │   │   ├── retrieval_evaluation_result.py
 │   │   │   ├── retrieval_metrics_result.py
-│   │   │   └── retrieval_metrics_summary.py
+│   │   │   ├── retrieval_metrics_summary.py
+│   │   │   └── retrieved_chunk.py
 │   │   ├── repositories/     # persistence layer
 │   │   └── services/         # application services
 │   │       └── retrieval_service.py
 │   
 │   ├── scripts/              # executable backend scripts
+│   │   ├── evaluate_retrieval.py
 │   │   ├── index_chunks.py
 │   │   └── search_chunks.py
 │   ├── tests/

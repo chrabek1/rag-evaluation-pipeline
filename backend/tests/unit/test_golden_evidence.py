@@ -1,6 +1,6 @@
 import pytest
 
-from app.models.golden_evidence import GoldenEvidence
+from app.models.golden_dataset import GoldenEvidence
 
 
 def test_golden_evidence_stores_text_and_normalized_length() -> None:

@@ -1,6 +1,6 @@
 import pytest
 
-from app.models.golden_dataset_metadata import (
+from app.models.golden_dataset import (
     GoldenDatasetMetadata,
 )
 
