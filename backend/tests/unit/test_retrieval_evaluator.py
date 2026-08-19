@@ -62,7 +62,7 @@ def test_evaluate_returns_all_retrieval_metrics() -> None:
         expected_graded_ndcg
     )
     assert result.weighted_precision_at_k == pytest.approx(
-        0.8 / 3
+        0.8 / (0.8 + 0.4)
     )
     assert result.evidence_coverage_at_k == pytest.approx(0.8)
 

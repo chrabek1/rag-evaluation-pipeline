@@ -23,7 +23,7 @@ Pierwszym etapem było zapoznanie się z metodami oceny systemów RAG oraz wybó
 1. **Retrieval** — sprawdzenie, czy system znajduje właściwe fragmenty i umieszcza je odpowiednio wysoko w rankingu.
 2. **Generation** — sprawdzenie, czy odpowiedź jest zgodna z pobranym kontekstem i odpowiada na pytanie.
 
-Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k, weighted Precision@k i EvidenceCoverage@k**. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
+Dla ewaluacji retrievalu zaimplementowałem **Precision@k, Recall@k, HitRate@k, MRR, nDCG@k, graded nDCG@k, weighted Precision@k i EvidenceCoverage@k**. Weighted Precision@k jest normalizowane względem sumy ocen idealnego top-k, dzięki czemu idealny zestaw wyników otrzymuje `1.0` niezależnie od rozłożenia evidence między chunkami. Dodałem również `RetrievalEvaluator`, agregację wyników wielu pytań i testy jednostkowe. Do późniejszej oceny generowania wybrałem **Faithfulness** i **Answer Relevance**.
 
 Research wykazał również najważniejsze ryzyka: data leakage, zbyt łatwe pytania syntetyczne, niepełne oznaczenia relewancji oraz uzależnienie ground truth od konkretnego chunkowania. Wnioski te wpłynęły później na sposób przygotowania golden datasetu. Szczegółowy opis znajduje się w `rag_evaluation_research.md`.
 

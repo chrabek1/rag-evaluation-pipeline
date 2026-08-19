@@ -397,36 +397,9 @@ def test_graded_ndcg_at_k_rejects_score_outside_range() -> None:
             retrieved_chunk_ids=["chunk-1"],
             k=1,
         )
-        
-    def weighted_precision_at_k(
-        relevance_by_chunk_id: dict[str, float],
-        retrieved_chunk_ids: list[str],
-        k: int,
-    ) -> float:
-        if k <= 0:
-            raise ValueError("k must begreater than 0")
-        
-        if not relevance_by_chunk_id:
-            raise ValueError(
-                "relevance_by_chunk_id must not be empty"
-            )
-        
-        if (
-            score < 0.0 or score > 1.0
-            for score in relevance_by_chunk_id.values()
-        ):
-            raise ValueError(
-                "relevance scores must be between 0 and 1"
-            )
-        
-        top_k_relevance_scores = [
-            relevance_by_chunk_id.get(chunk_id, 0.0)
-            for chunk_id in retrieved_chunk_ids[:k]
-        ]
-        
-        return sum(top_k_relevance_scores) / k
 
-def test_weighted_precision_at_k_returns_average_coverage() -> None:
+
+def test_weighted_precision_at_k_returns_one_for_ideal_results() -> None:
     result = weighted_precision_at_k(
         relevance_by_chunk_id={
             "chunk-1": 0.9,
@@ -440,7 +413,23 @@ def test_weighted_precision_at_k_returns_average_coverage() -> None:
         k=3,
     )
 
-    assert result == pytest.approx(0.4)
+    assert result == pytest.approx(1.0)
+
+
+def test_weighted_precision_at_k_normalizes_against_ideal_results() -> None:
+    result = weighted_precision_at_k(
+        relevance_by_chunk_id={
+            "chunk-1": 0.9,
+            "chunk-2": 0.3,
+        },
+        retrieved_chunk_ids=[
+            "chunk-1",
+            "unknown-chunk",
+        ],
+        k=2,
+    )
+
+    assert result == pytest.approx(0.75)
 
 
 def test_weighted_precision_at_k_assigns_zero_to_unknown_chunks() -> None:
@@ -480,6 +469,22 @@ def test_weighted_precision_at_k_rejects_empty_relevance_mapping() -> None:
             retrieved_chunk_ids=["chunk-1"],
             k=1,
         )
+
+
+def test_weighted_precision_at_k_rejects_only_zero_scores() -> None:
+    with pytest.raises(
+        ValueError,
+        match=(
+            "relevance_by_chunk_id must contain "
+            "at least one positive score"
+        ),
+    ):
+        weighted_precision_at_k(
+            relevance_by_chunk_id={"chunk-1": 0.0},
+            retrieved_chunk_ids=["chunk-1"],
+            k=1,
+        )
+
 
 def test_evidence_coverage_at_k_merges_overlapping_intervals() -> None:
     result = evidence_coverage_at_k(

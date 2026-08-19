@@ -185,12 +185,27 @@ def weighted_precision_at_k(
             "relevance scores must be between 0 and 1"
         )
     
-    top_k_relevance_scores= [
+    if not any(
+        score > 0.0
+        for score in relevance_by_chunk_id.values()
+    ):
+        raise ValueError(
+            "relevance_by_chunk_id must contain at least one positive score"
+        )
+        
+    retrieved_score = sum(
         relevance_by_chunk_id.get(chunk_id, 0.0)
         for chunk_id in retrieved_chunk_ids[:k]
-    ]
+    )
     
-    return sum(top_k_relevance_scores) / k
+    ideal_score = sum(
+        sorted(
+            relevance_by_chunk_id.values(),
+            reverse=True,
+        )[:k]
+    )
+    
+    return retrieved_score / ideal_score
 
 def evidence_coverage_at_k(
     evidence_lengths: list[int],
