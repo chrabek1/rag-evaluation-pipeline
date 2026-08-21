@@ -8,9 +8,13 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "asyncpg>=0.31.0",
+    "google-genai>=2.18.1",
     "httpx>=0.28.1",
+    "langchain-community==0.3.31",
+    "litellm>=1.97.0",
     "pgvector>=0.5.0",
     "pydantic-settings>=2.15.0",
+    "ragas==0.4.3",
 ]
 
 [project.scripts]
@@ -28,4 +32,13 @@ module-root = ""
 dev = [
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "-m 'not external and not slow'"
+markers = [
+    "integration: tests requiring local project services",
+    "external: tests requiring external services or paid APIs",
+    "ollama: tests requiring an Ollama server on the host",
+    "slow: tests loading models or performing real embedding calls",
 ]

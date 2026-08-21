@@ -9,7 +9,7 @@
 
 ## Overview
 
-RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval experiments and evaluation. It loads a corpus of prepared document chunks from CSV, generates dense embeddings with a configured Sentence Transformers model (by default [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3)), and stores them in PostgreSQL with `pgvector` for vector similarity search.
+RAG Evaluation Pipeline is a local Retrieval-Augmented Generation (RAG) project for retrieval and generation experiments. It loads a corpus of prepared document chunks from CSV, generates dense embeddings with a configured Sentence Transformers model (by default [`BAAI/bge-m3`](https://huggingface.co/BAAI/bge-m3)), and stores them in PostgreSQL with `pgvector` for vector similarity search. Gemini or a local Ollama model can generate answers and act as the RAGAS judge.
 
 ## Evaluation inputs
 
@@ -50,6 +50,17 @@ flowchart LR
     G --> H
     H --> T[Top-k RetrievedChunk]
   end
+
+  subgraph GENERATION_FLOW [Generation and evaluation]
+    T --> GS[GenerationService]
+    Q --> GS
+    GS --> LLM[Gemini or Ollama]
+    LLM --> ANS[Generated answer]
+    ANS --> RAGAS[RAGAS evaluator]
+    T --> RAGAS
+    Q --> RAGAS
+    RAGAS --> GM[Faithfulness and Answer Relevancy]
+  end
 ```
 
 The environment consists of three Docker services:
@@ -69,7 +80,7 @@ Implemented:
 - repository-level persistence logic for chunk records
 - Docker Compose environment with service health checks
 - FastAPI embedding service with model and schema validation
-- automated unit and integration tests for backend and embedding service (166 passing backend tests)
+- automated unit and integration tests for backend and embedding service
 - reproducible full-corpus indexing from an empty database
 - vector retrieval with cosine similarity
 - configurable `top_k` for retrieval
@@ -86,10 +97,17 @@ Implemented:
 - versioned golden dataset loader with contract validation
 - end-to-end retrieval evaluation pipeline and JSON result writer
 - retrieval evaluation CLI with configurable `top_k` and output path
+- provider-independent generation service
+- Gemini and local Ollama generation clients
+- RAGAS generation evaluation using Faithfulness and Answer Relevancy with
+  Gemini or local Ollama as the judge
+- reuse of the embedding service by RAGAS through an asynchronous adapter
+- separate generation and evaluation model configuration
+- optional external integration test for RAGAS, Gemini and the embedding service
 
 Planned:
 
-- generation pipeline and generation-quality metrics
+- combined retrieval and generation evaluation pipeline
 - automated comparison of multiple retrieval configurations
 - reranking experiments
 
@@ -114,6 +132,17 @@ TEST_DATABASE_URL=postgresql://rag_eval:rag_eval@postgres:5432/rag_eval_test
 CORPUS_PATH=/data/dane.csv
 GOLDEN_DATASET_PATH=/data/golden_dataset.json
 
+GENERATION_PROVIDER=ollama
+GENERATION_MODEL=llama3.2:3b
+GENERATION_TEMPERATURE=0.0
+
+EVALUATION_PROVIDER=gemini
+EVALUATION_MODEL=gemini-3.6-flash
+EVALUATION_TEMPERATURE=0.0
+
+GEMINI_API_KEY=
+OLLAMA_BASE_URL=http://host.docker.internal:11434
+
 # Optional host paths used by Docker Compose
 CORPUS_HOST_PATH=./dane.csv
 GOLDEN_DATASET_HOST_PATH=./golden_dataset.json
@@ -122,6 +151,10 @@ GOLDEN_DATASET_HOST_PATH=./golden_dataset.json
 - The backend loads configuration from the file specified as `env_file` in `docker-compose.yml`.
 - For local development copy `.env.example` → `.env` and adjust values as needed.
 - Do not commit `.env` to the repository.
+- `GENERATION_*` selects the model that produces answers. `EVALUATION_*`
+  independently selects Gemini or Ollama as the RAGAS judge.
+- A local Ollama server must be running on the host when Ollama is selected.
+- `GEMINI_API_KEY` is required when Gemini is used for generation or evaluation.
 
 ### Replacing the input data or embedding model
 
@@ -248,10 +281,27 @@ Note: retrieval is implemented using cosine similarity over stored vector embedd
 
 The project includes both unit and integration tests for the backend and embedding service.
 
-Run the backend test suite:
+The default backend test command runs unit tests and fast local integrations.
+Tests marked `external` or `slow` are skipped:
 
 ```bash
-docker compose exec backend uv run pytest tests -v
+docker compose exec backend uv run pytest
+```
+
+Run the local slow tests that call the real embedding service:
+
+```bash
+docker compose exec backend uv run pytest -m slow
+```
+
+Run the external RAGAS integration test explicitly. It requires a configured
+Gemini API key and performs real API calls:
+
+```bash
+docker compose exec backend \
+  uv run pytest \
+  tests/integration/test_ragas_generation_evaluation.py \
+  -m external -v
 ```
 
 Run the embedding service test suite:
@@ -266,8 +316,11 @@ The backend test suite covers:
 - repository integration tests
 - indexing pipeline integration tests
 - retrieval pipeline integration tests
+- optional RAGAS, Gemini and embedding-service integration test
 
-Current test status: 166 passing backend tests.
+Fast tests use mocked embeddings where appropriate. Slow integration tests
+separately verify the same indexing and retrieval boundaries against the real
+embedding service.
 
 ## Project Structure
 
@@ -290,7 +343,7 @@ rag-evaluation-pipeline/
 │   │   ├── repositories/     # persistence layer
 │   │   └── services/         # application services
 │   │       └── retrieval_service.py
-│   
+│
 │   ├── scripts/              # executable backend scripts
 │   │   ├── evaluate_retrieval.py
 │   │   ├── index_chunks.py
