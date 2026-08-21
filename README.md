@@ -1,6 +1,6 @@
 # RAG Evaluation Pipeline
 
-> Reproducible local environment for building and evaluating retrieval strategies over a fixed document corpus.
+> Reproducible local environment for evaluating retrieval and generation over a fixed document corpus.
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Docker Compose](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
@@ -49,6 +49,7 @@ flowchart LR
     R --> G
     G --> H
     H --> T[Top-k RetrievedChunk]
+    T --> RM[Retrieval metrics]
   end
 
   subgraph GENERATION_FLOW [Generation and evaluation]
@@ -60,6 +61,8 @@ flowchart LR
     T --> RAGAS
     Q --> RAGAS
     RAGAS --> GM[Faithfulness and Answer Relevancy]
+    RM --> OUT[Combined JSON result]
+    GM --> OUT
   end
 ```
 
@@ -103,11 +106,16 @@ Implemented:
   Gemini or local Ollama as the judge
 - reuse of the embedding service by RAGAS through an asynchronous adapter
 - separate generation and evaluation model configuration
-- optional external integration test for RAGAS, Gemini and the embedding service
+- combined retrieval, generation and RAGAS evaluation pipeline
+- aggregate retrieval and generation summaries
+- complete JSON result writer with configuration and per-question results
+- full RAG evaluation CLI with configurable `top_k` and output path
+- fast integration test covering the complete local evaluation flow
+- optional external integration tests for RAGAS, Gemini, Ollama and the
+  embedding service
 
 Planned:
 
-- combined retrieval and generation evaluation pipeline
 - automated comparison of multiple retrieval configurations
 - reranking experiments
 
@@ -258,6 +266,25 @@ per-question retrieved chunks, similarity scores and metrics. Because the
 backend directory is mounted into the container, the example output is saved
 on the host as `backend/results/retrieval_top_k_5.json`.
 
+### Evaluate the complete RAG pipeline
+
+Run retrieval, generate an answer for every golden-dataset question and
+evaluate the answers with RAGAS:
+
+```bash
+docker compose exec backend \
+  uv run python scripts/evaluate_rag.py \
+  --top-k 5 \
+  --output results/rag_top_k_5.json
+```
+
+The generation model is selected with `GENERATION_*`. The independent RAGAS
+judge is selected with `EVALUATION_*`. Both support Gemini and local Ollama.
+
+The JSON output contains the experiment configuration, retrieval and generation
+summaries, retrieved chunk contents, generated answers, token usage, latency and
+per-question metrics. The file is saved on the host under `backend/results/`.
+
 ## Database Schema
 
 | Column | Description |
@@ -304,6 +331,13 @@ docker compose exec backend \
   -m external -v
 ```
 
+Run external tests using the local Ollama server:
+
+```bash
+docker compose exec backend \
+  uv run pytest -m "external and ollama" -v
+```
+
 Run the embedding service test suite:
 
 ```bash
@@ -316,7 +350,9 @@ The backend test suite covers:
 - repository integration tests
 - indexing pipeline integration tests
 - retrieval pipeline integration tests
-- optional RAGAS, Gemini and embedding-service integration test
+- complete retrieval-generation evaluation integration test using the test
+  database and mocked model boundaries
+- optional RAGAS, Gemini, Ollama and embedding-service integration tests
 
 Fast tests use mocked embeddings where appropriate. Slow integration tests
 separately verify the same indexing and retrieval boundaries against the real
